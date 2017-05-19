@@ -9,8 +9,12 @@ CREATE TABLE dbo.[Event]
       EventId  int NOT NULL IDENTITY(1, 1),
       Name VARCHAR(50) NOT NULL,
       CONSTRAINT PK_Id_Event PRIMARY KEY CLUSTERED (EventId ),
+<<<<<<< HEAD
 	  CONSTRAINT CH_Event_Name UNIQUE(Name),
 	  CONSTRAINT CH_Event_Name_Null CHECK(Name IS NULL)
+=======
+	  CONSTRAINT CH_Event_Name UNIQUE(Name)
+>>>>>>> TC
     );
 GO
 
@@ -22,9 +26,13 @@ CREATE TABLE dbo.[Log]
 	EventDate DATETIME NOT NULL DEFAULT SYSDATETIME(), 
 	CONSTRAINT PK_Id_Log PRIMARY KEY CLUSTERED (LogId),
 	CONSTRAINT FK_Log_Event_Id_Event FOREIGN KEY(EventId) REFERENCES [Event](EventId),
+<<<<<<< HEAD
 	CONSTRAINT CH_Log_EventDate CHECK (EventDate > '01\01\2017') ,
 	CONSTRAINT CH_Log_EventDate_Null CHECK (EventDate IS NULL),
 	CONSTRAINT CH_Log_EventId_Null CHECK (EventId IS NULL)
+=======
+	CONSTRAINT CH_Log_EventDate CHECK (EventDate > '01\01\2017') 
+>>>>>>> TC
 )
 GO
 
@@ -37,9 +45,12 @@ CREATE TABLE dbo.[User]
 	DateCreatedAt DATE NOT NULL DEFAULT SYSDATETIME(),
 	CONSTRAINT PK_Id_User PRIMARY KEY CLUSTERED (UserId),
 	CONSTRAINT CH_User_Login UNIQUE ([Login]),
+<<<<<<< HEAD
 	CONSTRAINT CH_User_Login_Null CHECK ([Login] IS NOT NULL),
 	CONSTRAINT CH_User_Login_StartsWithNumber CHECK ([Login] NOT LIKE '[0-9]%'),
 	CONSTRAINT CH_User_Password_Null CHECK ([Password] IS NOT NULL) 
+=======
+>>>>>>> TC
 )
 GO
 
@@ -77,9 +88,13 @@ CREATE TABLE dbo.Marker
 	[Timestamp] DATETIME NOT NULL DEFAULT SYSDATETIME(),
 	CONSTRAINT PK_Id_Marker PRIMARY KEY CLUSTERED (MarkerId),
 	CONSTRAINT FK_Marker_Track_Id_User FOREIGN KEY(UserId) REFERENCES dbo.[User](UserId),
+<<<<<<< HEAD
 	CONSTRAINT CH_Marker_Longtitude_Latitude CHECK(Longtitude <= 180 OR Longtitude >= -180 AND Latitude <= 90 OR Latitude >= 0 ),
 	CONSTRAINT CH_Marker_Longtitude_Null CHECK (Longtitude IS NOT NULL),
 	CONSTRAINT CH_Marker_Latitude_Null CHECK (Latitude IS NOT NULL)
+=======
+	CONSTRAINT CH_Marker_Longtitude_Latitude CHECK(Longtitude <= 180 OR Longtitude >= -180 AND Latitude <= 90 OR Latitude >= 0 )
+>>>>>>> TC
 )
 GO
 
