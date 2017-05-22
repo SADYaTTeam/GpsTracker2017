@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewSimple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/simpleText" />
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="318dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spinner"
+        android:text="RadioButton" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_below="@+id/textViewSimple"
+        android:layout_alignParentStart="true" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton"
+        android:layout_below="@+id/radioButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="89dp" />
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/radioButton"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="19dp"
+        android:text="RadioButton" />
+</LinearLayout>
