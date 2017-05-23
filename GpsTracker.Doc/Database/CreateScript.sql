@@ -92,5 +92,25 @@ CREATE TABLE dbo.Track
 )
 GO
 
+INSERT  INTO dbo.Event
+        ( Name )
+VALUES  ( 'NEW_USER'  -- Name - varchar(50)
+          ),
+        ( 'EDIT_USER'  -- Name - varchar(50)
+          ),
+        ( 'DELETE_USER'  -- Name - varchar(50)
+          ),
+        ( 'OUT_OF_SAFE_ZONE'  -- Name - varchar(50)
+          ),
+        ( 'IN_SAFE_ZONE'  -- Name - varchar(50)
+          ),
+        ( 'SOS_BUTTON_CLICK'  -- Name - varchar(50)
+          );
+
+SELECT * FROM dbo.Event ORDER BY EventId ASC
+
+
+
+
 
 
