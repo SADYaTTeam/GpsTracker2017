@@ -17,6 +17,8 @@ namespace GpsTracker.Models.DataContext.Contexts
         {
             _context = context;
             Event = new EventContext(_context);
+            Log = new LogContext(_context);
+            Person = new PersonContext(_context);
         }
 
         #endregion
@@ -32,9 +34,9 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public IDbContext<Models.Event, Event> Event { get; set; }
 
-        public IDbContext<Models.Log, Log> Log { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbContext<Models.Log, Log> Log { get; set; }
 
-        public IDbContext<Models.Person, Person> Person { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbContext<Models.Person, Person> Person { get; set; }
 
         public IDbContext<Models.User, User> User { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

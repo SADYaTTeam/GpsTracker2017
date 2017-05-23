@@ -49,9 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\Contexts\BaseContext.cs" />
     <Compile Include="DataContext\Contexts\EventContext.cs" />
     <Compile Include="DataContext\Contexts\LogContext.cs" />
     <Compile Include="DataContext\Contexts\MainContext.cs" />
+    <Compile Include="DataContext\Contexts\PersonContext.cs" />
+    <Compile Include="DataContext\Contexts\UserContext.cs" />
     <Compile Include="DataContext\Event.cs">
       <DependentUpon>GpsTrackerDbContext.tt</DependentUpon>
     </Compile>

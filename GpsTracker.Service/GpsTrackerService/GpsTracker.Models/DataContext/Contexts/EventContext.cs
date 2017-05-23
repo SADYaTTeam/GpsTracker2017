@@ -11,29 +11,22 @@ using System.Diagnostics;
 
 namespace GpsTracker.Models.DataContext.Contexts
 {
-    public class EventContext : IDbContext<Models.Event, DataContext.Event>
+    public class EventContext : BaseContext, IDbContext<Models.Event, DataContext.Event>
     {
         #region Constructors
 
-        public EventContext()
-        {
-            _context = new GpsTrackingDatabaseEntities();
-        }
+        public EventContext() : base() { }
 
-        public EventContext(GpsTrackingDatabaseEntities context)
-        {
-            _context = context;
-        }
+        public EventContext(GpsTrackingDatabaseEntities context):base(context) { }
 
         #endregion
 
         #region Fields
 
-        private GpsTrackingDatabaseEntities _context;
-
         #endregion
 
         #region Properties
+
         #endregion
 
         #region Methods
@@ -46,16 +39,7 @@ namespace GpsTracker.Models.DataContext.Contexts
                 return false;
             }
             _context.Event.Remove(temp);
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine($"Exception: {ex.Message}");
-                return false;
-            }
-            return true;
+            return SaveChanges();
         }
 
         public IEnumerable<Models.Event> GetAll()
@@ -65,7 +49,7 @@ namespace GpsTracker.Models.DataContext.Contexts
             {
                 return null;
             }
-            var result = new List<Models.Event>();
+            var result = new List<Models.Event>(temp.Count);
             foreach(var item in temp)
             {
                 result.Add(item.Convert());
@@ -80,7 +64,7 @@ namespace GpsTracker.Models.DataContext.Contexts
             {
                 return null;
             }
-            var result = new List<Models.Event>();
+            var result = new List<Models.Event>(temp.Count);
             foreach (var item in temp)
             {
                 result.Add(item.Convert());
@@ -104,7 +88,15 @@ namespace GpsTracker.Models.DataContext.Contexts
                 transaction.Dispose();
                 return false;
             }
-            transaction.Dispose();
+            try
+            {
+                transaction.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception:{ex.Message}");
+                return false;
+            }
             return true;
         }
 
@@ -117,16 +109,7 @@ namespace GpsTracker.Models.DataContext.Contexts
             }
             temp.EventId = newItem.EventId;
             temp.Name = newItem.Name;
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine($"Exception: {ex.Message}");
-                return false;
-            }
-            return true;
+            return SaveChanges();
         }
 
         #endregion

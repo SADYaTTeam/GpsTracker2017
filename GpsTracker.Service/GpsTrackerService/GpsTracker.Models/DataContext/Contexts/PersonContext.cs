@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using GpsTracker.Models.Mappers;
 using GpsTracker.Models.DataContext.Interfaces;
+using System.Diagnostics;
 using GpsTracker.Models.Models;
 using System.Linq.Expressions;
-using System.Diagnostics;
 
 namespace GpsTracker.Models.DataContext.Contexts
 {
-    public class LogContext : BaseContext, IDbContext<Models.Log, Log>
+    public class PersonContext : BaseContext, IDbContext<Models.Person, Person>
     {
         #region Constructors
 
-        public LogContext() : base() { }
+        public PersonContext() : base() { }
 
-        public LogContext(GpsTrackingDatabaseEntities context) : base(context) { }
+        public PersonContext(GpsTrackingDatabaseEntities context) : base(context) { }
 
         #endregion
 
@@ -33,23 +33,23 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public bool Delete(int id)
         {
-            var temp = _context.Log.FirstOrDefault(x => x.LogId == id);
+            var temp = _context.Person.FirstOrDefault(x => x.PersonId == id);
             if (temp == null)
             {
                 return false;
             }
-            _context.Log.Remove(temp);
+            _context.Person.Remove(temp);
             return SaveChanges();
         }
 
-        public IEnumerable<Models.Log> GetAll()
+        public IEnumerable<Models.Person> GetAll()
         {
-            var temp = _context.Log.ToList();
+            var temp = _context.Person.ToList();
             if(temp.Count == 0)
             {
                 return null;
             }
-            var result = new List<Models.Log>(temp.Count);
+            var result = new List<Models.Person>(temp.Count);
             foreach(var item in temp)
             {
                 result.Add(item.Convert());
@@ -57,14 +57,14 @@ namespace GpsTracker.Models.DataContext.Contexts
             return result;
         }
 
-        public IEnumerable<Models.Log> GetBy(Expression<Func<Log, bool>> expression)
+        public IEnumerable<Models.Person> GetBy(Expression<Func<Person, bool>> expression)
         {
-            var temp = _context.Log.Where(expression).ToList();
+            var temp = _context.Person.Where(expression).ToList();
             if (temp.Count == 0)
             {
                 return null;
             }
-            var result = new List<Models.Log>(temp.Count);
+            var result = new List<Models.Person>(temp.Count);
             foreach (var item in temp)
             {
                 result.Add(item.Convert());
@@ -72,13 +72,18 @@ namespace GpsTracker.Models.DataContext.Contexts
             return result;
         }
 
-        public bool Insert(Models.Log newItem)
+        public bool Insert(Models.Person newItem)
         {
             var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("INSERT INTO Log(EventId, Message)" +
-                                                    $"VALUES:({newItem.EventId}, '{newItem.Message}'");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT dbo.[User] ON");
+                var max = (from item in _context.Person
+                           select item.PersonId).ToList().Max();
+                newItem.PersonId = max + 1;
+                _context.Person.Add(newItem.Convert());
+                _context.SaveChanges();
+                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT dbo.[User] OFF");
                 transaction.Commit();
             }
             catch(Exception ex)
@@ -100,15 +105,22 @@ namespace GpsTracker.Models.DataContext.Contexts
             return true;
         }
 
-        public bool Update(int id, Models.Log newItem)
+        public bool Update(int id, Models.Person newItem)
         {
-            var temp = _context.Log.FirstOrDefault(x => x.LogId == id);
+            var temp = _context.Person.FirstOrDefault(x => x.PersonId == id);
             if (temp == null)
             {
                 return false;
             }
-            temp.EventId = newItem.EventId;
-            temp.Message = newItem.Message;
+            temp.UserId = newItem.UserId;
+            temp.FirstName = newItem.FirstName;
+            temp.LastName = newItem.LastName;
+            temp.MiddleName = newItem.MiddleName;
+            temp.Gender = newItem.Gender;
+            temp.DateOfBirth = newItem.DateOfBirth;
+            temp.Photo = newItem.Photo;
+            temp.Email = newItem.Email;
+            temp.Phone = newItem.Phone;
             return SaveChanges();
         }
 
