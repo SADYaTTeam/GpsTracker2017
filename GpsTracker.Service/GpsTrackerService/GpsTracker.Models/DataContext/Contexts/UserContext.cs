@@ -89,20 +89,12 @@ namespace GpsTracker.Models.DataContext.Contexts
             }
             catch(Exception ex)
             {
+                Debug.WriteLine($"Exception:{ex.Message}");
                 transaction.Rollback();
-                transaction.Dispose();
-                Debug.WriteLine($"Exception:{ex.Message}");
+                DisposeTransaction(transaction);    
                 return false;
             }
-            try
-            {
-                transaction.Dispose();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Exception:{ex.Message}");
-                return false;
-            }
+            DisposeTransaction(transaction);
             return true;
         }
 

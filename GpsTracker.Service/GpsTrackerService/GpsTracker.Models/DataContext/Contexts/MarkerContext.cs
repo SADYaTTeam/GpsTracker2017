@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GpsTracker.Models.Mappers;
 using GpsTracker.Models.DataContext.Interfaces;
+using GpsTracker.Models.Mappers;
+using System.Diagnostics;
 using GpsTracker.Models.Models;
 using System.Linq.Expressions;
-using System.Diagnostics;
 
 namespace GpsTracker.Models.DataContext.Contexts
 {
-    public class LogContext : BaseContext, IDbContext<Models.Log, Log>
+    public class MarkerContext : BaseContext, IDbContext<Models.Marker, Marker>
     {
+
         #region Constructors
 
-        public LogContext() : base() { }
+        public MarkerContext(): base() { }
 
-        public LogContext(GpsTrackingDatabaseEntities context) : base(context) { }
+        public MarkerContext(GpsTrackingDatabaseEntities context): base(context) { }
 
         #endregion
 
@@ -33,23 +34,23 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public bool Delete(int id)
         {
-            var temp = _context.Log.FirstOrDefault(x => x.LogId == id);
+            var temp = _context.Marker.FirstOrDefault(x => x.MarkerId == id);
             if (temp == null)
             {
                 return false;
             }
-            _context.Log.Remove(temp);
+            _context.Marker.Remove(temp);
             return SaveChanges();
         }
 
-        public IEnumerable<Models.Log> GetAll()
+        public IEnumerable<Models.Marker> GetAll()
         {
-            var temp = _context.Log.ToList();
+            var temp = _context.Marker.ToList();
             if(temp.Count == 0)
             {
                 return null;
             }
-            var result = new List<Models.Log>(temp.Count);
+            var result = new List<Models.Marker>(temp.Count);
             foreach(var item in temp)
             {
                 result.Add(item.Convert());
@@ -57,14 +58,14 @@ namespace GpsTracker.Models.DataContext.Contexts
             return result;
         }
 
-        public IEnumerable<Models.Log> GetBy(Expression<Func<Log, bool>> expression)
+        public IEnumerable<Models.Marker> GetBy(Expression<Func<Marker, bool>> expression)
         {
-            var temp = _context.Log.Where(expression).ToList();
+            var temp = _context.Marker.Where(expression).ToList();
             if (temp.Count == 0)
             {
                 return null;
             }
-            var result = new List<Models.Log>(temp.Count);
+            var result = new List<Models.Marker>(temp.Count);
             foreach (var item in temp)
             {
                 result.Add(item.Convert());
@@ -72,35 +73,43 @@ namespace GpsTracker.Models.DataContext.Contexts
             return result;
         }
 
-        public bool Insert(Models.Log newItem)
+        public bool Insert(Models.Marker newItem)
         {
             var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("INSERT INTO Log(EventId, Message)" +
-                                                    $"VALUES:({newItem.EventId}, '{newItem.Message}'");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT [User] ON");
+                var max = (from item in _context.Marker
+                           select item.MarkerId).ToList().Max();
+                newItem.MarkerId = max + 1;
+                _context.Marker.Add(newItem.Convert());
+                _context.SaveChanges();
+                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT [User] OFF");
                 transaction.Commit();
             }
             catch(Exception ex)
             {
                 Debug.WriteLine($"Exception:{ex.Message}");
-                transaction.Rollback();
                 DisposeTransaction(transaction);
+                transaction.Rollback();
                 return false;
             }
             DisposeTransaction(transaction);
             return true;
         }
 
-        public bool Update(int id, Models.Log newItem)
+        public bool Update(int id, Models.Marker newItem)
         {
-            var temp = _context.Log.FirstOrDefault(x => x.LogId == id);
+            var temp = _context.Marker.FirstOrDefault(x => x.MarkerId == id);
             if (temp == null)
             {
                 return false;
             }
-            temp.EventId = newItem.EventId;
-            temp.Message = newItem.Message;
+            temp.UserId = newItem.UserId;
+            temp.Name = newItem.Name;
+            temp.Longtitude = newItem.Longtitude;
+            temp.Latitude = newItem.Latitude;
+            temp.Timestamp = newItem.Timestamp;
             return SaveChanges();
         }
 

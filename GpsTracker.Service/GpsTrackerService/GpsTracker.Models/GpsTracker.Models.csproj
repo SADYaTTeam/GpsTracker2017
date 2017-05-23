@@ -53,7 +53,9 @@
     <Compile Include="DataContext\Contexts\EventContext.cs" />
     <Compile Include="DataContext\Contexts\LogContext.cs" />
     <Compile Include="DataContext\Contexts\MainContext.cs" />
+    <Compile Include="DataContext\Contexts\MarkerContext.cs" />
     <Compile Include="DataContext\Contexts\PersonContext.cs" />
+    <Compile Include="DataContext\Contexts\TrackContext.cs" />
     <Compile Include="DataContext\Contexts\UserContext.cs" />
     <Compile Include="DataContext\Event.cs">
       <DependentUpon>GpsTrackerDbContext.tt</DependentUpon>

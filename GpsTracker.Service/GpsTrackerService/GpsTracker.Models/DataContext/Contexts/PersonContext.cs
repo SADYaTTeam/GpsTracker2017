@@ -77,31 +77,23 @@ namespace GpsTracker.Models.DataContext.Contexts
             var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT dbo.[User] ON");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT [User] ON");
                 var max = (from item in _context.Person
                            select item.PersonId).ToList().Max();
                 newItem.PersonId = max + 1;
                 _context.Person.Add(newItem.Convert());
                 _context.SaveChanges();
-                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT dbo.[User] OFF");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT [User] OFF");
                 transaction.Commit();
             }
             catch(Exception ex)
             {
+                Debug.WriteLine($"Exception:{ex.Message}");
                 transaction.Rollback();
-                transaction.Dispose();
-                Debug.WriteLine($"Exception:{ex.Message}");
+                DisposeTransaction(transaction);
                 return false;
             }
-            try
-            {
-                transaction.Dispose();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Exception:{ex.Message}");
-                return false;
-            }
+            DisposeTransaction(transaction);
             return true;
         }
 

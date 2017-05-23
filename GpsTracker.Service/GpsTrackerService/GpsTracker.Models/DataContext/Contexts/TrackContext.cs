@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using GpsTracker.Models.Mappers;
 using GpsTracker.Models.DataContext.Interfaces;
 using GpsTracker.Models.Models;
 using System.Linq.Expressions;
-using System.Diagnostics;
 
 namespace GpsTracker.Models.DataContext.Contexts
 {
-    public class LogContext : BaseContext, IDbContext<Models.Log, Log>
+    public class TrackContext : BaseContext, IDbContext<Models.Track, Track>
     {
         #region Constructors
 
-        public LogContext() : base() { }
+        public TrackContext(): base() { }
 
-        public LogContext(GpsTrackingDatabaseEntities context) : base(context) { }
+        public TrackContext(GpsTrackingDatabaseEntities context): base(context) { }
 
         #endregion
 
@@ -33,38 +33,23 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public bool Delete(int id)
         {
-            var temp = _context.Log.FirstOrDefault(x => x.LogId == id);
+            var temp = _context.Track.FirstOrDefault(x => x.TrackId == id);
             if (temp == null)
             {
                 return false;
             }
-            _context.Log.Remove(temp);
+            _context.Track.Remove(temp);
             return SaveChanges();
         }
 
-        public IEnumerable<Models.Log> GetAll()
+        public IEnumerable<Models.Track> GetAll()
         {
-            var temp = _context.Log.ToList();
-            if(temp.Count == 0)
-            {
-                return null;
-            }
-            var result = new List<Models.Log>(temp.Count);
-            foreach(var item in temp)
-            {
-                result.Add(item.Convert());
-            }
-            return result;
-        }
-
-        public IEnumerable<Models.Log> GetBy(Expression<Func<Log, bool>> expression)
-        {
-            var temp = _context.Log.Where(expression).ToList();
+            var temp = _context.Track.ToList();
             if (temp.Count == 0)
             {
                 return null;
             }
-            var result = new List<Models.Log>(temp.Count);
+            var result = new List<Models.Track>(temp.Count);
             foreach (var item in temp)
             {
                 result.Add(item.Convert());
@@ -72,16 +57,31 @@ namespace GpsTracker.Models.DataContext.Contexts
             return result;
         }
 
-        public bool Insert(Models.Log newItem)
+        public IEnumerable<Models.Track> GetBy(Expression<Func<Track, bool>> expression)
+        {
+            var temp = _context.Track.Where(expression).ToList();
+            if (temp.Count == 0)
+            {
+                return null;
+            }
+            var result = new List<Models.Track>(temp.Count);
+            foreach (var item in temp)
+            {
+                result.Add(item.Convert());
+            }
+            return result;
+        }
+
+        public bool Insert(Models.Track newItem)
         {
             var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("INSERT INTO Log(EventId, Message)" +
-                                                    $"VALUES:({newItem.EventId}, '{newItem.Message}'");
+                _context.Database.ExecuteSqlCommand("INSERT INTO Track(MarkerId, UserId)" +
+                                                    $"VALUES({newItem.MarkerId},{newItem.UserId})");
                 transaction.Commit();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Exception:{ex.Message}");
                 transaction.Rollback();
@@ -92,15 +92,15 @@ namespace GpsTracker.Models.DataContext.Contexts
             return true;
         }
 
-        public bool Update(int id, Models.Log newItem)
+        public bool Update(int id, Models.Track newItem)
         {
-            var temp = _context.Log.FirstOrDefault(x => x.LogId == id);
+            var temp = _context.Track.FirstOrDefault(x => x.TrackId == id);
             if (temp == null)
             {
                 return false;
             }
-            temp.EventId = newItem.EventId;
-            temp.Message = newItem.Message;
+            temp.MarkerId = newItem.MarkerId;
+            temp.UserId = newItem.UserId;
             return SaveChanges();
         }
 

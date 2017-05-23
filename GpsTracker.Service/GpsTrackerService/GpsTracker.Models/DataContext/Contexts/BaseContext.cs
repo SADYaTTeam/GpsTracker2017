@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Data.Entity;
 
 namespace GpsTracker.Models.DataContext.Contexts
 {
@@ -33,6 +34,18 @@ namespace GpsTracker.Models.DataContext.Contexts
         #endregion
 
         #region Methods
+
+        protected void DisposeTransaction(DbContextTransaction transaction)
+        {
+            try
+            {
+                transaction.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception:{ex.Message}");
+            }
+        }
 
         protected bool SaveChanges()
         {
