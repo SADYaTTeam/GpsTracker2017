@@ -50,7 +50,7 @@ CREATE TABLE dbo.[Person]
 	FirstName NCHAR(40) NULL,
 	LastName NCHAR(40) NULL,
 	MiddleName NCHAR(40) NULL,
-	Gender BIT NOT NULL,
+	Gender BIT NULL,
 	DateOfBirth DATETIME NULL,
 	--AddressCountry NCHAR(40) NULL,
 	--AddressCity NCHAR(40) NULL,
