@@ -9,7 +9,7 @@ CREATE TABLE dbo.[Event]
       EventId  int NOT NULL IDENTITY(1, 1),
       Name VARCHAR(50) NOT NULL,
       CONSTRAINT PK_Id_Event PRIMARY KEY CLUSTERED (EventId ),
-	  CONSTRAINT CH_Event_Name UNIQUE(Name),
+	  CONSTRAINT UQ_Event_Name UNIQUE(Name),
 	  CONSTRAINT CH_Event_Name_Empty CHECK(Name <> '')
     );
 GO
@@ -31,12 +31,15 @@ CREATE TABLE dbo.[User]
 	UserId INT NOT NULL IDENTITY(1, 1),
 	[Login] NCHAR(16) NOT NULL,
 	[Password] NVARCHAR(16) NOT NULL,
+	DeviceId CHAR(16) NOT NULL,
 	IsAdmin BIT NOT NULL DEFAULT 0,
 	DateCreatedAt DATETIME NOT NULL DEFAULT SYSDATETIME(),
 	CONSTRAINT PK_Id_User PRIMARY KEY CLUSTERED (UserId),
-	CONSTRAINT CH_User_Login UNIQUE ([Login]),
+	CONSTRAINT UQ_User_Login UNIQUE ([Login]),
 	CONSTRAINT CH_User_Login_StartsWithNumber_And_Length_More_Than_5 CHECK ([Login] NOT LIKE '[0-9]%' AND LEN([Login]) > 4),
-	CONSTRAINT CH_User_Password_Null CHECK (LEN([Password]) > 5) 
+	CONSTRAINT CH_User_Password_Null CHECK (LEN([Password]) > 5),
+	CONSTRAINT CH_User_DeviceId CHECK (LEN(DeviceId) = 16),
+	CONSTRAINT UQ_User_Device_Id UNIQUE(DeviceId),
 )
 GO
 
@@ -51,17 +54,14 @@ CREATE TABLE dbo.[Person]
 	DateOfBirth DATETIME NULL,
 	--AddressCountry NCHAR(40) NULL,
 	--AddressCity NCHAR(40) NULL,
-	DeviceId CHAR(16) NOT NULL,
 	Photo IMAGE NULL,
 	Email NVARCHAR(50) NULL,
 	Phone NVARCHAR(13) NULL,
 	CONSTRAINT PK_Id_Person PRIMARY KEY CLUSTERED (PersonId),
 	CONSTRAINT FK_Person_User_Id_User FOREIGN KEY(UserId) REFERENCES dbo.[User](UserId),
-	CONSTRAINT CH_Person_Device_Id UNIQUE(DeviceId),
 	CONSTRAINT CH_Person_BirthDate CHECK (DateOfBirth > '1950-01-01' AND DateOfBirth < DATEADD(YEAR, -10, SYSDATETIME())),
 	CONSTRAINT CH_Person_Phone CHECK (Phone LIKE '+380%[0-9]%'), 
-	CONSTRAINT CH_Person_Email CHECK (Email LIKE '[a-z]%[a-z]@[a-z]%[a-z].[a-z][a-z]%'),
-	CONSTRAINT CH_Person_DeviceId CHECK (LEN(DeviceId) = 16)
+	CONSTRAINT CH_Person_Email CHECK (Email LIKE '[a-z]%[a-z]@[a-z]%[a-z].[a-z][a-z]%')
 )
 GO
 
