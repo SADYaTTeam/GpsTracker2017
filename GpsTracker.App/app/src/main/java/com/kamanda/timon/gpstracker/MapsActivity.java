@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -45,10 +47,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
-import static java.security.AccessController.getContext;
+import static com.kamanda.timon.gpstracker.R.id.map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -61,11 +61,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //region Variables
     private static final String TAG = "MapsActivity";
     private GoogleMap mMap;
-    private double longitude;
-    private double latitude;
+    //  private double longitude;
+    //  private double latitude;
     private GoogleApiClient googleApiClient;
     DataMessage message;
+    LocationManager locationManager;
     //endregion Variables
+
+    private LocationListener listener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            message.set_latitude(location.getLatitude());
+            message.set_longitude(location.getLongitude());
+            Log.i("GPS_Coordinates", message.get_latitude() + "; " + message.getlongtitude());
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            Log.w("MyMapListener","GPS is enabled!");
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            //TODO Complete event handler and show message about GPS disconnect
+            // Toast.makeText(getBaseContext(), "You are dissconnected", Toast.LENGTH_LONG).show();
+            Log.w("MyMapListener","GPS is disabled!");
+        }
+    };
 
     //region Activity
     @Override
@@ -75,7 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(map);
         mapFragment.getMapAsync(this);
 
         //Initializing googleApiClient
@@ -90,7 +118,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onStart() {
         googleApiClient.connect();
         super.onStart();
+        message = new DataMessage();
+        locationManager = (LocationManager) getApplicationContext()
+                .getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                5000, 5, listener);
+        //49.803089; 24.0011349
     }
+
+
 
     @Override
     protected void onStop() {
@@ -115,6 +162,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         mMap.setOnMarkerDragListener(this);
         mMap.setOnMapLongClickListener(this);
+
     }
 
     private void moveMap() {
@@ -123,10 +171,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
          * adding marker to map
          * move the camera with animation
          */
-        LatLng latLng = new LatLng(latitude, longitude);
+        LatLng latLng = new LatLng(message.get_latitude(), message.getlongtitude());
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
-                .draggable(true)
+                .draggable(false)
                 .title("New Marker"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
@@ -146,8 +194,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getCurrentLocation();
         moveMap();
     }
-
-
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -178,8 +224,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMarkerDragEnd(Marker marker) {
         // getting the Co-ordinates
-        latitude = marker.getPosition().latitude;
-        longitude = marker.getPosition().longitude;
+        ///latitude = marker.getPosition().latitude;
+       // longitude = marker.getPosition().longitude;
 
         //move to current position
         moveMap();
@@ -210,8 +256,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (location != null) {
             //Getting longitude and latitude
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
+            message.set_longitude(location.getLongitude());
+            message.set_latitude(location.getLatitude());
+            Log.i("GPS_Coordinates_Start", message.get_latitude() + "; " + message.getlongtitude());
 
             //moving the map to location
             moveMap();
@@ -232,10 +279,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (location != null) {
             //Getting longitude and latitude
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
+            message.set_longitude(location.getLongitude());
+            message.set_latitude(location.getLatitude());
         }
-        return latitude + "; " + longitude;
+        return message.get_latitude() + "; " + message.getlongtitude();
     }
     //endregion Get current location
 
@@ -284,9 +331,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void CheckConnection() {
         try {
             if (isConnected()) {
-                Toast.makeText(getBaseContext(), "You are conncted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "You are connected", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(getBaseContext(), "You are NOT conncted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "You are NOT connected", Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
 
@@ -310,8 +357,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("longtitude", message.getlongtitude() );
-            jsonObject.accumulate("latitude", message.getLatitude());
-            jsonObject.accumulate("deviceId", message.getDeviceId());
+            jsonObject.accumulate("latitude", message.get_latitude());
+            jsonObject.accumulate("deviceId", message.get_deviceId());
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -365,10 +412,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected String doInBackground(String... urls) {
 
-            DataMessage message = new DataMessage();
-            message.setLatitude(latitude);
-            message.setLongitude(longitude);
-
             return POST(urls[0], message);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -392,7 +435,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //TODO Complete validate DataMessage object
 //    private boolean validate(){
-//        if(message.getLatitude() ==  Double.isNaN() )
+//        if(message.get_latitude() ==  Double.isNaN() )
 //            return false;
 //        else if(etCountry.getText().toString().trim().equals(""))
 //            return false;
