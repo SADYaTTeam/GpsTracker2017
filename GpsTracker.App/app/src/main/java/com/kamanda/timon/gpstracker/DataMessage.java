@@ -1,38 +1,34 @@
 package com.kamanda.timon.gpstracker;
 
-import android.provider.Settings;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * Created by timon on 23.05.2017.
  */
 
 public class DataMessage {
-    private double longitude;
-    private double latitude;
-    private String deviceId;
+    private double _longitude;
+    private double _latitude;
+    private String _deviceId;
+    private int _messageType;
 
     double getlongtitude() {
-        return longitude;
+        return _longitude;
     };
 
-    double getLatitude() {
-        return longitude;
+    double get_latitude() {
+        return _latitude;
     };
 
-    String getDeviceId(){ return deviceId;  };
+    String get_deviceId(){ return _deviceId;  };
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void set_longitude(double _longitude) {
+        this._longitude = _longitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void set_latitude(double _latitude) {
+        this._latitude = _latitude;
     }
 
-    public void setDeviceId (String deviceId) { this.deviceId = deviceId;};
+    public void set_deviceId(String _deviceId) { this._deviceId = _deviceId;};
 
 
 
