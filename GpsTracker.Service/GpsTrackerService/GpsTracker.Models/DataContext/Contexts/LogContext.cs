@@ -77,8 +77,27 @@ namespace GpsTracker.Models.DataContext.Contexts
             var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("INSERT INTO Log(EventId, Message)" +
-                                                    $"VALUES:({newItem.EventId}, '{newItem.Message}'");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT [User] ON");
+                try
+                {
+                    var max = (from item in _context.Log
+                               select item.LogId).ToList().Max();
+                    newItem.LogId = max + 1;
+                }
+                catch (InvalidOperationException operationEx)
+                {
+                    Debug.WriteLine($"Person set is empty. InvalidOperationException: {operationEx.Message}");
+                    newItem.LogId = 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Unknown exception with message: {ex.Message}");
+                }
+                _context.Log.Add(newItem.Convert());
+                _context.SaveChanges();
+                transaction.Rollback();
+                DisposeTransaction(transaction);
+                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT [User] OFF");
                 transaction.Commit();
             }
             catch(Exception ex)

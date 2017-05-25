@@ -18,6 +18,7 @@ namespace GpsTracker.Models.DataContext
         public int EventId { get; set; }
         public string Message { get; set; }
         public System.DateTime EventDate { get; set; }
+        public string DeviceId { get; set; }
     
         public virtual Event Event { get; set; }
     }

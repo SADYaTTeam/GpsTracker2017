@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpsTracker.Models", "GpsTra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpsTracker.Models.Test", "GpsTracker.Models.Test\GpsTracker.Models.Test.csproj", "{ABF9D6E8-4A05-43A2-9DBC-300FD27A3A22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpsTracker.Service", "GpsTracker.Service\GpsTracker.Service.csproj", "{1F21352D-AB59-456A-AA75-29FCA96BE629}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ABF9D6E8-4A05-43A2-9DBC-300FD27A3A22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABF9D6E8-4A05-43A2-9DBC-300FD27A3A22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABF9D6E8-4A05-43A2-9DBC-300FD27A3A22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F21352D-AB59-456A-AA75-29FCA96BE629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F21352D-AB59-456A-AA75-29FCA96BE629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F21352D-AB59-456A-AA75-29FCA96BE629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F21352D-AB59-456A-AA75-29FCA96BE629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
