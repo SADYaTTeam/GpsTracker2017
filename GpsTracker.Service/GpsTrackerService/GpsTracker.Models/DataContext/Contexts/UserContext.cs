@@ -77,14 +77,14 @@ namespace GpsTracker.Models.DataContext.Contexts
             var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("INSERT INTO [User](Login, Password, DeviceId, IsAdmin, DateTime" +
+                _context.Database.ExecuteSqlCommand("INSERT INTO [User](Login, Password, DeviceId, IsAdmin)" +
                                                     $"VALUES" +
                                                     $"(" +
                                                     $"'{newItem.Login}'," +
                                                     $"'{newItem.Password}'," +
-                                                    $"{newItem.DeviceId}," +
-                                                    $"{newItem.IsAdmin}," +
-                                                    $"'{newItem.DateCreatedAt.ToString("yyyy-MM-dd")}'");
+                                                    $"'{newItem.DeviceId}'," +
+                                                    $"{Convert.ToInt32(newItem.IsAdmin)}" +
+                                                    $")");
                 transaction.Commit();
             }
             catch(Exception ex)

@@ -20,6 +20,8 @@ namespace GpsTracker.Models.DataContext.Contexts
             Log = new LogContext(_context);
             Person = new PersonContext(_context);
             User = new UserContext(_context);
+            Marker = new MarkerContext(_context);
+            Track = new TrackContext(_context);
         }
 
         #endregion
@@ -50,9 +52,9 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public IDbContext<Models.User, User> User { get; set; }
 
-        public IDbContext<Models.Marker, Marker> Marker { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbContext<Models.Marker, Marker> Marker { get; set; }
 
-        public IDbContext<Models.Track, Track> Track { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbContext<Models.Track, Track> Track { get; set; }
 
 
         #endregion
@@ -68,6 +70,7 @@ namespace GpsTracker.Models.DataContext.Contexts
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
+                throw new Exception($"Exception: {ex.Message}");
             }
         }
 
@@ -80,11 +83,13 @@ namespace GpsTracker.Models.DataContext.Contexts
             catch(NullReferenceException ex)
             {
                 Debug.WriteLine("You didn't start transaction!");
+                throw new Exception($"Exception: {ex.Message}");
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
                 _transaction.Dispose();
+                throw new Exception($"Exception: {ex.Message}");
             }
             _transaction.Dispose();
         }
@@ -98,11 +103,13 @@ namespace GpsTracker.Models.DataContext.Contexts
             catch (NullReferenceException ex)
             {
                 Debug.WriteLine("You didn't start transaction!");
+                throw new Exception($"Exception: {ex.Message}");
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
                 _transaction.Dispose();
+                throw new Exception($"Exception: {ex.Message}");
             }
             _transaction.Dispose();
         }
