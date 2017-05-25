@@ -78,13 +78,13 @@ namespace GpsTracker.Models.DataContext.Contexts
             var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT [User] ON");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] ON");
                 var max = (from item in _context.Marker
                            select item.MarkerId).ToList().Max();
                 newItem.MarkerId = max + 1;
                 _context.Marker.Add(newItem.Convert());
                 _context.SaveChanges();
-                _context.Database.ExecuteSqlCommand("SET IDENTITY INSERT [User] OFF");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
                 transaction.Commit();
             }
             catch(Exception ex)

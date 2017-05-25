@@ -12,7 +12,7 @@ namespace GpsTracker.Service.Controllers
 
         static StaticInfo()
         {
-            _sosList = new List<GeoMessage>();
+            _sosList = new List<Log>();
             _markerList = new HashSet<Marker>();
         }
 
@@ -31,7 +31,7 @@ namespace GpsTracker.Service.Controllers
         {
             get
             {
-                return _sosList ?? (_sosList = new List<GeoMessage>());
+                return _sosList ?? (_sosList = new List<Log>());
             }
         }
 

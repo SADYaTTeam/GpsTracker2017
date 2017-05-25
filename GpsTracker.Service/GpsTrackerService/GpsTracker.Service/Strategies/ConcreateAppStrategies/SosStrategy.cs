@@ -42,7 +42,8 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                     {
                         DeviceId = message.DeviceId,
                         EventDate = DateTime.Now,
-                        EventId = MainContext.Instance.Event.GetBy(x => x.Name == "SOS_BUTTON_CLICK").ToList()[0].EventId);
+                        EventId = MainContext.Instance.Event.GetBy(x => x.Name == "SOS_BUTTON_CLICK").ToList()[0].EventId
+                    });
                 }
                 temp.EventDate = DateTime.Now;
                 WriteToDb(message); //Async

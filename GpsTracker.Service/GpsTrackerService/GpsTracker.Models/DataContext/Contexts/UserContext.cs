@@ -83,8 +83,7 @@ namespace GpsTracker.Models.DataContext.Contexts
                                                     $"'{newItem.Login}'," +
                                                     $"'{newItem.Password}'," +
                                                     $"{newItem.DeviceId}," +
-                                                    $"{newItem.IsAdmin}," +
-                                                    $"'{newItem.DateCreatedAt.ToString("yyyy-MM-dd")}'");
+                                                    $"{newItem.IsAdmin}");
                 transaction.Commit();
             }
             catch(Exception ex)
