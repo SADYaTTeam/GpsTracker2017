@@ -1,0 +1,10 @@
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\GpsTracker.Models.dll.config
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\GpsTracker.Models.dll
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\GpsTracker.Models.pdb
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.dll
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.SqlServer.dll
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.xml
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.SqlServer.xml
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.dll
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.pdb
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.csprojResolveAssemblyReference.cache
