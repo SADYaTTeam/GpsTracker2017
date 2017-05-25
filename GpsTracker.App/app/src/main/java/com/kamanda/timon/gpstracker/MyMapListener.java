@@ -2,13 +2,11 @@ package com.kamanda.timon.gpstracker;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -18,42 +16,46 @@ import android.util.Log;
 
 public class MyMapListener implements LocationListener {
 
-    Context context;
+    private Context _context;
 
-    boolean isGPSEnabled;
-    boolean isNetworkEnabled;
-    boolean canGetLocation;
+    private boolean _isGPSEnabled;
+    private boolean _isNetworkEnabled;
+    private boolean _canGetLocation;
 
-    Location location;
+    private DataMessage _message;
+
+    private Location _location;
     protected LocationManager locationManager;
 
-    public MyMapListener(Context context) {
-        this.context = context;
+    public MyMapListener(Context _context) {
+        this._context = _context;
+        _message = new DataMessage();
+        findLocation();
     }
 
-    public Location getLocation() {
+    public  void findLocation() {
         try {
 
-            locationManager = (LocationManager)context .getSystemService(Context.LOCATION_SERVICE);
-            isGPSEnabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
-            isNetworkEnabled = locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER);
+            locationManager = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
+            _isGPSEnabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
+            _isNetworkEnabled = locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER);
 
-            if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                if(isGPSEnabled) {
-                    if (location == null) {
+            if(ContextCompat.checkSelfPermission(_context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if(_isGPSEnabled) {
+                    if (_location == null) {
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
                         if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            _location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         }
 
                     }
 
                 }
-                if (location==null) {
-                    if(isNetworkEnabled) {
+                if (_location ==null) {
+                    if(_isNetworkEnabled) {
                         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
                         if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                            _location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         }
                     }
                 }
@@ -62,43 +64,17 @@ public class MyMapListener implements LocationListener {
         } catch(Exception ex) {
 
         }
-        Log.i("GPS_Coordinates", location.getLatitude()+ "; " + location.getLongitude());
-        return location;
+
+        _message.set_longitude(_location.getLongitude());
+        _message.set_latitude(_location.getLatitude());
+
+        Log.i("GPS_Coordinates_findLoc", _location.getLatitude()+ "; " + _location.getLongitude());
     }
+
+
     @Override
     public void onLocationChanged(Location location) {
-        try {
-
-            locationManager = (LocationManager)context .getSystemService(Context.LOCATION_SERVICE);
-            isGPSEnabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
-            isNetworkEnabled = locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER);
-
-            if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                if(isGPSEnabled) {
-
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
-                        if (locationManager != null) {
-                            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    }
-
-                }
-
-                    if(isNetworkEnabled) {
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
-                        if (locationManager != null) {
-                            locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        }
-                }
-            }
-
-        } catch(Exception ex) {
-
-        }
-        Log.i("GPS_Coordinates", location.getLatitude()+ "; " + location.getLongitude());
-
-        //message.set_latitude(location.getLatitude());
-        //message.set_longitude(location.getLongitude());
-        //Log.i("GPS_Coordinates", message.get_latitude()+ "; " + message.get_longtitude());
+        findLocation();
     }
 
     @Override
