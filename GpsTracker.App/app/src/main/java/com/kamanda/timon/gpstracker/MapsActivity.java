@@ -64,6 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DataMessage _message;
     private MyMapListener _mapListener;
     private Location _mLocation;
+    private String _deviceId;
 
     //endregion Variables
 
@@ -78,6 +79,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         _mapListener = new MyMapListener(getApplicationContext());
         _message = new DataMessage();
+        _deviceId = Secure.getString(this.getContentResolver(),
+                Secure.ANDROID_ID);
+        _mapListener.setDeviceId(_deviceId);
+
       //  _mLocation = _mapListener.getLocation();
 
 //        _message.set_latitude(_mLocation.getLatitude());
@@ -269,10 +274,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
             String filename = "MyLocation.txt";
-            String deviceId = Secure.getString(this.getContentResolver(),
-                Secure.ANDROID_ID);
+//            String _deviceId = Secure.getString(this.getContentResolver(),
+//                Secure.ANDROID_ID);
 
-            String sData = getCurrentLocationString() + " \nDevice id:" + deviceId;
+            String sData = getCurrentLocationString() + " \nDevice id:" + _deviceId;
 
 
         String root = Environment.getExternalStorageDirectory().toString();
@@ -326,7 +331,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("longtitude", message.get_longtitude() );
             jsonObject.accumulate("latitude", message.get_latitude());
-            jsonObject.accumulate("deviceId", message.get_deviceId());
+            jsonObject.accumulate("_deviceId", message.get_deviceId());
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -380,7 +385,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected String doInBackground(String... urls) {
 
-            return POST(urls[0], _message);
+            return POST(urls[0], _mapListener.getDataMessage());
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -421,7 +426,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 event.startTracking();
                 saveLocationToFile();
                 //TODO Input Server URL here in future
-                new HttpAsyncTask().execute("URL");
+                new HttpAsyncTask().execute("172.16.0.88");
                 return true;
         }
         return super.onKeyDown(keyCode, event);

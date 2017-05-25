@@ -33,6 +33,14 @@ public class MyMapListener implements LocationListener {
         findLocation();
     }
 
+    public DataMessage getDataMessage() {return this._message;}
+    public void setDeviceId(String _deviceId) {
+        this._message.set_deviceId(_deviceId);
+    }
+    public void setMessageType(int _messageType) {
+        this._message.set_messageType(_messageType);
+    }
+
     public  void findLocation() {
         try {
 
