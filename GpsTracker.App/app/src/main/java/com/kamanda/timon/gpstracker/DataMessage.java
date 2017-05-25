@@ -10,7 +10,7 @@ public class DataMessage {
     private String _deviceId;
     private int _messageType;
 
-    double getlongtitude() {
+    double get_longtitude() {
         return _longitude;
     };
 
