@@ -16,90 +16,143 @@ import android.util.Log;
 
 public class MyMapListener implements LocationListener {
 
-    private Context _context;
+    //region Variables
+    /**
+     *
+     */
+    private Context context;
 
-    private boolean _isGPSEnabled;
-    private boolean _isNetworkEnabled;
-    private boolean _canGetLocation;
+    /**
+     *
+     */
+    private boolean isGPSEnabled;
+    /**
+     *
+     */
+    private boolean isNetworkEnabled;
+    /**
+     *
+     */
+    private boolean canGetLocation;
 
-    private DataMessage _message;
+    /**
+     *
+     */
+    private DataMessage message;
 
-    private Location _location;
-    protected LocationManager locationManager;
-
-    public MyMapListener(Context _context) {
-        this._context = _context;
-        _message = new DataMessage();
+    /**
+     *
+     */
+    private Location location;
+    /**
+     *
+     */
+    private LocationManager locationManager;
+    /**
+     *
+     */
+    private static final int INTERVAL_MILISECONDS = 1000;
+    //endregion Variables
+    /**
+     * @param context
+     */
+    public MyMapListener(final Context context) {
+        this.context = context;
+        message = new DataMessage();
         findLocation();
     }
 
-    public DataMessage getDataMessage() {return this._message;}
-    public void setDeviceId(String _deviceId) {
-        this._message.set_deviceId(_deviceId);
-    }
-    public void setMessageType(int _messageType) {
-        this._message.set_messageType(_messageType);
+    /**
+     * @return
+     */
+    public DataMessage getDataMessage() {
+        return this.message; }
+
+    /**
+     * @param deviceId
+     */
+    public void setDeviceId(final String deviceId) {
+        this.message.setDeviceId(deviceId);
     }
 
+    /**
+     * @param messageType
+     */
+    public void setMessageType(final int messageType) {
+        this.message.setMessageType(messageType);
+    }
+
+    /**
+     *
+     */
     public  void findLocation() {
         try {
 
-            locationManager = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
-            _isGPSEnabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
-            _isNetworkEnabled = locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER);
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            isGPSEnabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
+            isNetworkEnabled = locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER);
 
-            if(ContextCompat.checkSelfPermission(_context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                if(_isGPSEnabled) {
-                    if (_location == null) {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (isGPSEnabled) {
+                    if (location == null) {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, INTERVAL_MILISECONDS, 0, this);
                         if (locationManager != null) {
-                            _location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         }
 
                     }
 
                 }
-                if (_location ==null) {
-                    if(_isNetworkEnabled) {
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
+                if (location == null) {
+                    if (isNetworkEnabled) {
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, INTERVAL_MILISECONDS, 0, this);
                         if (locationManager != null) {
-                            _location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         }
                     }
                 }
             }
 
-        } catch(Exception ex) {
+        } catch (Exception ex) {
 
         }
 
-        _message.set_longitude(_location.getLongitude());
-        _message.set_latitude(_location.getLatitude());
+        message.setLongitude(location.getLongitude());
+        message.setLatitude(location.getLatitude());
 
-        Log.i("GPS_Coordinates_findLoc", _location.getLatitude()+ "; " + _location.getLongitude());
+        Log.i("GPS_Coordinates_findLoc", location.getLatitude() + "; " + location.getLongitude());
     }
 
 
+    /**
+     * @param location
+     */
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(final Location location) {
         findLocation();
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    public void onStatusChanged(final String provider, final int status, final Bundle extras) {
 
     }
 
+    /**
+     * @param provider
+     */
     @Override
-    public void onProviderEnabled(String provider) {
-        Log.w("MyMapListener","GPS is enabled!");
+    public void onProviderEnabled(final String provider) {
+        Log.w("MyMapListener", "GPS is enabled!");
     }
 
+    /**
+     * @param provider
+     */
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(final String provider) {
         //TODO Complete event handler and show message about GPS disconnect
         // Toast.makeText(getBaseContext(), "You are dissconnected", Toast.LENGTH_LONG).show();
-        Log.w("MyMapListener","GPS is disabled!");
+        Log.w("MyMapListener", "GPS is disabled!");
     }
 
    // public IBinder onBind(Intent arg0){

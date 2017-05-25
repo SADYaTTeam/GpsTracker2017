@@ -1,49 +1,93 @@
-package com.kamanda.timon.gpstracker;
 
-import android.provider.Settings;
+package com.kamanda.timon.gpstracker;
 
 /**
  * Created by timon on 23.05.2017.
  */
 
 public class DataMessage {
-    private double _longitude;
-    private double _latitude;
-    private String _deviceId;
-    private int _messageType;
+    /**
+     *
+     */
+    private double longitude;
+    /**
+     *
+     */
+    private double latitude;
+    /**
+     *
+     */
+    private String deviceId;
+    /**
+     *
+     */
+    private int messageType;
 
+    /**
+     *
+     */
     public DataMessage() {
-//        this._deviceId = Settings.Secure.getString(this.getContentResolver(),
+//        this.deviceId = Settings.Secure.getString(this.getContentResolver(),
 //                Settings.Secure.ANDROID_ID);
 
     }
 
-    public double get_longtitude() { return _longitude; };
+    /**
+     * @return
+     */
+    public final double getLongtitude() {
+        return longitude; }
 
-    public double get_latitude() {
-        return _latitude;
-    };
-
-    public String get_deviceId(){ return _deviceId;  };
-
-    public void get_deviceId(String _deviceId) { this._deviceId = _deviceId;};
-
-    public int get_messageType(){ return _messageType;  };
-
-    public void set_longitude(double _longitude) {
-        this._longitude = _longitude;
+    /**
+     * @return
+     */
+    public final double getLatitude() {
+        return latitude;
     }
 
-    public void set_latitude(double _latitude) {
-        this._latitude = _latitude;
+    /**
+     * @return deviceId;
+     */
+    public final String getDeviceId() {
+        return deviceId; }
+
+    /**
+     * @param deviceId
+     */
+    public final void getDeviceId(final String deviceId) {
+        this.deviceId = deviceId; }
+
+    /**
+     * @return
+     */
+    public final int getMessageType() {
+        return messageType;  }
+
+    /**
+     * @param longitude
+     */
+    public void setLongitude(final double longitude) {
+        this.longitude = longitude;
     }
 
-    public void set_deviceId(String _deviceId) { this._deviceId = _deviceId;};
+    /**
+     * @param latitude
+     */
+    public void setLatitude(final double latitude) {
+        this.latitude = latitude;
+    }
 
-    public void set_messageType(int _messageType){ this._messageType = _messageType;  };
+    /**
+     * @param deviceId
+     */
+    public final void setDeviceId(final String deviceId) {
+        this.deviceId = deviceId; }
 
-
-
+    /**
+     * @param messageType
+     */
+    public final void setMessageType(final int messageType) {
+        this.messageType = messageType; }
 
 
 }
