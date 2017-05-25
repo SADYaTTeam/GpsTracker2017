@@ -61,9 +61,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //  private double longitude;
     //  private double latitude;
     private GoogleApiClient googleApiClient;
-    DataMessage message;
-    private MyMapListener mapListener;
-    private Location mLocation;
+    private DataMessage _message;
+    private MyMapListener _mapListener;
+    private Location _mLocation;
 
     //endregion Variables
 
@@ -76,12 +76,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
 
-        mapListener = new MyMapListener(getApplicationContext());
-        message = new DataMessage();
-        mLocation = mapListener.getLocation();
+        _mapListener = new MyMapListener(getApplicationContext());
+        _message = new DataMessage();
+      //  _mLocation = _mapListener.getLocation();
 
-        message.set_latitude(mLocation.getLatitude());
-        message.set_longitude(mLocation.getLongitude());
+//        _message.set_latitude(_mLocation.getLatitude());
+//        _message.set_longitude(_mLocation.getLongitude());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -104,8 +104,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
-
     @Override
     protected void onStop() {
         googleApiClient.disconnect();
@@ -124,7 +122,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Lviv and move the camera
 
       //  LatLng latLng = new LatLng(49.840466, 24.027845);
-        LatLng latLng = new LatLng(message.get_latitude(), message.get_longtitude());
+        LatLng latLng = new LatLng(_message.get_latitude(), _message.get_longtitude());
         mMap.addMarker(new MarkerOptions().position(latLng).title("Current Position"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
@@ -139,7 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
          * adding marker to map
          * move the camera with animation
          */
-        LatLng latLng = new LatLng(message.get_latitude(), message.get_longtitude());
+        LatLng latLng = new LatLng(_message.get_latitude(), _message.get_longtitude());
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
                 .draggable(false)
@@ -225,9 +223,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (location != null) {
             //Getting longitude and latitude
-            message.set_longitude(location.getLongitude());
-            message.set_latitude(location.getLatitude());
-            Log.i("GPS_Coordinates_Start", message.get_latitude() + "; " + message.get_longtitude());
+            _message.set_longitude(location.getLongitude());
+            _message.set_latitude(location.getLatitude());
+            Log.i("GPS_Coordinates_Start", _message.get_latitude() + "; " + _message.get_longtitude());
 
             //moving the map to location
             moveMap();
@@ -248,10 +246,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (location != null) {
             //Getting longitude and latitude
-            message.set_longitude(location.getLongitude());
-            message.set_latitude(location.getLatitude());
+            _message.set_longitude(location.getLongitude());
+            _message.set_latitude(location.getLatitude());
         }
-        return message.get_latitude() + "; " + message.get_longtitude();
+        return _message.get_latitude() + "; " + _message.get_longtitude();
     }
     //endregion Get current location
 
@@ -273,6 +271,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String filename = "MyLocation.txt";
             String deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
+
             String sData = getCurrentLocationString() + " \nDevice id:" + deviceId;
 
 
@@ -381,7 +380,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected String doInBackground(String... urls) {
 
-            return POST(urls[0], message);
+            return POST(urls[0], _message);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -404,7 +403,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //TODO Complete validate DataMessage object
 //    private boolean validate(){
-//        if(message.get_latitude() ==  Double.isNaN() )
+//        if(_message.get_latitude() ==  Double.isNaN() )
 //            return false;
 //        else if(etCountry.getText().toString().trim().equals(""))
 //            return false;
