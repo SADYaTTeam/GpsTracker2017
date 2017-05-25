@@ -12,5 +12,6 @@ namespace GpsTracker.Models.Models
         public int EventId { get; set; }
         public string Message { get; set; }
         public DateTime EventDate { get; set; } 
+        public string DeviceId { get; set; }
     }
 }

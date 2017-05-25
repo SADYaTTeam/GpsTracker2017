@@ -28,10 +28,19 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         private GpsTrackingDatabaseEntities _context;
         private System.Data.Entity.DbContextTransaction _transaction;
+        private static IMainDbContext _instance;
 
         #endregion
 
         #region Properties
+
+        public static IMainDbContext Instance
+        {
+            get
+            {
+                return _instance ?? (_instance = new MainContext(new GpsTrackingDatabaseEntities()));
+            }
+        }
 
         public IDbContext<Models.Event, Event> Event { get; set; }
 
@@ -97,6 +106,7 @@ namespace GpsTracker.Models.DataContext.Contexts
             }
             _transaction.Dispose();
         }
+
         #endregion
     }
 }

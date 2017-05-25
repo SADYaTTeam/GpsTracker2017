@@ -24,7 +24,8 @@ namespace GpsTracker.Models.Mappers
                 LogId = log.LogId,
                 EventId = log.EventId,
                 EventDate = log.EventDate,
-                Message = log.Message
+                Message = log.Message,
+                DeviceId = log.DeviceId
             };
         }
 

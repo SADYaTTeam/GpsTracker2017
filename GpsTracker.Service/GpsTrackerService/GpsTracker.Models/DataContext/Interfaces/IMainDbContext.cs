@@ -14,5 +14,8 @@ namespace GpsTracker.Models.DataContext.Interfaces
         IDbContext<Models.User, DataContext.User> User { get; set; }
         IDbContext<Models.Marker, DataContext.Marker> Marker { get; set; }
         IDbContext<Models.Track, DataContext.Track> Track { get; set; }
+        void BeginTransaction();
+        void CommitTransaction();
+        void RollbackTransaction();
     }
 }
