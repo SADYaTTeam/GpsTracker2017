@@ -2,11 +2,8 @@ package com.kamanda.timon.gpstracker;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -65,41 +62,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //  private double latitude;
     private GoogleApiClient googleApiClient;
     DataMessage message;
-    LocationManager locationManager;
+    private MyMapListener mapListener;
+    private Location mLocation;
+
     //endregion Variables
 
-    private LocationListener listener = new LocationListener() {
 
-        @Override
-        public void onLocationChanged(Location location) {
-            message.set_latitude(location.getLatitude());
-            message.set_longitude(location.getLongitude());
-            Log.i("GPS_Coordinates", message.get_latitude() + "; " + message.getlongtitude());
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            Log.w("MyMapListener","GPS is enabled!");
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            //TODO Complete event handler and show message about GPS disconnect
-            // Toast.makeText(getBaseContext(), "You are dissconnected", Toast.LENGTH_LONG).show();
-            Log.w("MyMapListener","GPS is disabled!");
-        }
-    };
 
     //region Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+
+        mapListener = new MyMapListener(getApplicationContext());
+        message = new DataMessage();
+        mLocation = mapListener.getLocation();
+
+        message.set_latitude(mLocation.getLatitude());
+        message.set_longitude(mLocation.getLongitude());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -118,23 +100,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onStart() {
         googleApiClient.connect();
         super.onStart();
-        message = new DataMessage();
-        locationManager = (LocationManager) getApplicationContext()
-                .getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                5000, 5, listener);
-        //49.803089; 24.0011349
+
     }
 
 
@@ -156,8 +123,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Lviv and move the camera
 
-        LatLng latLng = new LatLng(49.840466, 24.027845);
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Default Marker"));
+      //  LatLng latLng = new LatLng(49.840466, 24.027845);
+        LatLng latLng = new LatLng(message.get_latitude(), message.get_longtitude());
+        mMap.addMarker(new MarkerOptions().position(latLng).title("Current Position"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         mMap.setOnMarkerDragListener(this);
@@ -171,7 +139,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
          * adding marker to map
          * move the camera with animation
          */
-        LatLng latLng = new LatLng(message.get_latitude(), message.getlongtitude());
+        LatLng latLng = new LatLng(message.get_latitude(), message.get_longtitude());
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
                 .draggable(false)
@@ -191,6 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+
         getCurrentLocation();
         moveMap();
     }
@@ -258,7 +227,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //Getting longitude and latitude
             message.set_longitude(location.getLongitude());
             message.set_latitude(location.getLatitude());
-            Log.i("GPS_Coordinates_Start", message.get_latitude() + "; " + message.getlongtitude());
+            Log.i("GPS_Coordinates_Start", message.get_latitude() + "; " + message.get_longtitude());
 
             //moving the map to location
             moveMap();
@@ -282,7 +251,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             message.set_longitude(location.getLongitude());
             message.set_latitude(location.getLatitude());
         }
-        return message.get_latitude() + "; " + message.getlongtitude();
+        return message.get_latitude() + "; " + message.get_longtitude();
     }
     //endregion Get current location
 
@@ -356,7 +325,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("longtitude", message.getlongtitude() );
+            jsonObject.accumulate("longtitude", message.get_longtitude() );
             jsonObject.accumulate("latitude", message.get_latitude());
             jsonObject.accumulate("deviceId", message.get_deviceId());
 
