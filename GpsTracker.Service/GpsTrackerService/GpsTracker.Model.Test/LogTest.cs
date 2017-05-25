@@ -13,9 +13,10 @@ namespace GpsTracker.Model.Test
         [TestMethod]
         public void LogInsert()
         {
+            var index = MainContext.Instance.Event.GetAll().ToList()[0].EventId;
             Assert.IsTrue(MainContext.Instance.Log.Insert(new Models.Models.Log()
             {
-                EventId = 50,
+                EventId = index,
                 Message = "Test LOG"
             }));
         }
@@ -28,11 +29,11 @@ namespace GpsTracker.Model.Test
         }
 
         [TestMethod]
-        public void LogGetUpdate()
+        public void LogUpdate()
         {
             var item = MainContext.Instance.Log.GetAll().ToList().LastOrDefault();
             item.Message = "Updated Test LOG";
-            item.EventId = 1;
+            item.EventId ++;
             Assert.IsTrue(MainContext.Instance.Log.Update(item.LogId, item));
         }
 

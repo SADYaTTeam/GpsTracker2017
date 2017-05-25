@@ -79,9 +79,22 @@ namespace GpsTracker.Models.DataContext.Contexts
             try
             {
                 _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] ON");
-                var max = (from item in _context.Marker
-                           select item.MarkerId).ToList().Max();
-                newItem.MarkerId = max + 1;
+                try
+                {
+                    var max = (from item in _context.Marker
+                               select item.MarkerId).ToList().Max();
+                    newItem.MarkerId = max + 1;
+                }
+                catch(InvalidOperationException ex)
+                {
+                    Debug.WriteLine($"Marker set is empty. Exception:{ex.Message}");
+                    newItem.MarkerId = 1;
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception($"Unknown exception with message:{ex.Message}");
+                }
+                newItem.Timestamp = DateTime.Now;
                 _context.Marker.Add(newItem.Convert());
                 _context.SaveChanges();
                 _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
@@ -90,8 +103,8 @@ namespace GpsTracker.Models.DataContext.Contexts
             catch(Exception ex)
             {
                 Debug.WriteLine($"Exception:{ex.Message}");
-                DisposeTransaction(transaction);
                 transaction.Rollback();
+                DisposeTransaction(transaction);
                 return false;
             }
             DisposeTransaction(transaction);

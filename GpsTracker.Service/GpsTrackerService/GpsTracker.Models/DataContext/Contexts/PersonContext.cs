@@ -95,8 +95,6 @@ namespace GpsTracker.Models.DataContext.Contexts
                 }
                 _context.Person.Add(newItem.Convert());
                 _context.SaveChanges();
-                transaction.Rollback();
-                DisposeTransaction(transaction);
                 _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
                 transaction.Commit();
             }

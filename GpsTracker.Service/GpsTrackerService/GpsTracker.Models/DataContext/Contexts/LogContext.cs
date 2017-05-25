@@ -86,7 +86,7 @@ namespace GpsTracker.Models.DataContext.Contexts
                 }
                 catch (InvalidOperationException operationEx)
                 {
-                    Debug.WriteLine($"Person set is empty. InvalidOperationException: {operationEx.Message}");
+                    Debug.WriteLine($"Log set is empty. InvalidOperationException: {operationEx.Message}");
                     newItem.LogId = 1;
                 }
                 catch (Exception ex)
@@ -96,8 +96,6 @@ namespace GpsTracker.Models.DataContext.Contexts
                 newItem.EventDate = DateTime.Now;
                 _context.Log.Add(newItem.Convert());
                 _context.SaveChanges();
-                transaction.Rollback();
-                DisposeTransaction(transaction);
                 _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
                 transaction.Commit();
             }
