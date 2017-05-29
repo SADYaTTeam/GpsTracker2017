@@ -17,6 +17,6 @@ namespace GpsTracker.Models.Messages
         public float Longitude { get; set; }
         public float Latitutde { get; set; }
         public string DeviceId { get; set; }
-        public MessageType Type { get; set; }
+        public Nullable<MessageType> Type { get; set; }
     }
 }
