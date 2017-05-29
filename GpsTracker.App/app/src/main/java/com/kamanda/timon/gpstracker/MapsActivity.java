@@ -87,14 +87,8 @@ public class MapsActivity extends FragmentActivity
     /**
      *
      */
-    private MyMapListener mapListener;
-    /**
-     *
-     */
-    private Location mLocation;
-    /**
-     *
-     */
+
+
     private String deviceId;
     private AsyncT asyncT = new AsyncT();
     //endregion Variables
@@ -108,11 +102,11 @@ public class MapsActivity extends FragmentActivity
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        mapListener = new MyMapListener(getApplicationContext());
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
-        mapListener.setDeviceId(deviceId);
+        startService(new Intent(this, MyService.class));
+        //mapListener.setDeviceId(deviceId);
 
       //  mLocation = mapListener.getLocation();
 
@@ -132,8 +126,8 @@ public class MapsActivity extends FragmentActivity
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        asyncT.execute();
-        minimizeApp();
+        //asyncT.execute();
+        //minimizeApp();
     }
 
     /**
