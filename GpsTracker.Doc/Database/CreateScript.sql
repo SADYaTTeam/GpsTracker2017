@@ -38,7 +38,7 @@ CREATE TABLE dbo.[User]
 	DateCreatedAt DATETIME NOT NULL DEFAULT SYSDATETIME(),
 	CONSTRAINT PK_Id_User PRIMARY KEY CLUSTERED (UserId),
 	CONSTRAINT UQ_User_Login UNIQUE ([Login]),
-	CONSTRAINT CH_User_Login_StartsWithNumber_And_Length_More_Than_5 CHECK ([Login] NOT LIKE '[0-9]%' AND LEN([Login]) > 4),
+	CONSTRAINT CH_User_Login_StartsWithNumber_And_Length_More_Than_5 CHECK (LEN([Login]) > 4),
 	CONSTRAINT CH_User_Password_Null CHECK (LEN([Password]) > 5),
 	CONSTRAINT CH_User_DeviceId CHECK (LEN(DeviceId) = 16),
 	CONSTRAINT UQ_User_Device_Id UNIQUE(DeviceId),
