@@ -52,6 +52,8 @@ public class MyMapListener implements LocationListener {
      *
      */
     private static final int INTERVAL_MILISECONDS = 1000;
+    AsyncT asyncT = new AsyncT();
+
     //endregion Variables
     /**
      * @param context
@@ -130,6 +132,7 @@ public class MyMapListener implements LocationListener {
     @Override
     public void onLocationChanged(final Location location) {
         findLocation();
+        asyncT.execute();
     }
 
     @Override

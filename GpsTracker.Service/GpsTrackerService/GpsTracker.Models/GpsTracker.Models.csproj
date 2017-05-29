@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{70730346-CDBF-43D1-81FB-D1EC79214DA0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GpsTracker.Models</RootNamespace>
+    <AssemblyName>GpsTracker.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataContext\Contexts\BaseContext.cs" />
+    <Compile Include="DataContext\Contexts\EventContext.cs" />
+    <Compile Include="DataContext\Contexts\LogContext.cs" />
+    <Compile Include="DataContext\Contexts\MainContext.cs" />
+    <Compile Include="DataContext\Contexts\MarkerContext.cs" />
+    <Compile Include="DataContext\Contexts\PersonContext.cs" />
+    <Compile Include="DataContext\Contexts\TrackContext.cs" />
+    <Compile Include="DataContext\Contexts\UserContext.cs" />
+    <Compile Include="DataContext\Event.cs">
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\GpsTrackerDbModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GpsTrackerDbModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\GpsTrackerDbModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\GpsTrackerDbModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GpsTrackerDbModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Interfaces\IDbContext.cs" />
+    <Compile Include="DataContext\Interfaces\IMainDbContext.cs" />
+    <Compile Include="DataContext\Log.cs">
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Marker.cs">
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Person.cs">
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Track.cs">
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\User.cs">
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappers\FromDb.cs" />
+    <Compile Include="Mappers\IntoDb.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\GeoMessage.cs" />
+    <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\Marker.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Track.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataContext\GpsTrackerDbModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GpsTrackerDbModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="App.Config" />
+    <None Include="DataContext\GpsTrackerDbModel.edmx.diagram">
+      <DependentUpon>GpsTrackerDbModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataContext\GpsTrackerDbModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GpsTrackerDbModel.edmx</DependentUpon>
+      <LastGenOutput>GpsTrackerDbModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataContext\GpsTrackerDbModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GpsTrackerDbModel.edmx</DependentUpon>
+      <LastGenOutput>GpsTrackerDbModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
