@@ -132,7 +132,7 @@ public class MyMapListener implements LocationListener {
     @Override
     public void onLocationChanged(final Location location) {
         findLocation();
-        asyncT.execute();
+       // asyncT.execute();
     }
 
     @Override
