@@ -38,11 +38,15 @@ class AsyncT extends AsyncTask<Void, Void, Void> {
 
             jsonObject.put("latitude", latitude);
             jsonObject.put("longtitude", longitude);
+            jsonObject.put("deviceId", "621hecq422xxs");
+            jsonObject.put("messageId", 3);
             //TODO Put deviceId in JSON here
           //  jsonObject.put("deviceId", deviceId);
             Log.i("JSON_Array", jsonObject.toString());
 
             DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+            int ResponceCode = httpURLConnection.getResponseCode();
+            Log.i("Responce", "" + ResponceCode + " " + httpURLConnection.getResponseMessage().toString());
             wr.writeBytes(jsonObject.toString());
             wr.flush();
             wr.close();
