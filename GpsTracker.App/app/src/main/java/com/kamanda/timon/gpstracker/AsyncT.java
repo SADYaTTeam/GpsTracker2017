@@ -20,6 +20,8 @@ import static android.R.id.message;
  */
 
 class AsyncT extends AsyncTask<Void, Void, Void> {
+    private double latitude;
+    private double longitude;
 
     @Override
     protected Void doInBackground(final Void... params) {
@@ -33,17 +35,12 @@ class AsyncT extends AsyncTask<Void, Void, Void> {
             httpURLConnection.connect();
 
             JSONObject jsonObject = new JSONObject();
-//            DataMessage message = new DataMessage();
-//            message.setLatitude(49.840466);
-//            message.setLongitude(24.027845);
-//            message.setDeviceId("0123456789ABCDEF");
-            String latitude = "49.840466";
-            String longtitude = "24.027845";
-            String deviceId = "0123456789ABCDEF";
-            jsonObject.put("latitude", latitude);
-            jsonObject.put("longtitude", longtitude);
-            jsonObject.put("deviceId", deviceId);
 
+            jsonObject.put("latitude", latitude);
+            jsonObject.put("longtitude", longitude);
+            //TODO Put deviceId in JSON here
+          //  jsonObject.put("deviceId", deviceId);
+            Log.i("JSON_Array", jsonObject.toString());
 
             DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
             wr.writeBytes(jsonObject.toString());
@@ -62,6 +59,11 @@ class AsyncT extends AsyncTask<Void, Void, Void> {
         }
 
         return null;
+    }
+
+    public void setData(final double latitude, final double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 }

@@ -107,6 +107,7 @@ public class MapsActivity extends FragmentActivity
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
+
         startService(new Intent(this, MyService.class));
         //mapListener.setDeviceId(deviceId);
 
@@ -219,8 +220,6 @@ public class MapsActivity extends FragmentActivity
      */
     @Override
     public void onConnected(final @Nullable Bundle bundle) {
-
-
         moveMap();
     }
 
@@ -283,40 +282,8 @@ public class MapsActivity extends FragmentActivity
     }
     //endregion Google Map Initialization And Event Properties
 
-    //region Get current location & move to this marker
 
-    /**
-     *
-     */
-    //Get current location
-
-
-    /**
-     * @return
-     */
-
-    //endregion Get current location
-
-
-    /**
-     * @param keyCode
-     * @param event
-     * @return
-     */
     //region SOS_BUTTON
-//    @Override
-//    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
-//        switch (keyCode) {
-//            case KeyEvent.KEYCODE_VOLUME_UP:
-//                event.startTracking();
-//                Toast.makeText(context, "JSON sended", Toast.LENGTH_SHORT);
-//                show();
-//                //asyncT.execute();
-//                //return true;
-////            default: break;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
     @Override
     public boolean dispatchKeyEvent(final KeyEvent event) {
         int action = event.getAction();
@@ -325,11 +292,10 @@ public class MapsActivity extends FragmentActivity
             case KeyEvent.KEYCODE_VOLUME_UP:
                 if (action == KeyEvent.ACTION_DOWN) {
                     //TODO
-                    Toast.makeText(getApplicationContext(), "JSON sended to server",
-                            Toast.LENGTH_LONG).show();
                     try {
-                        AsyncT asyncT = new AsyncT();
-                        asyncT.execute();
+                        Toast.makeText(getApplicationContext(), "JSON sended to server",
+                                Toast.LENGTH_LONG).show();
+                        startService(new Intent(this, MyService.class));
                     }
                     catch (Exception exc) {
                         Log.e("AsyncT", exc.getMessage(), exc);
