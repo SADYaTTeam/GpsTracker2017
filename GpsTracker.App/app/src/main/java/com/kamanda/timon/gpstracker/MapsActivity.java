@@ -141,7 +141,7 @@ public class MapsActivity extends FragmentActivity
     protected void onStart() {
         googleApiClient.connect();
         super.onStart();
-       // minimizeApp();
+
     }
 
     /**
