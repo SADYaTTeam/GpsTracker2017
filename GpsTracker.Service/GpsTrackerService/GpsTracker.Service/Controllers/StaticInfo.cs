@@ -1,8 +1,9 @@
 ﻿using GpsTracker.Models.Models;
-using System;
+//using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+//using System.Linq;
+//using System.Web;
+using GpsTracker.Models.Messages;
 
 namespace GpsTracker.Service.Controllers
 {
@@ -12,7 +13,7 @@ namespace GpsTracker.Service.Controllers
 
         static StaticInfo()
         {
-            _sosList = new List<Log>();
+            _sosList = new HashSet<SosMessage>();
             _markerList = new HashSet<Marker>();
         }
 
@@ -20,18 +21,18 @@ namespace GpsTracker.Service.Controllers
 
         #region Fields
 
-        private static List<Log> _sosList;
+        private static HashSet<SosMessage> _sosList;
         private static HashSet<Marker> _markerList;
 
         #endregion
 
         #region Properties
 
-        public static List<Log> SosList
+        public static HashSet<SosMessage> SosList
         {
             get
             {
-                return _sosList ?? (_sosList = new List<Log>());
+                return _sosList ?? (_sosList = new HashSet<SosMessage>());
             }
         }
 

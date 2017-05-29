@@ -94,8 +94,9 @@
     </Compile>
     <Compile Include="Mappers\FromDb.cs" />
     <Compile Include="Mappers\IntoDb.cs" />
+    <Compile Include="Messages\SosMessage.cs" />
     <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\GeoMessage.cs" />
+    <Compile Include="Messages\GeoMessage.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Marker.cs" />
     <Compile Include="Models\Person.cs" />

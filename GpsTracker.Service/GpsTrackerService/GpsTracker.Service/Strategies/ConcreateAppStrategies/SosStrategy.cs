@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using GpsTracker.Models.Messages;
 using GpsTracker.Models.Models;
 using System.Web.Http;
 using GpsTracker.Service.Controllers;
@@ -35,24 +36,47 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
         {
             try
             {
-                var temp = StaticInfo.SosList.FirstOrDefault(x => x.DeviceId == message.DeviceId);
+                var index = GetOrCreateUser(message).UserId;
+                var temp = StaticInfo.SosList.FirstOrDefault(x => x.UserId == index);
                 if (temp == null)
                 {
-                    StaticInfo.SosList.Add(new Log()
+                    StaticInfo.SosList.Add(new SosMessage()
                     {
-                        DeviceId = message.DeviceId,
-                        EventDate = DateTime.Now,
-                        EventId = MainContext.Instance.Event.GetBy(x => x.Name == "SOS_BUTTON_CLICK").ToList()[0].EventId
+                        Latitude = message.Latitutde,
+                        Longitude = message.Longitude,
+                        UserId = index,
+                        Timestamp = DateTime.Now
                     });
                 }
-                temp.EventDate = DateTime.Now;
-                WriteToDb(message); //Async
+                temp.Timestamp = DateTime.Now;
+                WriteToDb(message);
                 return new System.Web.Http.Results.OkResult(_controller);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
                 return new System.Web.Http.Results.InternalServerErrorResult(_controller);
             }
+            //try
+            //{
+            //    var temp = StaticInfo.SosList.FirstOrDefault(x => x.DeviceId == message.DeviceId);
+            //    if (temp == null)
+            //    {
+            //        StaticInfo.SosList.Add(new Log()
+            //        {
+            //            DeviceId = message.DeviceId,
+            //            EventDate = DateTime.Now,
+            //            EventId = MainContext.Instance.Event.GetBy(x => x.Name == "SOS_BUTTON_CLICK").ToList()[0].EventId
+            //        });
+            //    }
+            //    temp.EventDate = DateTime.Now;
+            //    WriteToDb(message); //Async
+            //    return new System.Web.Http.Results.OkResult(_controller);
+            //}
+            //catch(Exception ex)
+            //{
+            //return new System.Web.Http.Results.InternalServerErrorResult(_controller);
+            //}
         }
 
         protected override void WriteToDb(GeoMessage message)
@@ -66,7 +90,7 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                     EventId = MainContext.Instance.Event.GetBy(x => x.Name == "SOS_BUTTON_CLICK").ToList()[0].EventId
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Internal DB Exception:{ex.Message}");
             }

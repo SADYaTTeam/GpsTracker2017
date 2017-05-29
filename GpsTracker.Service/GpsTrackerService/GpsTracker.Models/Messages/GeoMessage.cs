@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GpsTracker.Models.Models
+namespace GpsTracker.Models.Messages
 {
     public enum MessageType
     {
