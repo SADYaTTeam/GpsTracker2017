@@ -96,7 +96,7 @@ public class MapsActivity extends FragmentActivity
      *
      */
     private String deviceId;
-
+    private AsyncT asyncT = new AsyncT();
     //endregion Variables
 
 
@@ -132,6 +132,8 @@ public class MapsActivity extends FragmentActivity
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+        asyncT.execute();
+        minimizeApp();
     }
 
     /**
@@ -141,7 +143,7 @@ public class MapsActivity extends FragmentActivity
     protected void onStart() {
         googleApiClient.connect();
         super.onStart();
-        minimizeApp();
+
     }
 
     /**
@@ -177,8 +179,8 @@ public class MapsActivity extends FragmentActivity
 
         // Add a marker in Lviv and move the camera
 
-      //  LatLng latLng = new LatLng(49.840466, 24.027845);
-        LatLng latLng = new LatLng(message.getLatitude(), message.getLongtitude());
+        LatLng latLng = new LatLng(49.840466, 24.027845);
+        //LatLng latLng = new LatLng(message.getLatitude(), message.getLongtitude());
         mMap.addMarker(new MarkerOptions().position(latLng).title("Current Position"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(ZOOM));
