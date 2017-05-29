@@ -17,7 +17,7 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public EventContext() : base() { }
 
-        public EventContext(GpsTrackingDatabaseEntities context):base(context) { }
+        public EventContext(GpsTrackingDBEntities context):base(context) { }
 
         #endregion
 

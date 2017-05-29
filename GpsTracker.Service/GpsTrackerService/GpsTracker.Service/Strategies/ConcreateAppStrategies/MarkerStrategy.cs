@@ -38,73 +38,50 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
         {
             try
             {
-
-                return new System.Web.Http.Results.InternalServerErrorResult(_controller);
+                user = GetOrCreateUser(message);
+                var temp = StaticInfo.MarkerList.FirstOrDefault(x => x.UserId == user.UserId);
+                if(temp == null)
+                {
+                    StaticInfo.MarkerList.Add(new Marker()
+                    {
+                        Latitude = message.Latitutde,
+                        Longtitude = message.Longitude,
+                        Timestamp = DateTime.Now,
+                        UserId = user.UserId
+                    });
+                }
+                else
+                {
+                    temp.Longtitude = message.Longitude;
+                    temp.Latitude = message.Latitutde;
+                    temp.Timestamp = DateTime.Now;
+                }
+                WriteToDb(message);
+                return new System.Web.Http.Results.OkResult(_controller);
             }
             catch(Exception ex)
             {
+                Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
                 return new System.Web.Http.Results.InternalServerErrorResult(_controller);
             }
-            //try
-            //{
-            //    var exist = MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId);
-            //    //Async input to DB new user
-            //    if (exist == null)
-            //    {
-            //        MainContext.Instance.User.Insert(new User()
-            //        {
-            //            DeviceId = message.DeviceId,
-            //            IsAdmin = false,
-            //            Login = message.DeviceId,
-            //            Password = message.DeviceId
-            //        });
-            //    }
-            //    user = exist.ToList()[0];
-            //    var temp = StaticInfo.MarkerList.FirstOrDefault(x => x.UserId == user.UserId);
-            //    if (temp == null)
-            //    {
-            //        StaticInfo.MarkerList.Add(new Marker()
-            //        {
-            //            UserId = user.UserId,
-            //            Latitude = message.Latitutde,
-            //            Longtitude = message.Longitude
-            //        });
-            //    }
-            //    temp.Latitude = message.Latitutde;
-            //    temp.Longtitude = message.Longitude;
-            //    temp.Timestamp = DateTime.Now;
-            //    WriteToDb(message); //Async
-            //    return new System.Web.Http.Results.OkResult(_controller);
-            //}
-            //catch(Exception ex)
-            //{
-            //return new System.Web.Http.Results.InternalServerErrorResult(_controller);
-            //}
         }
 
         protected override void WriteToDb(GeoMessage message)
         {
-            //try
-            //{
-            //    MainContext.Instance.BeginTransaction();
-            //    MainContext.Instance.Marker.Insert(new Marker()
-            //    {
-            //        Latitude = message.Latitutde,
-            //        Longtitude = message.Longitude,
-            //        UserId = user.UserId,
-            //    });
-            //    var temp = MainContext.Instance.Marker.GetAll().ToList();
-            //    MainContext.Instance.Track.Insert(new Track()
-            //    {
-            //        UserId = user.UserId,
-            //        MarkerId = (from item in temp
-            //                    select item.MarkerId).Max() + 1
-            //    });
-            //}
-            //catch(Exception ex)
-            //{
-            //    Debug.WriteLine($"Internal Server exception: {ex.Message}");
-            //}
+            try
+            {
+                TrackContext temp = (TrackContext)MainContext.Instance.Track;
+                temp.Insert(user, new Marker()
+                {
+                    Longtitude = message.Longitude,
+                    Latitude = message.Latitutde,
+                    UserId = user.UserId
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Internal Server exception: {ex.Message}");
+            }
         }
 
         #endregion

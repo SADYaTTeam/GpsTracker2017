@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="GpsTrackingDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="GpsTrackingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Event">
     <Key>
       <PropertyRef Name="EventId" />
@@ -132,7 +132,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="GpsTrackingDatabaseEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="GpsTrackingDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Event" EntityType="Self.Event" />
     <EntitySet Name="Log" EntityType="Self.Log" />
     <EntitySet Name="Marker" EntityType="Self.Marker" />

@@ -13,7 +13,7 @@ namespace GpsTracker.Models.DataContext.Contexts
     {
         #region Constructors
 
-        public MainContext(GpsTrackingDatabaseEntities context)
+        public MainContext(GpsTrackingDBEntities context)
         {
             _context = context;
             Event = new EventContext(_context);
@@ -28,7 +28,7 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         #region Fields
 
-        private GpsTrackingDatabaseEntities _context;
+        private GpsTrackingDBEntities _context;
         private System.Data.Entity.DbContextTransaction _transaction;
         private static IMainDbContext _instance;
 
@@ -40,7 +40,7 @@ namespace GpsTracker.Models.DataContext.Contexts
         {
             get
             {
-                return _instance ?? (_instance = new MainContext(new GpsTrackingDatabaseEntities()));
+                return _instance ?? (_instance = new MainContext(new GpsTrackingDBEntities()));
             }
         }
 

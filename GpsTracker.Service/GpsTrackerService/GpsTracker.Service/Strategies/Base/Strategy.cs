@@ -54,6 +54,7 @@ namespace GpsTracker.Service.Strategies.Base
                     Login = message.DeviceId,
                     Password = message.DeviceId
                 });
+                exist = MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId);
             }
             return exist.ToList()[0];
         }

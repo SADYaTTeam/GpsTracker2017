@@ -41,7 +41,7 @@ namespace GpsTracker.Models.Test
         [TestMethod]
         public void EventDelete()
         {
-            var context = new DataContext.Contexts.MainContext(new DataContext.GpsTrackingDatabaseEntities());
+            var context = new DataContext.Contexts.MainContext(new DataContext.GpsTrackingDBEntities());
             var allData = context.Event.GetAll().ToList();
             Assert.IsTrue(context.Event.Delete(context.Event.GetAll().ToList().LastOrDefault().EventId));
         }
