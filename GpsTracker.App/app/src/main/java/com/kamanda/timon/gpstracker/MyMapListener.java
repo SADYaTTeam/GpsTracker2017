@@ -100,23 +100,18 @@ public class MyMapListener implements LocationListener {
 
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 if (isGPSEnabled) {
-                    if (location == null) {
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, INTERVAL_MILISECONDS, 0, this);
                         if (locationManager != null) {
                             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         }
 
-                    }
-
                 }
-                if (location == null) {
                     if (isNetworkEnabled) {
                         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, INTERVAL_MILISECONDS, 0, this);
                         if (locationManager != null) {
                             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         }
                     }
-                }
             }
 
         } catch (Exception ex) {
