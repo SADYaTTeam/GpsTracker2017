@@ -107,6 +107,7 @@ public class MapsActivity extends FragmentActivity
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
+        Log.i("deviceId" , deviceId.toString());
 
         startService(new Intent(this, MyService.class));
         //mapListener.setDeviceId(deviceId);

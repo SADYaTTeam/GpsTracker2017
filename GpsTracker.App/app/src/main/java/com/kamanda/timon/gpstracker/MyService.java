@@ -19,7 +19,6 @@ public class MyService extends Service {
 
     final String LOG_TAG = "serviceLogs";
     private MyMapListener mapListener;
-
     void createJson() {
         AsyncT asyncT = new AsyncT();
         asyncT.setData(mapListener.getDataMessage().getLatitude(), mapListener.getDataMessage().getLongtitude());
