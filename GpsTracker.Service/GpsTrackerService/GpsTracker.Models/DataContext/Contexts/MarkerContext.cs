@@ -18,7 +18,7 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public MarkerContext(): base() { }
 
-        public MarkerContext(GpsTrackingDatabaseEntities context): base(context) { }
+        public MarkerContext(GpsTrackingDBEntities context): base(context) { }
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace GpsTracker.Models.DataContext.Contexts
             var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] ON");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Marker ON");
                 try
                 {
                     var max = (from item in _context.Marker
@@ -97,7 +97,7 @@ namespace GpsTracker.Models.DataContext.Contexts
                 newItem.Timestamp = DateTime.Now;
                 _context.Marker.Add(newItem.Convert());
                 _context.SaveChanges();
-                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Marker OFF");
                 transaction.Commit();
             }
             catch(Exception ex)

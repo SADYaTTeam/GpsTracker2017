@@ -17,7 +17,7 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public UserContext(): base() { }
 
-        public UserContext(GpsTrackingDatabaseEntities context): base(context) { }
+        public UserContext(GpsTrackingDBEntities context): base(context) { }
 
         #endregion
 

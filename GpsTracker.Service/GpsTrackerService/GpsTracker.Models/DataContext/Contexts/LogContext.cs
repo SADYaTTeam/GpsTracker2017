@@ -17,7 +17,7 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public LogContext() : base() { }
 
-        public LogContext(GpsTrackingDatabaseEntities context) : base(context) { }
+        public LogContext(GpsTrackingDBEntities context) : base(context) { }
 
         #endregion
 
