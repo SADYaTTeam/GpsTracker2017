@@ -34,32 +34,32 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 
         public override IHttpActionResult Execute(GeoMessage message)
         {
-            try
-            {
-                var index = GetOrCreateUser(message).UserId;
-                var temp = StaticInfo.SosList.FirstOrDefault(x => x.UserId == index);
-                if (temp == null)
-                {
-                    StaticInfo.SosList.Add(new SosMessage()
-                    {
-                        Latitude = message.Latitutde,
-                        Longitude = message.Longitude,
-                        UserId = index,
-                        Timestamp = DateTime.Now
-                    });
-                }
-                else
-                {
-                    temp.Timestamp = DateTime.Now;
-                }
-                WriteToDb(message);
-                return new System.Web.Http.Results.OkResult(_controller);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
-                return new System.Web.Http.Results.InternalServerErrorResult(_controller);
-            }
+            //try
+            //{
+            //    var index = GetOrCreateUser(message).UserId;
+            //    var temp = StaticInfo.SosList.FirstOrDefault(x => x.UserId == index);
+            //    if (temp == null)
+            //    {
+            //        StaticInfo.SosList.Add(new SosMessage()
+            //        {
+            //            Latitude = message.Latitude,
+            //            Longitude = message.Longitude,
+            //            UserId = index,
+            //            Timestamp = DateTime.Now
+            //        });
+            //    }
+            //    else
+            //    {
+            //        temp.Timestamp = DateTime.Now;
+            //    }
+            //    WriteToDb(message);
+            //    return new System.Web.Http.Results.OkResult(_controller);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
+            return new System.Web.Http.Results.InternalServerErrorResult(_controller);
+            //}
         }
 
         protected override void WriteToDb(GeoMessage message)
