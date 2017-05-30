@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' href='css/style.css'>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/w3.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function(e) {
+      $('.search-panel .dropdown-menu').find('a').click(function(e) {
+        e.preventDefault();
+        var param = $(this).attr("href").replace("#", "");
+        var concept = $(this).text();
+        $('.search-panel span#search_concept').text(concept);
+        $('.input-group #search_param').val(param);
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">GPS Tracker</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <a href="#about"><button class="btn btn-black navbar-btn">Dowload</button></a>
+        <a><button class="btn btn-black navbar-btn" data-toggle="collapse" data-target="#about_panel">About</button></a>
+        <div class="nav navbar-nav navbar-right">
+          <button class="btn btn-black navbar-btn" data-toggle="collapse" data-target="#login_panel"><span class="glyphicon glyphicon-log-in"></span> Log in</button>
+        </div>
+        <div class="input-group nav navbar-nav navbar-right navbar-inverse align-middle" style="width: 300px;margin-top: 7px">
+          <div class="input-group-btn search-panel">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                     <span id="search_concept">Search by</span> <span class="caret"></span>
+                   </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#contains">ID</a></li>
+              <li class="divider"></li>
+              <li><a href="#less_than">Login</a></li>
+            </ul>
+          </div>
+          <input type="hidden" name="search_param" value="all" id="search_param">
+          <input type="text" class="form-control" name="x">
+          <span class="input-group-btn">
+                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="w3-conrainer w3-white collapse panel" id="about_panel">
+    <div class="w3-twothird w3-container">
+      <h2>Over 25 Years Of Experience</h2>
+      <p>Founded in 1991, TomTom has grown from a Dutch-based start-up company into a leading multi-national, global brand with products sold to customers across various markets reaching over 800 million people around the world every day.</p>
+      <h2>Global Coverage</h2>
+      <p>We have one of the most extensive digital map databases with a portfolio of 14 trillion data points reaching more than 4 billion people worldwide.  To create and maintain our various products and services, we process billions of data points every
+        day on a truly global scale.</p>
+    </div>
+    <div class="w3-third w3-container">
+      <h2>Brand Assets</h2>
+      <div class="w3-row">
+        <div class="w3-col" style="width:25%">
+          <div class="circle w3-green w3-right">
+          </div>
+        </div>
+        <div class="w3-col" style="width:30%">
+          <div class="circle w3-grey w3-right w3-margin-right">
+          </div>
+        </div>
+        <div class="w3-col" style="width:35%">
+          <div class="circle w3-black w3-left w3-margin-left">
+          </div>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col" style="width:38%">
+          <div class="circle w3-border w3-border-black w3-right">
+          </div>
+        </div>
+        <div class="w3-col" style="width:23%">
+          <div class="circle w3-red w3-right w3-margin-left">
+          </div>
+        </div>
+      </div>
+      <p>Brand guidance on color and logo usage for download.</p>
+      <button class="w3-bar-item w3-button w3-round-xlarge w3-green">Download Brand Assets</button>
+    </div>
+
+  </div>
+
+
+  <div id="login_panel" class="collapse panel">
+    <form class="login_form">
+      Username<br>
+      <input type="text" class="input_login" name="uname">
+      <br>Password<br>
+      <input type="password" class="input_login" name="upswd">
+      <div class="w3-display-container w3-black" style="height: 50px">
+        <div class="w3-display-left">
+          <a href="user.html"><button class="w3-button w3-white w3-left w3-round-xlarge w3-hover-green">Log in</button></a>
+        </div>
+        <div class="w3-display-right">
+          <a href="user.html">
+            <p class="w3-right w3 lightblue" style="font-size: 15px; color: blue">Forgot password?</p>
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="map_container">
+    <div id="map" style="width:100%;height:100%"></div>
+  </div>
+  <footer class="navbar-fixed-bottom navbar-inverse">
+    <div class="container">
+      <p class="text-muted text-center">Copyright &copy; 2017 KAMANDA. All rights reserverd.</p>
+    </div>
+  </footer>
+  <script>
+    function myMap() {
+      var mapOptions = {
+        center: new google.maps.LatLng(51.5, -0.12),
+        zoom: 10,
+        mapTypeId: 'roadmap'
+      }
+      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    }
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm39wrggcAiB5PRUWSIAI2g1tXWX3cQlI&callback=myMap"></script>
+  <!--
+To use this code on your website, get a free API key from Google.
+Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+-->
+
+</body>
+
+</html>
