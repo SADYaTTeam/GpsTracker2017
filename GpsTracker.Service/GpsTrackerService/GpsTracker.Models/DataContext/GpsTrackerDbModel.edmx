@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GpsTrackingDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="GpsTrackingDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventId" />
@@ -19,7 +19,7 @@
           <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventId" Type="int" Nullable="false" />
           <Property Name="Message" Type="nvarchar" MaxLength="200" />
-          <Property Name="EventDate" Type="datetime" Nullable="false" />
+          <Property Name="EventDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="DeviceId" Type="char" MaxLength="16" />
         </EntityType>
         <EntityType Name="Marker">
@@ -31,7 +31,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="60" />
           <Property Name="Longtitude" Type="float" Nullable="false" />
           <Property Name="Latitude" Type="float" Nullable="false" />
-          <Property Name="Timestamp" Type="datetime" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -43,7 +43,7 @@
           <Property Name="LastName" Type="nchar" MaxLength="40" />
           <Property Name="MiddleName" Type="nchar" MaxLength="40" />
           <Property Name="Gender" Type="bit" />
-          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="DateOfBirth" Type="datetime2" Precision="7" />
           <Property Name="Photo" Type="image" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="13" />
@@ -65,7 +65,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="16" Nullable="false" />
           <Property Name="DeviceId" Type="char" MaxLength="16" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
-          <Property Name="DateCreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="DateCreatedAt" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <Association Name="FK_Log_Event_Id_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
@@ -127,7 +127,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GpsTrackingDatabaseModelStoreContainer">
+        <EntityContainer Name="GpsTrackingDBModelStoreContainer">
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Marker" EntityType="Self.Marker" Schema="dbo" store:Type="Tables" />
@@ -159,7 +159,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GpsTrackingDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="GpsTrackingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventId" />
@@ -175,7 +175,7 @@
           <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventId" Type="Int32" Nullable="false" />
           <Property Name="Message" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EventDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EventDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="DeviceId" Type="String" MaxLength="16" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Log_Event_Id_Event" FromRole="Log" ToRole="Event" />
         </EntityType>
@@ -188,7 +188,7 @@
           <Property Name="Name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="Longtitude" Type="Double" Nullable="false" />
           <Property Name="Latitude" Type="Double" Nullable="false" />
-          <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="User" Relationship="Self.FK_Marker_Track_Id_User" FromRole="Marker" ToRole="User" />
           <NavigationProperty Name="Track" Relationship="Self.FK_Track_Marker_Id_Marker" FromRole="Marker" ToRole="Track" />
         </EntityType>
@@ -202,7 +202,7 @@
           <Property Name="LastName" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
           <Property Name="MiddleName" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
           <Property Name="Gender" Type="Boolean" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="7" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
@@ -227,7 +227,7 @@
           <Property Name="Password" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DeviceId" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateCreatedAt" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Marker" Relationship="Self.FK_Marker_Track_Id_User" FromRole="User" ToRole="Marker" />
           <NavigationProperty Name="Person" Relationship="Self.FK_Person_User_Id_User" FromRole="User" ToRole="Person" />
           <NavigationProperty Name="Track" Relationship="Self.FK_Track_User_Id_User" FromRole="User" ToRole="Track" />
@@ -292,7 +292,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GpsTrackingDatabaseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="GpsTrackingDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Event" EntityType="Self.Event" />
           <EntitySet Name="Log" EntityType="Self.Log" />
           <EntitySet Name="Marker" EntityType="Self.Marker" />
@@ -325,9 +325,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GpsTrackingDatabaseModelStoreContainer" CdmEntityContainer="GpsTrackingDatabaseEntities">
+        <EntityContainerMapping StorageEntityContainer="GpsTrackingDBModelStoreContainer" CdmEntityContainer="GpsTrackingDBEntities">
           <EntitySetMapping Name="Event">
-            <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Event">
+            <EntityTypeMapping TypeName="GpsTrackingDBModel.Event">
               <MappingFragment StoreEntitySet="Event">
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -335,7 +335,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Log">
-            <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Log">
+            <EntityTypeMapping TypeName="GpsTrackingDBModel.Log">
               <MappingFragment StoreEntitySet="Log">
                 <ScalarProperty Name="LogId" ColumnName="LogId" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
@@ -346,7 +346,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Marker">
-            <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Marker">
+            <EntityTypeMapping TypeName="GpsTrackingDBModel.Marker">
               <MappingFragment StoreEntitySet="Marker">
                 <ScalarProperty Name="MarkerId" ColumnName="MarkerId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -358,7 +358,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Person">
-            <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Person">
+            <EntityTypeMapping TypeName="GpsTrackingDBModel.Person">
               <MappingFragment StoreEntitySet="Person">
                 <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -374,7 +374,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Track">
-            <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Track">
+            <EntityTypeMapping TypeName="GpsTrackingDBModel.Track">
               <MappingFragment StoreEntitySet="Track">
                 <ScalarProperty Name="TrackId" ColumnName="TrackId" />
                 <ScalarProperty Name="MarkerId" ColumnName="MarkerId" />
@@ -383,7 +383,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.User">
+            <EntityTypeMapping TypeName="GpsTrackingDBModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Login" ColumnName="Login" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using GpsTracker.Models.Messages;
 using GpsTracker.Models.Models;
 using GpsTracker.Service.Strategies.Base;
 using GpsTracker.Service.Controllers;
@@ -37,37 +38,30 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
         {
             try
             {
-                var exist = MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId);
-                //Async input to DB new user
-                if (exist == null)
-                {
-                    MainContext.Instance.User.Insert(new User()
-                    {
-                        DeviceId = message.DeviceId,
-                        IsAdmin = false,
-                        Login = message.DeviceId,
-                        Password = message.DeviceId
-                    });
-                }
-                user = exist.ToList()[0];
+                user = GetOrCreateUser(message);
                 var temp = StaticInfo.MarkerList.FirstOrDefault(x => x.UserId == user.UserId);
                 if (temp == null)
                 {
                     StaticInfo.MarkerList.Add(new Marker()
                     {
-                        UserId = user.UserId,
-                        Latitude = message.Latitutde,
-                        Longtitude = message.Longitude
+                        Latitude = message.Latitude,
+                        Longtitude = message.Longitude,
+                        Timestamp = DateTime.Now,
+                        UserId = user.UserId
                     });
                 }
-                temp.Latitude = message.Latitutde;
-                temp.Longtitude = message.Longitude;
-                temp.Timestamp = DateTime.Now;
-                WriteToDb(message); //Async
+                else
+                {
+                    temp.Longtitude = message.Longitude;
+                    temp.Latitude = message.Latitude;
+                    temp.Timestamp = DateTime.Now;
+                }
+                WriteToDb(message);
                 return new System.Web.Http.Results.OkResult(_controller);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
                 return new System.Web.Http.Results.InternalServerErrorResult(_controller);
             }
         }
@@ -76,22 +70,15 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
         {
             try
             {
-                MainContext.Instance.BeginTransaction();
-                MainContext.Instance.Marker.Insert(new Marker()
+                TrackContext temp = (TrackContext)MainContext.Instance.Track;
+                temp.Insert(user, new Marker()
                 {
-                    Latitude = message.Latitutde,
                     Longtitude = message.Longitude,
-                    UserId = user.UserId,
-                });
-                var temp = MainContext.Instance.Marker.GetAll().ToList();
-                MainContext.Instance.Track.Insert(new Track()
-                {
-                    UserId = user.UserId,
-                    MarkerId = (from item in temp
-                                select item.MarkerId).Max() + 1
+                    Latitude = message.Latitude,
+                    UserId = user.UserId
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Internal Server exception: {ex.Message}");
             }

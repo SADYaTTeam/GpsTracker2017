@@ -14,10 +14,10 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public BaseContext()
         {
-            _context = new GpsTrackingDatabaseEntities();
+            _context = new GpsTrackingDBEntities();
         }
 
-        public BaseContext(GpsTrackingDatabaseEntities context)
+        public BaseContext(GpsTrackingDBEntities context)
         {
             _context = context;
         }
@@ -26,7 +26,7 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         #region Fields
 
-        protected GpsTrackingDatabaseEntities _context;
+        protected GpsTrackingDBEntities _context;
 
         #endregion
 

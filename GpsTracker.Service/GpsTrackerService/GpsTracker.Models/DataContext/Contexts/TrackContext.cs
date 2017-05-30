@@ -17,7 +17,7 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         public TrackContext(): base() { }
 
-        public TrackContext(GpsTrackingDatabaseEntities context): base(context) { }
+        public TrackContext(GpsTrackingDBEntities context): base(context) { }
 
         #endregion
 
@@ -79,6 +79,49 @@ namespace GpsTracker.Models.DataContext.Contexts
             {
                 _context.Database.ExecuteSqlCommand("INSERT INTO Track(MarkerId, UserId)" +
                                                     $"VALUES({newItem.MarkerId},{newItem.UserId})");
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception:{ex.Message}");
+                transaction.Rollback();
+                DisposeTransaction(transaction);
+                return false;
+            }
+            DisposeTransaction(transaction);
+            return true;
+        }
+
+        public bool Insert(Models.User user, Models.Marker marker)
+        {
+            var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] ON");
+                try
+                {
+                    var max = (from item in _context.Marker
+                               select item.MarkerId).ToList().Max();
+                    marker.MarkerId = max + 1;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Debug.WriteLine($"Marker set is empty. Exception:{ex.Message}");
+                    marker.MarkerId = 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Unknown exception with message:{ex.Message}");
+                }
+                marker.Timestamp = DateTime.Now;
+                _context.Marker.Add(marker.Convert());
+                _context.SaveChanges();
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
+                var index = (from item in _context.Marker
+                             where item.UserId == user.UserId
+                             select item.MarkerId).ToList().Max();
+                _context.Database.ExecuteSqlCommand("INSERT INTO Track(MarkerId, UserId)" +
+                                                        $"VALUES({index},{user.UserId})");
                 transaction.Commit();
             }
             catch (Exception ex)
