@@ -117,8 +117,11 @@ namespace GpsTracker.Models.DataContext.Contexts
                 _context.Marker.Add(marker.Convert());
                 _context.SaveChanges();
                 _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
+                var index = (from item in _context.Marker
+                             where item.UserId == user.UserId
+                             select item.MarkerId).ToList().Max();
                 _context.Database.ExecuteSqlCommand("INSERT INTO Track(MarkerId, UserId)" +
-                                                    $"VALUES({marker.MarkerId},{user.UserId})");
+                                                        $"VALUES({index},{user.UserId})");
                 transaction.Commit();
             }
             catch (Exception ex)
