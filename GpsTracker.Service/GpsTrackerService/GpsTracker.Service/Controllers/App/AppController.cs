@@ -30,21 +30,20 @@ namespace GpsTracker.Service.Controllers
                 case MessageType.Marker:
                     {
                         strategy = new MarkerStrategy(this);
-                        return strategy.Execute(message);
+                        break;
                     }
                 case MessageType.SOS:
                     {
                         strategy = new SosStrategy(this);
-                        var response = strategy.Execute(message);
-                        //onSos(null, null);
-                        return response;
+                        break;
                     }
                 default:
                     {
                         strategy = new UnknownTypeStrategy(this);
-                        return strategy.Execute(message);
+                        break;
                     }
             }
+            return strategy.Execute(message);
         }
     }
 }

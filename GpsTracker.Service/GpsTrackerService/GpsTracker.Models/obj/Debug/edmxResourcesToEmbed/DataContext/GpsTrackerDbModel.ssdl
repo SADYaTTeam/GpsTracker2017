@@ -14,7 +14,7 @@
     <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="Message" Type="nvarchar" MaxLength="200" />
-    <Property Name="EventDate" Type="datetime" Nullable="false" />
+    <Property Name="EventDate" Type="datetime2" Precision="7" Nullable="false" />
     <Property Name="DeviceId" Type="char" MaxLength="16" />
   </EntityType>
   <EntityType Name="Marker">
@@ -26,7 +26,7 @@
     <Property Name="Name" Type="nvarchar" MaxLength="60" />
     <Property Name="Longtitude" Type="float" Nullable="false" />
     <Property Name="Latitude" Type="float" Nullable="false" />
-    <Property Name="Timestamp" Type="datetime" Nullable="false" />
+    <Property Name="Timestamp" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <EntityType Name="Person">
     <Key>
@@ -38,7 +38,7 @@
     <Property Name="LastName" Type="nchar" MaxLength="40" />
     <Property Name="MiddleName" Type="nchar" MaxLength="40" />
     <Property Name="Gender" Type="bit" />
-    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="DateOfBirth" Type="datetime2" Precision="7" />
     <Property Name="Photo" Type="image" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
     <Property Name="Phone" Type="nvarchar" MaxLength="13" />
@@ -60,7 +60,7 @@
     <Property Name="Password" Type="nvarchar" MaxLength="16" Nullable="false" />
     <Property Name="DeviceId" Type="char" MaxLength="16" Nullable="false" />
     <Property Name="IsAdmin" Type="bit" Nullable="false" />
-    <Property Name="DateCreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="DateCreatedAt" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <Association Name="FK_Log_Event_Id_Event">
     <End Role="Event" Type="Self.Event" Multiplicity="1" />

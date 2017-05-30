@@ -36,47 +36,47 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 
         public override IHttpActionResult Execute(GeoMessage message)
         {
-            //try
-            //{
-            //    user = GetOrCreateUser(message);
-            //    var temp = StaticInfo.MarkerList.FirstOrDefault(x => x.UserId == user.UserId);
-            //    if(temp == null)
-            //    {
-            //        StaticInfo.MarkerList.Add(new Marker()
-            //        {
-            //            Latitude = message.Latitude,
-            //            Longtitude = message.Longitude,
-            //            Timestamp = DateTime.Now,
-            //            UserId = user.UserId
-            //        });
-            //    }
-            //    else
-            //    {
-            //        temp.Longtitude = message.Longitude;
-            //        temp.Latitude = message.Latitude;
-            //        temp.Timestamp = DateTime.Now;
-            //    }
-            //    WriteToDb(message);
-            //    return new System.Web.Http.Results.OkResult(_controller);
-            //}
-            //catch(Exception ex)
-            //{
-            //    Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
-            return new System.Web.Http.Results.InternalServerErrorResult(_controller);
-            //}
+            try
+            {
+                user = GetOrCreateUser(message);
+                var temp = StaticInfo.MarkerList.FirstOrDefault(x => x.UserId == user.UserId);
+                if (temp == null)
+                {
+                    StaticInfo.MarkerList.Add(new Marker()
+                    {
+                        Latitude = message.Latitude,
+                        Longtitude = message.Longitude,
+                        Timestamp = DateTime.Now,
+                        UserId = user.UserId
+                    });
+                }
+                else
+                {
+                    temp.Longtitude = message.Longitude;
+                    temp.Latitude = message.Latitude;
+                    temp.Timestamp = DateTime.Now;
+                }
+                WriteToDb(message);
+                return new System.Web.Http.Results.OkResult(_controller);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
+                return new System.Web.Http.Results.InternalServerErrorResult(_controller);
+            }
         }
 
         protected override void WriteToDb(GeoMessage message)
         {
             try
             {
-                //TrackContext temp = (TrackContext)MainContext.Instance.Track;
-                //temp.Insert(user, new Marker()
-                //{
-                //    Longtitude = message.Longitude,
-                //    Latitude = message.Latitude,
-                //    UserId = user.UserId
-                //});
+                TrackContext temp = (TrackContext)MainContext.Instance.Track;
+                temp.Insert(user, new Marker()
+                {
+                    Longtitude = message.Longitude,
+                    Latitude = message.Latitude,
+                    UserId = user.UserId
+                });
             }
             catch (Exception ex)
             {
