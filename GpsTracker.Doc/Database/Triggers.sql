@@ -1,5 +1,3 @@
-USE GpsTrackingDatabase;
-
 SELECT  *
 FROM    dbo.Event
 ORDER BY EventId ASC;  -- Get Event codes
@@ -9,33 +7,12 @@ GO
 		--  User_OnDelete--
 --====================================
 --BEGIN
-
-IF EXISTS ( SELECT  *
-            FROM    sys.triggers
-            WHERE   name = N'User_OnInsert'
-                    AND parent_class_desc = N'GpsTrackingDatabase' )
-    DROP TRIGGER User_OnInsert
-	GO
-
-CREATE TRIGGER User_OnInsert ON dbo.[User]
-    FOR INSERT
-AS
-	BEGIN
-	    INSERT  INTO dbo.Log
-                ( EventId ,
-                  Message
-                )
-		SELECT 1, CONCAT(N'New user #', ins.UserId, ' has been inserted with DeviceId: ', ins.DeviceId)
-		FROM Inserted ins
-	END
-        
---END
-
+       
 IF EXISTS ( SELECT  *
             FROM    sys.triggers
             WHERE   name = N'User_OnDelete'
                     AND parent_class_desc = N'GpsTrackingDatabase' )
-    DROP TRIGGER User_OnDelete ON DATABASE; --Delete trigger it exists 
+    DROP TRIGGER User_OnDelete  --Delete trigger it exists 
 GO  
 
 CREATE TRIGGER User_OnDelete ON dbo.[User]
@@ -44,12 +21,14 @@ AS
     BEGIN
         INSERT  INTO dbo.Log
                 ( EventId ,
-                  Message
+                  Message,
+                  DeviceId
                 )
-		SELECT 3, CONCAT(N'User with id: ', del.UserId, ' has been deleted with DeviceId: ', del.DeviceId)
+		SELECT 3, CONCAT(N'User with id: ', del.UserId, ' has been deleted'), del.DeviceId
 		FROM Deleted del		 
     END; 
 
+--END
 
 --====================================
 		--  User_OnUpdate--
@@ -59,7 +38,7 @@ BEGIN
             FROM    sys.triggers
             WHERE   name = N'User_OnUpdate'
                     AND parent_class_desc = N'DATABASE')
-    DROP TRIGGER User_OnUpdate ON DATABASE;	
+    DROP TRIGGER User_OnUpdate	
 END
 
 GO
@@ -78,43 +57,28 @@ AS
 GO
 
 --====================================
-		--  User_OnUpdate_TestCase--
+		--  User_OnInsert--
 --====================================
---INSERT INTO dbo.[User]
---        ( Login ,
---          Password ,
---          IsAdmin ,
---		  DeviceId
---        )
---VALUES  ( N'admin' , -- Login - nchar(16)
---          N'password' , -- Password - nvarchar(16)
---          1, -- IsAdmin - bit
---		  'abfn5kgjdhfu5068' --DeviceId - nvarcahr(16)
---        )
+--BEGIN
 
---INSERT INTO dbo.[User]
---        ( Login ,
---          Password ,
---          IsAdmin , 
---		  DeviceId 
---        )
---VALUES  ( N'admin2' , -- Login - nchar(16)
---          N'password' , -- Password - nvarchar(16)
---          1, -- IsAdmin - bit
---		  'abfn5kgjdhfu5062' --DeviceId - nvarcahr(16)
---        )
+IF EXISTS ( SELECT  *
+            FROM    sys.triggers
+            WHERE   name = N'User_OnInsert'
+                    AND parent_class_desc = N'GpsTrackingDatabase' )
+    DROP TRIGGER User_OnInsert
+	GO
 
---SELECT * FROM dbo.[User]
-
---UPDATE  dbo.[User]
---SET     Login = 'taras2' ,
---        Password = 'taraspassword'
---WHERE   UserId = ( SELECT   MAX(UserId)
---                   FROM     dbo.[User]
---                 )
---DELETE FROM dbo.[User]
---WHERE UserId = ( SELECT   MAX(UserId)
---                   FROM     dbo.[User]
---               )
-
---SELECT * FROM dbo.Log
+CREATE TRIGGER User_OnInsert ON dbo.[User]
+    FOR INSERT
+AS
+	BEGIN
+	    INSERT  INTO dbo.Log
+                ( EventId ,
+                  Message,
+                  DeviceId
+                )
+		SELECT 1, CONCAT(N'New user #', ins.UserId, ' has been inserted'), ins.DeviceId
+		FROM Inserted ins
+	END
+	        
+--END
