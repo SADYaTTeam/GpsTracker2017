@@ -3,6 +3,7 @@ package com.kamanda.timon.gpstracker;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -90,7 +91,8 @@ public class MapsActivity extends FragmentActivity
 
 
     private String deviceId;
-    private AsyncT asyncT = new AsyncT();
+
+    //Context context;
     //endregion Variables
 
 
@@ -105,6 +107,8 @@ public class MapsActivity extends FragmentActivity
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
+        Log.i("deviceId" , deviceId.toString());
+
         startService(new Intent(this, MyService.class));
         //mapListener.setDeviceId(deviceId);
 
@@ -126,7 +130,7 @@ public class MapsActivity extends FragmentActivity
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        //asyncT.execute();
+
         //minimizeApp();
     }
 
@@ -137,7 +141,6 @@ public class MapsActivity extends FragmentActivity
     protected void onStart() {
         googleApiClient.connect();
         super.onStart();
-
     }
 
     /**
@@ -218,8 +221,6 @@ public class MapsActivity extends FragmentActivity
      */
     @Override
     public void onConnected(final @Nullable Bundle bundle) {
-
-
         moveMap();
     }
 
@@ -282,38 +283,34 @@ public class MapsActivity extends FragmentActivity
     }
     //endregion Google Map Initialization And Event Properties
 
-    //region Get current location & move to this marker
 
-    /**
-     *
-     */
-    //Get current location
-
-
-    /**
-     * @return
-     */
-
-    //endregion Get current location
-
-
-    /**
-     * @param keyCode
-     * @param event
-     * @return
-     */
     //region SOS_BUTTON
     @Override
-    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+    public boolean dispatchKeyEvent(final KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_UP:
-                event.startTracking();
-
-
+                if (action == KeyEvent.ACTION_DOWN) {
+                    //TODO
+                    try {
+                        Toast.makeText(getApplicationContext(), "JSON sended to server",
+                                Toast.LENGTH_LONG).show();
+                        startService(new Intent(this, MyService.class));
+                    }
+                    catch (Exception exc) {
+                        Log.e("AsyncT", exc.getMessage(), exc);
+                    }
+                }
                 return true;
-            default: break;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (action == KeyEvent.ACTION_DOWN) {
+                    //TODO
+                }
+                return true;
+            default:
+                return super.dispatchKeyEvent(event);
         }
-        return super.onKeyDown(keyCode, event);
     }
     //endregion SOS_BUTTON
 }

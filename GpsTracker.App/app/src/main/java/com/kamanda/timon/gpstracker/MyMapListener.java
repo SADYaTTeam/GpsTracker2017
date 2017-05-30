@@ -2,6 +2,7 @@ package com.kamanda.timon.gpstracker;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -9,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by timon on 24.05.2017.
@@ -55,6 +57,7 @@ public class MyMapListener implements LocationListener {
     AsyncT asyncT = new AsyncT();
 
     //endregion Variables
+
     /**
      * @param context
      */
@@ -68,7 +71,8 @@ public class MyMapListener implements LocationListener {
      * @return
      */
     public DataMessage getDataMessage() {
-        return this.message; }
+        return this.message;
+    }
 
     /**
      * @param deviceId
@@ -87,7 +91,7 @@ public class MyMapListener implements LocationListener {
     /**
      *
      */
-    public  void findLocation() {
+    public void findLocation() {
         try {
 
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -132,7 +136,12 @@ public class MyMapListener implements LocationListener {
     @Override
     public void onLocationChanged(final Location location) {
         findLocation();
-       // asyncT.execute();
+        try {
+            Log.i("AsyncT", "Location Changed; JSON was sended to server");
+            //TODO Send asyncT with actual data here
+        } catch (Exception exc) {
+            Log.e("AsyncT", exc.getMessage(), exc);
+        }
     }
 
     @Override
@@ -153,12 +162,7 @@ public class MyMapListener implements LocationListener {
      */
     @Override
     public void onProviderDisabled(final String provider) {
-        //TODO Complete event handler and show message about GPS disconnect
-        // Toast.makeText(getBaseContext(), "You are dissconnected", Toast.LENGTH_LONG).show();
         Log.w("MyMapListener", "GPS is disabled!");
     }
 
-   // public IBinder onBind(Intent arg0){
-   //     return null;
-    //}
 }
