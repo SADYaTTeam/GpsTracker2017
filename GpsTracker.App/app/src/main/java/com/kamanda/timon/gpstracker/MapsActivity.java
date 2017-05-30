@@ -5,6 +5,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -71,6 +72,7 @@ public class MapsActivity extends FragmentActivity
      *
      */
     private static final int ZOOM = 15;
+    public static String DEVICE_ID;
     /**
      *
      */
@@ -89,10 +91,6 @@ public class MapsActivity extends FragmentActivity
      *
      */
 
-
-    private String deviceId;
-
-    //Context context;
     //endregion Variables
 
 
@@ -105,23 +103,18 @@ public class MapsActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         message = new DataMessage();
-        deviceId = Secure.getString(this.getContentResolver(),
+        DEVICE_ID = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
-        Log.i("deviceId" , deviceId.toString());
-
+        Log.i("deviceId", DEVICE_ID.toString());
+        saveAndroidIdToFile();
         startService(new Intent(this, MyService.class));
-        //mapListener.setDeviceId(deviceId);
 
-      //  mLocation = mapListener.getLocation();
-
-//        message.setLatitude(mLocation.getLatitude());
-//        message.setLongitude(mLocation.getLongitude());
 
         // Obtain the SupportMapFragment
         // and get notified when the map is ready to be used.
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(map);
+                        .findFragmentById(map);
         mapFragment.getMapAsync(this);
 
         //Initializing googleApiClient
@@ -132,6 +125,29 @@ public class MapsActivity extends FragmentActivity
                 .build();
 
         //minimizeApp();
+    }
+
+    private void saveAndroidIdToFile() {
+
+
+        String filename = "MyAndroidId.txt";
+        String deviceId = Secure.getString(this.getContentResolver(),
+                Secure.ANDROID_ID);
+        String sData = DEVICE_ID;
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/GpsTracker");
+        myDir.mkdirs();
+        File file = new File(myDir, filename);
+        if (file.exists()) file.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(sData.getBytes());
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -205,7 +221,6 @@ public class MapsActivity extends FragmentActivity
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
 
-
     }
 
     /**
@@ -265,8 +280,7 @@ public class MapsActivity extends FragmentActivity
     @Override
     public void onMarkerDragEnd(final Marker marker) {
         // getting the Co-ordinates
-        ///latitude = marker.getPosition().latitude;
-       // longitude = marker.getPosition().longitude;
+
 
         //move to current position
         moveMap();
@@ -297,8 +311,7 @@ public class MapsActivity extends FragmentActivity
                         Toast.makeText(getApplicationContext(), "JSON sended to server",
                                 Toast.LENGTH_LONG).show();
                         startService(new Intent(this, MyService.class));
-                    }
-                    catch (Exception exc) {
+                    } catch (Exception exc) {
                         Log.e("AsyncT", exc.getMessage(), exc);
                     }
                 }
