@@ -35,7 +35,7 @@ public class DataMessage {
     /**
      * @return
      */
-    public final double getLongtitude() {
+    public final double getLongitude() {
         return longitude; }
 
     /**

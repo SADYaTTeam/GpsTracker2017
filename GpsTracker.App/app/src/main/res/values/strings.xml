@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">GpsTracker</string>
     <string name="simpleText">Простий текст</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">GPS Tracker</string>
 </resources>
