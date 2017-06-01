@@ -1,24 +1,30 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Web.Http;
-using GpsTracker.Models.DataContext.Contexts;
-using GpsTracker.Models.Messages;
-using GpsTracker.Service.Strategies.Base;
-using GpsTracker.Service.Strategies.ConcreateAppStrategies;
-//using System.Net;
-//using System.Net.Http;
-
+﻿// <copyright file="AppController.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Service.Controllers.App
 {
-    [RoutePrefix ("api/app")]
+    #region using...
+    using System;
+    using System.Diagnostics;
+    using System.Web.Http;
+    using System.Linq;
+    using Models.DataContext.Contexts;
+    using Models.Messages;
+    using Strategies.Base;
+    using Strategies.ConcreateAppStrategies;
+    #endregion
+
+    /// <summary>
+    /// Class representes web api 2 controller for path "../api/app"
+    /// </summary>
+    [RoutePrefix("api/app")]
     public class AppController : ApiController
     {
-        public delegate void EventContainer(object sender, EventArgs args);
-
-        //public event EventContainer onSos;
-
-
+        /// <summary>
+        /// Take marker message and proccess it(write info to write table, etc.)
+        /// </summary>
+        /// <param name="message">Marker message from mobile app</param>
+        /// <returns>Return Ok(200) if message successfully been treated. And returns InternalServerError(500) if there's an exception while proccess</returns>
         [HttpPost]
         [Route("")]
         public IHttpActionResult TakeGeo([FromBody] GeoMessage message)
@@ -31,7 +37,7 @@ namespace GpsTracker.Service.Controllers.App
                         strategy = new MarkerStrategy(this);
                         break;
                     }
-                case MessageType.SOS:
+                case MessageType.Sos:
                     {
                         strategy = new SosStrategy(this);
                         break;
@@ -45,6 +51,11 @@ namespace GpsTracker.Service.Controllers.App
             return strategy.Execute(message);
         }
 
+        /// <summary>
+        /// Check db for the existance user with this deviceId
+        /// </summary>
+        /// <param name="message">Check message from mobile app</param>
+        /// <returns>Returns Ok(200) if there're user in db with that deviceId, BadRequest(400) if not and InternalServerError(500) if there's an exception while process</returns>
         [HttpPost]
         [Route("check")]
         public IHttpActionResult CheckExist([FromBody] CheckMessage message)
@@ -68,33 +79,53 @@ namespace GpsTracker.Service.Controllers.App
             }
         }
 
+        /// <summary>
+        /// Registrate new user in system
+        /// </summary>
+        /// <param name="newUser">Registration message from mobile app</param>
+        /// <returns>Returns Ok(200) if new user been successfully inserted, BadRequest(400) if there're already user in db with this info or
+        /// some fields in message are empty, InternalServerError(500) if there's an exception while process </returns>
         [HttpPost]
         [Route("reg")]
-        public IHttpActionResult Registration([FromBody] LoginMessage newUser)
+        public IHttpActionResult Registration([FromBody] RegistrationMessage message)
         {
             try
             {
-                if(newUser.GetType().GetProperties().Where(pi => pi.GetValue(newUser) is string)
-                                                    .Select(pi => (string) pi.GetValue(newUser))
-                                                    .Any(value => String.IsNullOrEmpty(value)))
+                if (message.GetType().GetProperties().Where(pi => pi.GetValue(message) is string)
+                    .Select(pi => (string) pi.GetValue(message))
+                    .Any(String.IsNullOrEmpty))
                 {
                     return new System.Web.Http.Results.BadRequestResult(this);
                 }
-                if (MainContext.Instance.User.GetBy(x => x.DeviceId == newUser.DeviceId) != null)
+                if (MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId) != null)
                 {
                     return new System.Web.Http.Results.BadRequestResult(this);
                 }
-                if(MainContext.Instance.User.Insert(new Models.Models.User() {
-                                                                                Login = newUser.Login,
-                                                                                Password = newUser.Password,
-                                                                                DeviceId = newUser.DeviceId,
-                                                                             }))
+                try
                 {
+                    MainContext.Instance.BeginTransaction();
+                    MainContext.Instance.User.Insert(new Models.Models.User()
+                    {
+                        DeviceId = message.DeviceId,
+                        IsAdmin = false,
+                        Login = message.DeviceId,
+                        Password = message.DeviceId
+                    });
+                    var user = MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId).FirstOrDefault();
+                    MainContext.Instance.Person.Insert(new Models.Models.Person()
+                    {
+                        UserId = user.UserId
+                    });
+                    MainContext.Instance.CommitTransaction();
                     return new System.Web.Http.Results.OkResult(this);
                 }
-                return new System.Web.Http.Results.BadRequestResult(this);
+                catch (Exception)
+                {
+                    MainContext.Instance.RollbackTransaction();
+                    return new System.Web.Http.Results.BadRequestResult(this);
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Internal server exception: {ex.Message}");
                 return new System.Web.Http.Results.InternalServerErrorResult(this);

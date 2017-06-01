@@ -1,30 +1,50 @@
-﻿using System;
-using System.Linq;
-using System.Web.Http;
-using GpsTracker.Models.Messages;
-using GpsTracker.Models.Models;
-using GpsTracker.Service.Strategies.Base;
-using GpsTracker.Service.Controllers;
-using GpsTracker.Models.DataContext.Contexts;
-using System.Diagnostics;
-using GpsTracker.Service.Controllers.App;
-
+﻿// <copyright file="MarkerStrategy.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 {
+    #region using...
+    using System;
+    using System.Linq;
+    using System.Web.Http;
+    using System.Diagnostics;
+    using Models.Messages;
+    using Models.Models;
+    using Base;
+    using Controllers;
+    using Models.DataContext.Contexts;
+    using Controllers.App;
+    #endregion
+
+    /// <summary>
+    /// Class presents strategy for merker-type messages
+    /// </summary>
     public class MarkerStrategy : Strategy
     {
-        #region Constructors
-
-        public MarkerStrategy()
-        { }
-
-        public MarkerStrategy(AppController controller): base(controller) { }
+        #region Fields
+        // DELETE AFTER DELETING TRACK!!!
+        private User _user;
 
         #endregion
 
-        #region Fields
+        #region Constructors
 
-        private User user;
+        /// <summary>
+        /// Initializes a new instance of <see cref="MarkerStrategy"/> class
+        /// </summary>
+        public MarkerStrategy()
+        {
+            
+        }
+
+        /// <summary>
+        /// Initialized a new instance of <see cref="MarkerStrategy"/> class
+        /// </summary>
+        /// <param name="controller">App contoller instance</param>
+        public MarkerStrategy(AppController controller) : base(controller)
+        {
+            
+        }
 
         #endregion
 
@@ -34,12 +54,18 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 
         #region Methods
 
+        /// <summary>
+        /// Treating incoming marker-type message
+        /// </summary>
+        /// <param name="message">Marker-type message</param>
+        /// <returns>Returns Ok(200) if process was successful and 
+        /// InternalServerError(500) if there're is some server exception</returns>
         public override IHttpActionResult Execute(GeoMessage message)
         {
             try
             {
-                user = GetOrCreateUser(message);
-                var temp = StaticInfo.MarkerList.FirstOrDefault(x => x.UserId == user.UserId);
+                _user = GetOrCreateUser(message);
+                var temp = StaticInfo.MarkerList.FirstOrDefault(x => x.UserId == _user.UserId);
                 if (temp == null)
                 {
                     StaticInfo.MarkerList.Add(new Marker()
@@ -47,7 +73,7 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                         Latitude = message.Latitude,
                         Longtitude = message.Longitude,
                         Timestamp = DateTime.Now,
-                        UserId = user.UserId
+                        UserId = _user.UserId
                     });
                 }
                 else
@@ -57,25 +83,29 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                     temp.Timestamp = DateTime.Now;
                 }
                 WriteToDb(message);
-                return new System.Web.Http.Results.OkResult(_controller);
+                return new System.Web.Http.Results.OkResult(Controller);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
-                return new System.Web.Http.Results.InternalServerErrorResult(_controller);
+                return new System.Web.Http.Results.InternalServerErrorResult(Controller);
             }
         }
 
+        /// <summary>
+        /// Write new marker to db
+        /// </summary>
+        /// <param name="message">Inforamtion ablit new marker</param>
         protected override void WriteToDb(GeoMessage message)
         {
             try
             {
-                TrackContext temp = (TrackContext)MainContext.Instance.Track;
-                temp.Insert(user, new Marker()
+                var temp = (TrackContext)MainContext.Instance.Track;
+                temp.Insert(_user, new Marker()
                 {
                     Longtitude = message.Longitude,
                     Latitude = message.Latitude,
-                    UserId = user.UserId
+                    UserId = _user.UserId
                 });
             }
             catch (Exception ex)

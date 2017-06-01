@@ -97,7 +97,7 @@
     <Compile Include="Mappers\FromDb.cs" />
     <Compile Include="Mappers\IntoDb.cs" />
     <Compile Include="Messages\CheckMessage.cs" />
-    <Compile Include="Messages\LoginMessage.cs" />
+    <Compile Include="Messages\RegistrationMessage.cs" />
     <Compile Include="Messages\SosMessage.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Messages\GeoMessage.cs" />

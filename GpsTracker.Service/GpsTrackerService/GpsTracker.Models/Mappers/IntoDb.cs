@@ -1,7 +1,16 @@
-﻿namespace GpsTracker.Models.Mappers
+﻿// <copyright file="IntoDb.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
+namespace GpsTracker.Models.Mappers
 {
+    /// <summary>
+    /// Class represents opportunity to map Models and DataContext
+    /// </summary>
     public static class IntoDb
     {
+        /// <summary>
+        /// Map <see cref="Models.Event"/> to <see cref="DataContext.Event"/>
+        /// </summary>
         public static DataContext.Event Convert(this Models.Event evnt)
         {
             return new DataContext.Event()
@@ -11,6 +20,9 @@
             };
         }
 
+        /// <summary>
+        /// Map <see cref="Models.Log"/> to <see cref="DataContext.Log"/>
+        /// </summary>
         public static DataContext.Log Convert(this Models.Log log)
         {
             return new DataContext.Log()
@@ -23,6 +35,9 @@
             };
         }
 
+        /// <summary>
+        /// Map <see cref="Models.Person"/> to <see cref="DataContext.Person"/>
+        /// </summary>
         public static DataContext.Person Convert(this Models.Person person)
         {
             return new DataContext.Person()
@@ -40,6 +55,9 @@
             };
         }
 
+        /// <summary>
+        /// Map <see cref="Models.Person"/> to <see cref="DataContext.Person"/>
+        /// </summary>
         public static DataContext.User Convert(this Models.User user)
         {
             return new DataContext.User()
@@ -53,6 +71,9 @@
             };
         }
 
+        /// <summary>
+        /// Map <see cref="Models.Marker"/> to <see cref="DataContext.Marker"/>
+        /// </summary>
         public static DataContext.Marker Convert(this Models.Marker marker)
         {
             return new DataContext.Marker()
@@ -65,6 +86,9 @@
             };
         }
 
+        /// <summary>
+        /// Map <see cref="Models.Track"/> to <see cref="DataContext.Track"/>
+        /// </summary>
         public static DataContext.Track Convert(this Models.Track track)
         {
             return new DataContext.Track()

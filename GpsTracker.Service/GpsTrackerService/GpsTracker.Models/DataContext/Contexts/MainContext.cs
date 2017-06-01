@@ -18,6 +18,10 @@ namespace GpsTracker.Models.DataContext.Contexts
         #region Fields
 
         /// <summary>
+        /// Represents singltone object of EF context
+        /// </summary>
+        private static IMainDbContext _instance;
+        /// <summary>
         /// Represents EF context
         /// </summary>
         private readonly GpsTrackingDBEntities _context;
@@ -25,10 +29,6 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// Represents transaction in EF context
         /// </summary>
         private System.Data.Entity.DbContextTransaction _transaction;
-        /// <summary>
-        /// Represents singltone object of EF context
-        /// </summary>
-        private static IMainDbContext _instance;
 
         #endregion
 

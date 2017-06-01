@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿// <copyright file="AssemblyInfo.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
