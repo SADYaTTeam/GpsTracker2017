@@ -17,7 +17,7 @@ public class StartMyActivityAtBootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {
 
-        Intent i = new Intent(context, MapsActivity.class);
+        Intent i = new Intent(context, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
 
