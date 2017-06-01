@@ -9,6 +9,7 @@ using System.Web.Http;
 using GpsTracker.Service.Controllers;
 using GpsTracker.Models.DataContext.Contexts;
 using System.Diagnostics;
+using GpsTracker.Service.Controllers.App;
 
 namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 {
@@ -16,7 +17,8 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
     {
         #region Constructors
 
-        public SosStrategy() : base() { }
+        public SosStrategy()
+        { }
 
         public SosStrategy(AppController controller) : base(controller) { }
 

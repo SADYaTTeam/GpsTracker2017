@@ -1,18 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GpsTracker.Models.DataContext.Interfaces;
-using GpsTracker.Models.Models;
-using System.Diagnostics;
+﻿// <copyright file="MainContext.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 
 namespace GpsTracker.Models.DataContext.Contexts
 {
+    #region using...
+    using System;
+    using Interfaces;
+    using System.Diagnostics;
+    #endregion
+
+    /// <summary>
+    /// Class represents work with db EF context
+    /// </summary>
     public class MainContext : IMainDbContext
     {
+        #region Fields
+
+        /// <summary>
+        /// Represents EF context
+        /// </summary>
+        private readonly GpsTrackingDBEntities _context;
+        /// <summary>
+        /// Represents transaction in EF context
+        /// </summary>
+        private System.Data.Entity.DbContextTransaction _transaction;
+        /// <summary>
+        /// Represents singltone object of EF context
+        /// </summary>
+        private static IMainDbContext _instance;
+
+        #endregion
+
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MainContext"/> class
+        /// </summary>
+        /// <param name="context">EF database context</param>
         public MainContext(GpsTrackingDBEntities context)
         {
             _context = context;
@@ -26,41 +51,50 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         #endregion
 
-        #region Fields
-
-        private GpsTrackingDBEntities _context;
-        private System.Data.Entity.DbContextTransaction _transaction;
-        private static IMainDbContext _instance;
-
-        #endregion
-
         #region Properties
 
-        public static IMainDbContext Instance
-        {
-            get
-            {
-                return _instance ?? (_instance = new MainContext(new GpsTrackingDBEntities()));
-            }
-        }
+        /// <summary>
+        /// Gets singletone object 
+        /// </summary>
+        public static IMainDbContext Instance => _instance ?? (_instance = new MainContext(new GpsTrackingDBEntities()));
 
+        /// <summary>
+        /// Gets or sets <see cref="Contexts.EventContext"/> 
+        /// </summary>
         public IDbContext<Models.Event, Event> Event { get; set; }
 
-        public IDbContext<Models.Log, Log> Log { get; set; }
+        /// <summary>
+        /// Gets or sets <see cref="Contexts.LogContext"/> 
+        /// </summary>
+        public IDbContext<Models.Log, DataContext.Log> Log { get; set; }
 
-        public IDbContext<Models.Person, Person> Person { get; set; }
+        /// <summary>
+        /// Gets or sets <see cref="Contexts.PersonContext"/> 
+        /// </summary>
+        public IDbContext<Models.Person, DataContext.Person> Person { get; set; }
 
-        public IDbContext<Models.User, User> User { get; set; }
+        /// <summary>
+        /// Gets or sets <see cref="Contexts.UserContext"/> 
+        /// </summary>
+        public IDbContext<Models.User, DataContext.User> User { get; set; }
 
-        public IDbContext<Models.Marker, Marker> Marker { get; set; }
+        /// <summary>
+        /// Gets or sets <see cref="Contexts.MarkerContext"/> 
+        /// </summary>
+        public IDbContext<Models.Marker, DataContext.Marker> Marker { get; set; }
 
-        public IDbContext<Models.Track, Track> Track { get; set; }
-
+        /// <summary>
+        /// Gets or sets <see cref="Contexts.TrackContext"/> 
+        /// </summary>
+        public IDbContext<Models.Track, DataContext.Track> Track { get; set; }
 
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Begin transaction in EF db context
+        /// </summary>
+        /// <remarks>See details about exception in debug</remarks>
         public void BeginTransaction()
         {
             try
@@ -74,13 +108,17 @@ namespace GpsTracker.Models.DataContext.Contexts
             }
         }
 
+        /// <summary>
+        /// Commit started transaction in EF db context
+        /// </summary> 
+        /// <remarks>See details about exception in debug</remarks>
         public void CommitTransaction()
         {
             try
             {
                 _transaction.Commit();
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
                 Debug.WriteLine("You didn't start transaction!");
                 throw new Exception($"Exception: {ex.Message}");
@@ -94,6 +132,10 @@ namespace GpsTracker.Models.DataContext.Contexts
             _transaction.Dispose();
         }
 
+        /// <summary>
+        /// Rollback started transaction in EF db context
+        /// </summary>
+        /// <remarks>See details about exception in debug</remarks>
         public void RollbackTransaction()
         {
             try

@@ -1,27 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GpsTracker.Models.Mappers;
-using GpsTracker.Models.DataContext.Interfaces;
-using GpsTracker.Models.Models;
-using System.Linq.Expressions;
-using System.Diagnostics;
-
+﻿// <copyright file="LogContext.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Models.DataContext.Contexts
 {
+    #region using...
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Diagnostics;
+    using Mappers;
+    using Interfaces;
+    #endregion
+
+    /// <summary>
+    /// Class represents work with event EF context
+    /// </summary>
     public class LogContext : BaseContext, IDbContext<Models.Log, Log>
     {
-        #region Constructors
-
-        public LogContext() : base() { }
-
-        public LogContext(GpsTrackingDBEntities context) : base(context) { }
+        #region Fields
 
         #endregion
 
-        #region Fields
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogContext"/> class
+        /// </summary>
+        public LogContext()
+        {
+            
+        }
+
+        /// <summary>
+        /// Initialize a new instance of the <see cref="LogContext"/> class with selected entity
+        /// </summary>
+        /// <param name="context">EF data context</param>
+        public LogContext(GpsTrackingDBEntities context) : base(context)
+        {
+            
+        }
 
         #endregion
 
@@ -31,56 +49,74 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         #region Methods
 
+        /// <summary>
+        /// Delete log with selected LogId from table
+        /// </summary>
+        /// <remarks>See details about error in debug</remarks>
+        /// <param name="id">Id of deleting item</param>
+        /// <returns>Returns true if item was deleted and false if there're some errors
+        /// (see details in debug)</returns>
         public bool Delete(int id)
         {
-            var temp = _context.Log.FirstOrDefault(x => x.LogId == id);
+            var temp = Context.Log.FirstOrDefault(x => x.LogId == id);
             if (temp == null)
             {
                 return false;
             }
-            _context.Log.Remove(temp);
+            Context.Log.Remove(temp);
             return SaveChanges();
         }
 
+        /// <summary>
+        /// Get all rows from current table
+        /// </summary>
+        /// <returns>Returns all rows or null if there're no rows in table</returns>
         public IEnumerable<Models.Log> GetAll()
         {
-            var temp = _context.Log.ToList();
-            if(temp.Count == 0)
-            {
-                return null;
-            }
-            var result = new List<Models.Log>(temp.Count);
-            foreach(var item in temp)
-            {
-                result.Add(item.Convert());
-            }
-            return result;
-        }
-
-        public IEnumerable<Models.Log> GetBy(Expression<Func<Log, bool>> expression)
-        {
-            var temp = _context.Log.Where(expression).ToList();
+            var temp = Context.Log.ToList();
             if (temp.Count == 0)
             {
                 return null;
             }
             var result = new List<Models.Log>(temp.Count);
-            foreach (var item in temp)
-            {
-                result.Add(item.Convert());
-            }
+            result.AddRange(temp.Select(item => item.Convert()));
             return result;
         }
 
+        /// <summary>
+        /// Get all rows that satisfied the condition
+        /// </summary>
+        /// <param name="expression">Lambda-expression that represents condition</param>
+        /// <returns>Returns all rows that satisfied condition or null 
+        /// if there'are no rows</returns>
+        public IEnumerable<Models.Log> GetBy(Expression<Func<Log, bool>> expression)
+        {
+            var temp = Context.Log.Where(expression).ToList();
+            if (temp.Count == 0)
+            {
+                return null;
+            }
+            var result = new List<Models.Log>(temp.Count);
+            result.AddRange(temp.Select(item => item.Convert()));
+            return result;
+        }
+
+        /// <summary>
+        /// Insert new log to current table
+        /// </summary>
+        /// <param name="newItem">New log for table</param>
+        /// <returns>Returns true if new item been inserted
+        /// and false if there're some errors
+        /// (see details in debug)</returns>
         public bool Insert(Models.Log newItem)
         {
-            var transaction = _context.Database.BeginTransaction();
+            var transaction = Context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] ON");
+                Context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] ON");
                 try
                 {
-                    var max = (from item in _context.Log
+                    var max = (from item in Context.Log
                                select item.LogId).ToList().Max();
                     newItem.LogId = max + 1;
                 }
@@ -94,9 +130,9 @@ namespace GpsTracker.Models.DataContext.Contexts
                     throw new Exception($"Unknown exception with message: {ex.Message}");
                 }
                 newItem.EventDate = DateTime.Now;
-                _context.Log.Add(newItem.Convert());
-                _context.SaveChanges();
-                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
+                Context.Log.Add(newItem.Convert());
+                Context.SaveChanges();
+                Context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
                 transaction.Commit();
             }
             catch(Exception ex)
@@ -110,9 +146,17 @@ namespace GpsTracker.Models.DataContext.Contexts
             return true;
         }
 
+        /// <summary>
+        /// Update log with select id
+        /// </summary>
+        /// <remarks>Old log take all info from new(except Id)</remarks>
+        /// <param name="id">Id of selected log</param>
+        /// <param name="newItem">represents new info for selected log</param>
+        /// <returns>Returns true if log was updated and false if there're 
+        /// some errors(see details in debug)</returns>
         public bool Update(int id, Models.Log newItem)
         {
-            var temp = _context.Log.FirstOrDefault(x => x.LogId == id);
+            var temp = Context.Log.FirstOrDefault(x => x.LogId == id);
             if (temp == null)
             {
                 return false;

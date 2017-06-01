@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Results;
-using GpsTracker.Models.Models;
-using GpsTracker.Service.Strategies.Base;
+﻿using GpsTracker.Service.Strategies.Base;
 using GpsTracker.Service.Controllers;
+using GpsTracker.Service.Controllers.App;
 
 namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 {
@@ -14,7 +8,8 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
     {
         #region Constructors
 
-        public UnknownTypeStrategy(): base() { }
+        public UnknownTypeStrategy()
+        { }
 
         public UnknownTypeStrategy(AppController controller) : base(controller) { }
 

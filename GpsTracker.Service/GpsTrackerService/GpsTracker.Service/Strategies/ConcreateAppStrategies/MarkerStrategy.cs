@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 using GpsTracker.Models.Messages;
 using GpsTracker.Models.Models;
@@ -9,6 +7,7 @@ using GpsTracker.Service.Strategies.Base;
 using GpsTracker.Service.Controllers;
 using GpsTracker.Models.DataContext.Contexts;
 using System.Diagnostics;
+using GpsTracker.Service.Controllers.App;
 
 namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 {
@@ -16,7 +15,8 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
     {
         #region Constructors
 
-        public MarkerStrategy(): base() { }
+        public MarkerStrategy()
+        { }
 
         public MarkerStrategy(AppController controller): base(controller) { }
 

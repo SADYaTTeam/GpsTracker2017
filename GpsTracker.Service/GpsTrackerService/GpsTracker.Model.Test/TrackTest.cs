@@ -1,13 +1,24 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GpsTracker.Models.DataContext.Contexts;
-using System.Linq;
-
+﻿// <copyright file="TrackTest.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Model.Test
 {
+    #region using...
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Models.DataContext.Contexts;
+    #endregion
+
+    /// <summary>
+    /// Class for test track context
+    /// </summary>
     [TestClass]
     public class TrackTest
     {
+        /// <summary>
+        /// Method testes Insert(insert temp user, marker and track with them)
+        /// method of TrackContext
+        /// </summary>
         [TestMethod]
         public void TrackInsert()
         {
@@ -33,6 +44,9 @@ namespace GpsTracker.Model.Test
             }));
         }
 
+        /// <summary>
+        /// Method testes GetAll method of TrackContext
+        /// </summary>
         [TestMethod]
         public void TrackGetAll()
         {
@@ -40,6 +54,9 @@ namespace GpsTracker.Model.Test
             Assert.IsNotNull(result);
         }
 
+        /// <summary>
+        /// Method testes Update method of TrackContext
+        /// </summary>
         [TestMethod]
         public void TrackUpdate()
         {
@@ -55,6 +72,9 @@ namespace GpsTracker.Model.Test
             Assert.IsTrue(MainContext.Instance.Track.Update(item.TrackId, item));
         }
 
+        /// <summary>
+        /// Method testes GetBy method of TrackContext
+        /// </summary>
         [TestMethod]
         public void TrackGetBy()
         {
@@ -62,6 +82,9 @@ namespace GpsTracker.Model.Test
             Assert.IsNotNull(MainContext.Instance.Marker.GetBy(x => x.MarkerId == markerIndex));
         }
 
+        /// <summary>
+        /// Method testes Delete(delete last inserted track) method of TrackContext
+        /// </summary>
         [TestMethod]
         public void TrackDelete()
         {

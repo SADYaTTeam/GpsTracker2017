@@ -1,16 +1,28 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GpsTracker.Models.DataContext.Contexts;
-using System.Linq;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-
+﻿// <copyright file="PersonTest.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Model.Test
 {
+    #region using...
+    using System;
+    using System.Linq;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Models.DataContext.Contexts;
+    #endregion
+
+    /// <summary>
+    /// Class for test person context
+    /// </summary>
     [TestClass]
     public class PersonTest
     {
+        /// <summary>
+        /// Method testes Insert(insert test user and test person
+        /// with all fields) method of PersonContext
+        /// </summary>
         [TestMethod]
         public void PersonInsert()
         {
@@ -40,6 +52,9 @@ namespace GpsTracker.Model.Test
             }
         }
 
+        /// <summary>
+        /// Method testes GetAll of PersonContext
+        /// </summary>
         [TestMethod]
         public void PersonGetAll()
         {
@@ -47,6 +62,9 @@ namespace GpsTracker.Model.Test
             Assert.IsNotNull(result);
         }
 
+        /// <summary>
+        /// Method testes Update(Set FirstName of last person = "Ivan") of PersonContext
+        /// </summary>
         [TestMethod]
         public void PersonUpdate()
         {
@@ -55,12 +73,18 @@ namespace GpsTracker.Model.Test
             Assert.IsTrue(MainContext.Instance.Person.Update(item.PersonId, item));
         }
 
+        /// <summary>
+        /// Method testes GetBy(FirstName == "Ivan") of PersonContext
+        /// </summary>
         [TestMethod]
         public void PersonGetBy()
         {
             Assert.IsNotNull(MainContext.Instance.Person.GetBy(x => x.FirstName == "Ivan"));
         }
 
+        /// <summary>
+        /// Method testes Delete(delete last inserted person) of PersonContext
+        /// </summary>
         [TestMethod]
         public void LogDelete()
         {

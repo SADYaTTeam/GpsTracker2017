@@ -1,13 +1,24 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GpsTracker.Models.DataContext.Contexts;
-using System.Linq;
-
+﻿// <copyright file="MarkerTest.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Model.Test
 {
+    #region using...
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Models.DataContext.Contexts;
+    #endregion
+
+    /// <summary>
+    /// Class for test marker context
+    /// </summary>
     [TestClass]
     public class MarkerTest
     {
+        /// <summary>
+        /// Method testes Insert(inserts test user and 
+        /// test marker from him) method of MarkerContext
+        /// </summary>
         [TestMethod]
         public void MarkerInsert()
         {
@@ -27,6 +38,9 @@ namespace GpsTracker.Model.Test
             }));
         }
 
+        /// <summary>
+        /// Method testes GetAll method of MarkerContext
+        /// </summary>
         [TestMethod]
         public void MarkerGetAll()
         {
@@ -34,6 +48,10 @@ namespace GpsTracker.Model.Test
             Assert.IsNotNull(result);
         }
 
+        /// <summary>
+        /// Method testes Update(set name of last marker "Test marker
+        /// name" method of MarkerContext
+        /// </summary>
         [TestMethod]
         public void MarkerUpdate()
         {
@@ -42,12 +60,18 @@ namespace GpsTracker.Model.Test
             Assert.IsTrue(MainContext.Instance.Marker.Update(item.MarkerId, item));
         }
 
+        /// <summary>
+        /// Method testes GetBy(Name == "Test marker name") method of MarkerContext
+        /// </summary>
         [TestMethod]
         public void MarkerGetBy()
         {
             Assert.IsNotNull(MainContext.Instance.Marker.GetBy(x => x.Name == "Test marker name"));
         }
 
+        /// <summary>
+        /// Method testes Delete(delete last marker) method of MarkerContext
+        /// </summary>
         [TestMethod]
         public void MarkerDelete()
         {

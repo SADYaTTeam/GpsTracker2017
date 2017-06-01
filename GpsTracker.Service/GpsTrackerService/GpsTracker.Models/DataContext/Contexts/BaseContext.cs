@@ -1,40 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Data.Entity;
-
+﻿// <copyright file="BaseContext.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Models.DataContext.Contexts
 {
+    #region using...
+    using System;
+    using System.Data.Entity;
+    using System.Diagnostics;    
+    #endregion
+
+    /// <summary>
+    /// Base class for all contexts to database tables
+    /// </summary>
     public abstract class BaseContext
-    {
+    { 
+        #region Fields
+
+        /// <summary>
+        /// Present EF context with DB
+        /// </summary>
+        private GpsTrackingDBEntities _context;
+
+        #endregion
+
         #region Constructor
 
-        public BaseContext()
+        /// <summary>
+        /// Initialize new instance of <see cref="BaseContext"/> class
+        /// </summary>
+        protected BaseContext()
         {
             _context = new GpsTrackingDBEntities();
         }
 
-        public BaseContext(GpsTrackingDBEntities context)
+        /// <summary>
+        /// Initialize new instance of <see cref="BaseContext"/> class with selected entity
+        /// </summary>
+        /// <param name="entity">EF data context</param>
+        protected BaseContext(GpsTrackingDBEntities entity)
         {
-            _context = context;
+            _context = entity;
         }
 
         #endregion
 
-        #region Fields
-
-        protected GpsTrackingDBEntities _context;
-
-        #endregion
-
         #region Properties
+
+        /// <summary>
+        /// Gets and sets EF data context
+        /// </summary>
+        protected GpsTrackingDBEntities Context
+        {
+            get => _context;
+            set => _context = value;
+        }
+
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Dispose created in EF context transaction 
+        /// </summary>
+        /// <param name="transaction">Open transaction</param>
         protected void DisposeTransaction(DbContextTransaction transaction)
         {
             try
@@ -47,11 +75,16 @@ namespace GpsTracker.Models.DataContext.Contexts
             }
         }
 
+        /// <summary>
+        /// SaveChanges in EF data context
+        /// </summary>
+        /// <remarks>Exception details search in debug</remarks>
+        /// <returns>Returns false if there're exception while saving, otherwise - true</returns>
         protected bool SaveChanges()
         {
             try
             {
-                _context.SaveChanges();
+                Context.SaveChanges();
             }
             catch (Exception ex)
             {
