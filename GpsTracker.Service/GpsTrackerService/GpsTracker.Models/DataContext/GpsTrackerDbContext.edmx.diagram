@@ -4,18 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="28644d0aebb748789eb80b4789353131" Name="Diagram1">
-        <EntityTypeShape EntityType="GpsTrackingDBModel.Event" Width="1.5" PointX="5.75" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GpsTrackingDBModel.Log" Width="1.5" PointX="8" PointY="5.875" IsExpanded="true" />
+      <Diagram DiagramId="4d6de643acf848c4bb12ed58551a76b9" Name="Diagram1">
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Event" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Log" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GpsTrackingDBModel.Marker" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GpsTrackingDBModel.Person" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GpsTrackingDBModel.Track" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Person" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GpsTrackingDBModel.User" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
         <AssociationConnector Association="GpsTrackingDBModel.FK_Log_Event_Id_Event" ManuallyRouted="false" />
         <AssociationConnector Association="GpsTrackingDBModel.FK_Marker_Track_Id_User" ManuallyRouted="false" />
-        <AssociationConnector Association="GpsTrackingDBModel.FK_Track_Marker_Id_Marker" ManuallyRouted="false" />
         <AssociationConnector Association="GpsTrackingDBModel.FK_Person_User_Id_User" ManuallyRouted="false" />
-        <AssociationConnector Association="GpsTrackingDBModel.FK_Track_User_Id_User" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

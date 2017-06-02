@@ -17,14 +17,14 @@ namespace GpsTracker.Service.Strategies.Base
     /// <summary>
     /// Class represents base class for strategies
     /// </summary>
-    public abstract class Strategy: IDisposable
+    public abstract class Strategy/*: IDisposable*/
     {
         #region Fields
 
-        /// <summary>
-        /// Represents conntroller, that initialize strategy
-        /// </summary>
-        private readonly ApiController _controller;
+        ///// <summary>
+        ///// Represents conntroller, that initialize strategy
+        ///// </summary>
+        //private readonly ApiController _controller;
 
         #endregion
 
@@ -64,10 +64,10 @@ namespace GpsTracker.Service.Strategies.Base
         /// Virtual method for treating incoming marker message
         /// </summary>
         /// <param name="message">Marker message</param>
-        /// <returns>Allways return InternalServerError(500) in base strategy class</returns>
-        public virtual IHttpActionResult Execute(GeoMessage message)
+        /// <returns>Allways return UnknownServerError(-1) in base strategy class</returns>
+        public virtual ResultMessage Execute(GeoMessage message)
         {
-            return new System.Web.Http.Results.InternalServerErrorResult(_controller);
+            return new ResultMessage(){Type = ResultType.UnknownError, Message = "Server tries to execute base strategy method."};
         }
 
         /// <summary>
@@ -108,13 +108,13 @@ namespace GpsTracker.Service.Strategies.Base
             return exist.ToList()[0];
         }
 
-        /// <summary>
-        /// Disposes unmanaged ApiController
-        /// </summary>
-        public virtual void Dispose()
-        {
-            _controller.Dispose();
-        }
+        ///// <summary>
+        ///// Disposes unmanaged ApiController
+        ///// </summary>
+        //public virtual void Dispose()
+        //{
+        //    _controller.Dispose();
+        //}
 
         #endregion
     }

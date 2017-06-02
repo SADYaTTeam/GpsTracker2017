@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="GpsTrackingDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="GpsTrackingDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Event">
     <Key>
       <PropertyRef Name="EventId" />
@@ -14,7 +14,8 @@
     <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="Message" Type="nvarchar" MaxLength="200" />
-    <Property Name="EventDate" Type="datetime" Nullable="false" />
+    <Property Name="EventDate" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="DeviceId" Type="char" MaxLength="16" />
   </EntityType>
   <EntityType Name="Marker">
     <Key>
@@ -25,7 +26,7 @@
     <Property Name="Name" Type="nvarchar" MaxLength="60" />
     <Property Name="Longtitude" Type="float" Nullable="false" />
     <Property Name="Latitude" Type="float" Nullable="false" />
-    <Property Name="Timestamp" Type="datetime" Nullable="false" />
+    <Property Name="Timestamp" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <EntityType Name="Person">
     <Key>
@@ -37,28 +38,10 @@
     <Property Name="LastName" Type="nchar" MaxLength="40" />
     <Property Name="MiddleName" Type="nchar" MaxLength="40" />
     <Property Name="Gender" Type="bit" />
-    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="DateOfBirth" Type="datetime2" Precision="7" />
     <Property Name="Photo" Type="image" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
     <Property Name="Phone" Type="nvarchar" MaxLength="13" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
-  <EntityType Name="Track">
-    <Key>
-      <PropertyRef Name="TrackId" />
-    </Key>
-    <Property Name="TrackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MarkerId" Type="int" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -69,7 +52,7 @@
     <Property Name="Password" Type="nvarchar" MaxLength="16" Nullable="false" />
     <Property Name="DeviceId" Type="char" MaxLength="16" Nullable="false" />
     <Property Name="IsAdmin" Type="bit" Nullable="false" />
-    <Property Name="DateCreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="DateCreatedAt" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <Association Name="FK_Log_Event_Id_Event">
     <End Role="Event" Type="Self.Event" Multiplicity="1" />
@@ -107,37 +90,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Track_Marker_Id_Marker">
-    <End Role="Marker" Type="Self.Marker" Multiplicity="1" />
-    <End Role="Track" Type="Self.Track" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Marker">
-        <PropertyRef Name="MarkerId" />
-      </Principal>
-      <Dependent Role="Track">
-        <PropertyRef Name="MarkerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Track_User_Id_User">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="Track" Type="Self.Track" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="Track">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityContainer Name="GpsTrackingDatabaseModelStoreContainer">
+  <EntityContainer Name="GpsTrackingDBModelStoreContainer">
     <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Marker" EntityType="Self.Marker" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Log_Event_Id_Event" Association="Self.FK_Log_Event_Id_Event">
       <End Role="Event" EntitySet="Event" />
@@ -150,14 +107,6 @@
     <AssociationSet Name="FK_Person_User_Id_User" Association="Self.FK_Person_User_Id_User">
       <End Role="User" EntitySet="User" />
       <End Role="Person" EntitySet="Person" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Track_Marker_Id_Marker" Association="Self.FK_Track_Marker_Id_Marker">
-      <End Role="Marker" EntitySet="Marker" />
-      <End Role="Track" EntitySet="Track" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Track_User_Id_User" Association="Self.FK_Track_User_Id_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="Track" EntitySet="Track" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

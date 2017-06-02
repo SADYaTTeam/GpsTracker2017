@@ -29,7 +29,6 @@ namespace GpsTracker.Models.DataContext
         public virtual DbSet<Log> Log { get; set; }
         public virtual DbSet<Marker> Marker { get; set; }
         public virtual DbSet<Person> Person { get; set; }
-        public virtual DbSet<Track> Track { get; set; }
         public virtual DbSet<User> User { get; set; }
     }
 }

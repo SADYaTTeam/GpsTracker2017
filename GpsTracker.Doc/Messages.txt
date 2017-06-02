@@ -1,0 +1,41 @@
+enum GeoType
+{
+	0: SOS
+	1: Marker
+}
+
+enum ResultType
+{
+	-1: UnknownError
+	0: Success
+	1: Decline
+}
+
+GeoMessage
+{
+	"Longitude": double,
+    "Latitude": double,
+    "DeviceId": string(16),
+    "Type": int
+}
+
+CheckMessage
+{
+	"DeviceId": string(16)
+}
+
+LoginMessage
+{
+	"Login": string(5..16)
+	"Password": string(6..16)
+	"DeviceId": string(16)
+}
+
+ResultMessage
+{
+	"Type": int,
+	"Message": string,
+	"Longitude": float?,
+	"Latitude": float?,
+	"Radius": float?
+}

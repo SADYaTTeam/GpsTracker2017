@@ -27,7 +27,7 @@ namespace GpsTracker.Service.Controllers.App
         /// <returns>Return Ok(200) if message successfully been treated. And returns InternalServerError(500) if there's an exception while proccess</returns>
         [HttpPost]
         [Route("")]
-        public IHttpActionResult TakeGeo([FromBody] GeoMessage message)
+        public ResultMessage TakeGeo([FromBody] GeoMessage message)
         {
             Strategy strategy;
             switch (message.Type)
@@ -55,10 +55,11 @@ namespace GpsTracker.Service.Controllers.App
         /// Check db for the existance user with this deviceId
         /// </summary>
         /// <param name="message">Check message from mobile app</param>
-        /// <returns>Returns Ok(200) if there're user in db with that deviceId, BadRequest(400) if not and InternalServerError(500) if there's an exception while process</returns>
+        /// <returns>Returns Success(0) if there're user in db with that deviceId, 
+        /// Decline(1) if not and UnknownError(-1) if there's an exception while process</returns>
         [HttpPost]
         [Route("check")]
-        public IHttpActionResult CheckExist([FromBody] CheckMessage message)
+        public ResultMessage CheckExist([FromBody] CheckMessage message)
         {
             try
             {
@@ -68,14 +69,27 @@ namespace GpsTracker.Service.Controllers.App
                 }
                 if (MainContext.Instance.User.GetBy(x => message.DeviceId == x.DeviceId) != null)
                 {
-                    return new System.Web.Http.Results.OkResult(this);
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Decline,
+                        Message = ""
+                    };
                 }
-                return new System.Web.Http.Results.BadRequestResult(this);
+                return new ResultMessage()
+                {
+                    Type = ResultType.Success,
+                    Message = "There's an user in db with this deviceId"
+                };
             }
             catch(Exception ex)
             {
                 Debug.WriteLine($"Internal server exception: {ex.Message}");
-                return new System.Web.Http.Results.InternalServerErrorResult(this);
+                return new ResultMessage()
+                {
+                    Type = ResultType.UnknownError,
+                    Message = "Internal server error" +
+                              $"{ex.Message}"
+                };
             }
         }
 
@@ -83,11 +97,13 @@ namespace GpsTracker.Service.Controllers.App
         /// Registrate new user in system
         /// </summary>
         /// <param name="message">Registration message from mobile app</param>
-        /// <returns>Returns Ok(200) if new user been successfully inserted, BadRequest(400) if there're already user in db with this info or
-        /// some fields in message are empty, InternalServerError(500) if there's an exception while process </returns>
+        /// <returns>Returns Success(1) if new user been successfully inserted, 
+        /// Decline(1) if there're already user in db with this info or
+        /// some fields in message are empty, 
+        /// UnknownError(-1) if there's an exception while process </returns>
         [HttpPost]
         [Route("reg")]
-        public IHttpActionResult Registration([FromBody] RegistrationMessage message)
+        public ResultMessage Registration([FromBody] RegistrationMessage message)
         {
             try
             {
@@ -95,11 +111,19 @@ namespace GpsTracker.Service.Controllers.App
                     .Select(pi => (string) pi.GetValue(message))
                     .Any(String.IsNullOrEmpty))
                 {
-                    return new System.Web.Http.Results.BadRequestResult(this);
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Decline,
+                        Message = "Some fields are empty"
+                    };
                 }
                 if (MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId) != null)
                 {
-                    return new System.Web.Http.Results.BadRequestResult(this);
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Decline,
+                        Message = "There's an user in db with this deviceId"
+                    };
                 }
                 try
                 {
@@ -117,18 +141,31 @@ namespace GpsTracker.Service.Controllers.App
                         UserId = user.UserId
                     });
                     MainContext.Instance.CommitTransaction();
-                    return new System.Web.Http.Results.OkResult(this);
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Success,
+                        Message = "User successfully added to db"
+                    };
                 }
                 catch (Exception)
                 {
                     MainContext.Instance.RollbackTransaction();
-                    return new System.Web.Http.Results.BadRequestResult(this);
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Decline,
+                        Message = "Input user information does not meet the requirements"
+                    }; ;
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Internal server exception: {ex.Message}");
-                return new System.Web.Http.Results.InternalServerErrorResult(this);
+                return new ResultMessage()
+                {
+                    Type = ResultType.UnknownError,
+                    Message = "Internal server error" +
+                              $"{ex.Message}"
+                };
             }
         }
     }

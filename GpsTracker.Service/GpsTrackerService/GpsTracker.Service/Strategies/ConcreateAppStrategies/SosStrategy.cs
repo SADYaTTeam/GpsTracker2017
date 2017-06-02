@@ -56,9 +56,9 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
         /// Treating incoming sos-type message
         /// </summary>
         /// <param name="message">Sos-type message</param>
-        /// <returns>Returns Ok(200) if process was successful and 
-        /// InternalServerError(500) if there're is some server exception</returns>
-        public override IHttpActionResult Execute(GeoMessage message)
+        /// <returns>Returns Success(0) if process was successful and 
+        /// InternalServerError(-1) if there're is some server exception</returns>
+        public override ResultMessage Execute(GeoMessage message)
         {
             try
             {
@@ -79,12 +79,21 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                     temp.Timestamp = DateTime.Now;
                 }
                 WriteToDb(message);
-                return new System.Web.Http.Results.OkResult(Controller);
+                return new ResultMessage()
+                {
+                    Type = ResultType.Success,
+                    Message = "Server succesfully read incoming sos message"
+                };
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
-                return new System.Web.Http.Results.InternalServerErrorResult(Controller);
+                return new ResultMessage()
+                {
+                    Type = ResultType.UnknownError,
+                    Message = "Internal server error" +
+                              $"{ex.Message}"
+                };
             }
         }
 

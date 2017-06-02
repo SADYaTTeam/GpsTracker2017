@@ -85,18 +85,5 @@ namespace GpsTracker.Models.Mappers
                 Timestamp = marker.Timestamp
             };
         }
-
-        /// <summary>
-        /// Map <see cref="DataContext.Track"/> to <see cref="Models.Track"/>
-        /// </summary>
-        public static Models.Track Convert(this DataContext.Track track)
-        {
-            return new Models.Track()
-            {
-                TrackId = track.TrackId,
-                UserId = track.UserId,
-                MarkerId = track.MarkerId
-            };
-        }
     }
 }

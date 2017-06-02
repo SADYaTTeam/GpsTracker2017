@@ -60,7 +60,7 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
         /// <param name="message">Marker-type message</param>
         /// <returns>Returns Ok(200) if process was successful and 
         /// InternalServerError(500) if there're is some server exception</returns>
-        public override IHttpActionResult Execute(GeoMessage message)
+        public override ResultMessage Execute(GeoMessage message)
         {
             try
             {
@@ -83,12 +83,21 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                     temp.Timestamp = DateTime.Now;
                 }
                 WriteToDb(message);
-                return new System.Web.Http.Results.OkResult(Controller);
+                return new ResultMessage()
+                {
+                    Type = ResultType.Success,
+                    Message = "Server succesfully read incoming marker message"
+                };
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
-                return new System.Web.Http.Results.InternalServerErrorResult(Controller);
+                Debug.WriteLine($"Exception in MarkerStrategy.Execute: {ex.Message}");
+                return new ResultMessage()
+                {
+                    Type = ResultType.UnknownError,
+                    Message = "Internal server error" +
+                              $"{ex.Message}"
+                };
             }
         }
 
@@ -98,20 +107,12 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
         /// <param name="message">Inforamtion ablit new marker</param>
         protected override void WriteToDb(GeoMessage message)
         {
-            try
+            MainContext.Instance.Marker.Insert(new Marker()
             {
-                var temp = (TrackContext)MainContext.Instance.Track;
-                temp.Insert(_user, new Marker()
-                {
-                    Longtitude = message.Longitude,
-                    Latitude = message.Latitude,
-                    UserId = _user.UserId
-                });
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Internal Server exception: {ex.Message}");
-            }
+                Latitude = message.Latitude,
+                Longtitude = message.Longitude,
+                UserId = _user.UserId
+            });
         }
 
         #endregion

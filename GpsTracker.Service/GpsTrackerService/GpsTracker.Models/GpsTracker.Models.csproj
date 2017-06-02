@@ -57,54 +57,50 @@
     <Compile Include="DataContext\Contexts\MainContext.cs" />
     <Compile Include="DataContext\Contexts\MarkerContext.cs" />
     <Compile Include="DataContext\Contexts\PersonContext.cs" />
-    <Compile Include="DataContext\Contexts\TrackContext.cs" />
     <Compile Include="DataContext\Contexts\UserContext.cs" />
     <Compile Include="DataContext\Event.cs">
-      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+      <DependentUpon>GpsTrackerDbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataContext\GpsTrackerDbModel.Context.cs">
+    <Compile Include="DataContext\GpsTrackerDbContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GpsTrackerDbModel.Context.tt</DependentUpon>
+      <DependentUpon>GpsTrackerDbContext.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataContext\GpsTrackerDbModel.cs">
+    <Compile Include="DataContext\GpsTrackerDbContext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+      <DependentUpon>GpsTrackerDbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataContext\GpsTrackerDbModel.Designer.cs">
+    <Compile Include="DataContext\GpsTrackerDbContext.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GpsTrackerDbModel.edmx</DependentUpon>
+      <DependentUpon>GpsTrackerDbContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataContext\Interfaces\IDbContext.cs" />
     <Compile Include="DataContext\Interfaces\IMainDbContext.cs" />
     <Compile Include="DataContext\Log.cs">
-      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+      <DependentUpon>GpsTrackerDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\Marker.cs">
-      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+      <DependentUpon>GpsTrackerDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\Person.cs">
-      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\Track.cs">
-      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+      <DependentUpon>GpsTrackerDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\User.cs">
-      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+      <DependentUpon>GpsTrackerDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Mappers\FromDb.cs" />
     <Compile Include="Mappers\IntoDb.cs" />
     <Compile Include="Messages\CheckMessage.cs" />
     <Compile Include="Messages\RegistrationMessage.cs" />
+    <Compile Include="Messages\ResultMessage.cs" />
     <Compile Include="Messages\SosMessage.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Messages\GeoMessage.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Marker.cs" />
     <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\Track.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -112,26 +108,26 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="DataContext\GpsTrackerDbModel.edmx">
+    <EntityDeploy Include="DataContext\GpsTrackerDbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GpsTrackerDbModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>GpsTrackerDbContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="App.Config" />
-    <None Include="DataContext\GpsTrackerDbModel.edmx.diagram">
-      <DependentUpon>GpsTrackerDbModel.edmx</DependentUpon>
+    <None Include="DataContext\GpsTrackerDbContext.edmx.diagram">
+      <DependentUpon>GpsTrackerDbContext.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataContext\GpsTrackerDbModel.Context.tt">
+    <Content Include="DataContext\GpsTrackerDbContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GpsTrackerDbModel.edmx</DependentUpon>
-      <LastGenOutput>GpsTrackerDbModel.Context.cs</LastGenOutput>
+      <DependentUpon>GpsTrackerDbContext.edmx</DependentUpon>
+      <LastGenOutput>GpsTrackerDbContext.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataContext\GpsTrackerDbModel.tt">
+    <Content Include="DataContext\GpsTrackerDbContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GpsTrackerDbModel.edmx</DependentUpon>
-      <LastGenOutput>GpsTrackerDbModel.cs</LastGenOutput>
+      <DependentUpon>GpsTrackerDbContext.edmx</DependentUpon>
+      <LastGenOutput>GpsTrackerDbContext.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -19,7 +19,6 @@ namespace GpsTracker.Models.DataContext
         {
             this.Marker = new HashSet<Marker>();
             this.Person = new HashSet<Person>();
-            this.Track = new HashSet<Track>();
         }
     
         public int UserId { get; set; }
@@ -33,7 +32,5 @@ namespace GpsTracker.Models.DataContext
         public virtual ICollection<Marker> Marker { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Person> Person { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Track> Track { get; set; }
     }
 }
