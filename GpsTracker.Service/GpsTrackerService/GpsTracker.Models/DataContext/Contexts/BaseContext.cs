@@ -12,7 +12,7 @@ namespace GpsTracker.Models.DataContext.Contexts
     /// <summary>
     /// Base class for all contexts to database tables
     /// </summary>
-    public abstract class BaseContext
+    public abstract class BaseContext: IDisposable
     { 
         #region Fields
 
@@ -92,6 +92,15 @@ namespace GpsTracker.Models.DataContext.Contexts
                 return false;
             }
             return true;
+        }
+
+
+        /// <summary>
+        /// Dispose unmanaged DbContext
+        /// </summary>
+        public virtual void Dispose()
+        {
+            _context.Dispose();
         }
 
         #endregion

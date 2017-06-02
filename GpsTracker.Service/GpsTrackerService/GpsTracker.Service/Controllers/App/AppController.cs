@@ -82,7 +82,7 @@ namespace GpsTracker.Service.Controllers.App
         /// <summary>
         /// Registrate new user in system
         /// </summary>
-        /// <param name="newUser">Registration message from mobile app</param>
+        /// <param name="message">Registration message from mobile app</param>
         /// <returns>Returns Ok(200) if new user been successfully inserted, BadRequest(400) if there're already user in db with this info or
         /// some fields in message are empty, InternalServerError(500) if there's an exception while process </returns>
         [HttpPost]

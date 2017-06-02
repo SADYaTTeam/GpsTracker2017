@@ -1,6 +1,9 @@
 ﻿// <copyright file="Strategy.cs" company="SADYaTTeam">
 //     SADYaTTeam 2017.
 // </copyright>
+
+using System;
+
 namespace GpsTracker.Service.Strategies.Base
 {
     #region using...
@@ -14,7 +17,7 @@ namespace GpsTracker.Service.Strategies.Base
     /// <summary>
     /// Class represents base class for strategies
     /// </summary>
-    public abstract class Strategy
+    public abstract class Strategy: IDisposable
     {
         #region Fields
 
@@ -103,6 +106,14 @@ namespace GpsTracker.Service.Strategies.Base
                 });
             }
             return exist.ToList()[0];
+        }
+
+        /// <summary>
+        /// Disposes unmanaged ApiController
+        /// </summary>
+        public virtual void Dispose()
+        {
+            _controller.Dispose();
         }
 
         #endregion
