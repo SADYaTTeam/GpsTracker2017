@@ -4,12 +4,23 @@
 namespace GpsTracker.Models.Messages
 {
     /// <summary>
-    /// Class represents structure of registration message from mobile app
+    /// Class represents structure of login message from mobile app
     /// </summary>
-    public class RegistrationMessage
+    public class LoginMessage
     {
+        /// <summary>
+        /// User login
+        /// </summary>
         public string Login { get; set; }
+
+        /// <summary>
+        /// User password
+        /// </summary>
         public string Password { get; set; }
+
+        /// <summary>
+        /// User deviceId
+        /// </summary>
         public string DeviceId { get; set; }
     }
 }

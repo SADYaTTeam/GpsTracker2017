@@ -6,7 +6,6 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
     #region using...
     using System;
     using System.Linq;
-    using System.Web.Http;
     using System.Diagnostics;
     using Models.Messages;
     using Models.Models;
@@ -95,7 +94,7 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                 return new ResultMessage()
                 {
                     Type = ResultType.UnknownError,
-                    Message = "Internal server error" +
+                    Message = "Internal server error " +
                               $"{ex.Message}"
                 };
             }

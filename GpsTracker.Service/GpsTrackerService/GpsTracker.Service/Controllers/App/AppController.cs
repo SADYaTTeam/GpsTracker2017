@@ -1,6 +1,7 @@
 ﻿// <copyright file="AppController.cs" company="SADYaTTeam">
 //     SADYaTTeam 2017.
 // </copyright>
+
 namespace GpsTracker.Service.Controllers.App
 {
     #region using...
@@ -15,7 +16,7 @@ namespace GpsTracker.Service.Controllers.App
     #endregion
 
     /// <summary>
-    /// Class representes web api 2 controller for path "../api/app"
+    /// Class representes web api 2 controller for app (path "../api/app")
     /// </summary>
     [RoutePrefix("api/app")]
     public class AppController : ApiController
@@ -65,21 +66,26 @@ namespace GpsTracker.Service.Controllers.App
             {
                 if (message.DeviceId.Length != 16)
                 {
-                    throw new Exception("DeviceId length != 16");
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Decline,
+                        Message = "Device id != 16"
+                    };
                 }
                 if (MainContext.Instance.User.GetBy(x => message.DeviceId == x.DeviceId) != null)
                 {
                     return new ResultMessage()
                     {
-                        Type = ResultType.Decline,
-                        Message = ""
+                        Type = ResultType.Success,
+                        Message = "There's an user in db with this deviceId"
                     };
                 }
                 return new ResultMessage()
                 {
-                    Type = ResultType.Success,
-                    Message = "There's an user in db with this deviceId"
+                    Type = ResultType.Decline,
+                    Message = "There's no user in db with this deviceId"
                 };
+
             }
             catch(Exception ex)
             {
@@ -87,7 +93,7 @@ namespace GpsTracker.Service.Controllers.App
                 return new ResultMessage()
                 {
                     Type = ResultType.UnknownError,
-                    Message = "Internal server error" +
+                    Message = "Internal server error " +
                               $"{ex.Message}"
                 };
             }
@@ -103,13 +109,13 @@ namespace GpsTracker.Service.Controllers.App
         /// UnknownError(-1) if there's an exception while process </returns>
         [HttpPost]
         [Route("reg")]
-        public ResultMessage Registration([FromBody] RegistrationMessage message)
+        public ResultMessage Registration([FromBody] LoginMessage message)
         {
             try
             {
                 if (message.GetType().GetProperties().Where(pi => pi.GetValue(message) is string)
                     .Select(pi => (string) pi.GetValue(message))
-                    .Any(String.IsNullOrEmpty))
+                    .Any(string.IsNullOrEmpty))
                 {
                     return new ResultMessage()
                     {
@@ -127,29 +133,51 @@ namespace GpsTracker.Service.Controllers.App
                 }
                 try
                 {
-                    MainContext.Instance.BeginTransaction();
-                    MainContext.Instance.User.Insert(new Models.Models.User()
+                    if (MainContext.Instance.User.Insert(new Models.Models.User()
                     {
                         DeviceId = message.DeviceId,
                         IsAdmin = false,
-                        Login = message.DeviceId,
-                        Password = message.DeviceId
-                    });
-                    var user = MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId).FirstOrDefault();
-                    MainContext.Instance.Person.Insert(new Models.Models.Person()
+                        Login = message.Login,
+                        Password = message.Password
+                    }))
                     {
-                        UserId = user.UserId
-                    });
-                    MainContext.Instance.CommitTransaction();
-                    return new ResultMessage()
+                        var users = MainContext.Instance.User.GetAll().LastOrDefault();
+                        var index = 1;
+                        if (users != null)
+                        {
+                            index = users.UserId;
+                        }
+                        if (MainContext.Instance.Person.Insert(new Models.Models.Person()
+                        {
+                            UserId = index
+                        }))
+                        {
+                            return new ResultMessage()
+                            {
+                                Type = ResultType.Success,
+                                Message = "User successfully added to db"
+                            };
+                        }
+                        return new ResultMessage()
+                        {
+                            Type = ResultType.Decline,
+                            Message = "User been created, but can't create personal info entity." +
+                                      "Create it through website(http://notbadtracker.azurewebsites.net/)"
+                        };
+                    }
+                    else
                     {
-                        Type = ResultType.Success,
-                        Message = "User successfully added to db"
-                    };
+                        return new ResultMessage()
+                        {
+                            Type = ResultType.Decline,
+                            Message = "Can't add new user with this data"
+                        };
+                    }
+
+
                 }
                 catch (Exception)
                 {
-                    MainContext.Instance.RollbackTransaction();
                     return new ResultMessage()
                     {
                         Type = ResultType.Decline,
@@ -163,7 +191,7 @@ namespace GpsTracker.Service.Controllers.App
                 return new ResultMessage()
                 {
                     Type = ResultType.UnknownError,
-                    Message = "Internal server error" +
+                    Message = "Internal server error " +
                               $"{ex.Message}"
                 };
             }

@@ -91,7 +91,7 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                 return new ResultMessage()
                 {
                     Type = ResultType.UnknownError,
-                    Message = "Internal server error" +
+                    Message = "Internal server error " +
                               $"{ex.Message}"
                 };
             }
