@@ -1,8 +1,5 @@
-CREATE DATABASE GpsTrackingDatabase
-GO
-
-USE GpsTrackingDatabase
-GO
+--CREATE DATABASE GpsTrackingDatabase
+--GO
 
 CREATE TABLE dbo.[Event]
     (
@@ -80,17 +77,6 @@ CREATE TABLE dbo.Marker
 	CONSTRAINT CH_Marker_Longtitude_Latitude CHECK(Longtitude <= 180 OR Longtitude >= -180 AND Latitude <= 90 OR Latitude >= 0 )
 	--CONSTRAINT CH_Marker_Longtitude_Null CHECK (Longtitude IS NOT NULL),
 	--CONSTRAINT CH_Marker_Latitude_Null CHECK (Latitude IS NOT NULL)
-)
-GO
-
-CREATE TABLE dbo.Track
-(
-	TrackId INT NOT NULL IDENTITY(1, 1),
-	MarkerId INT NOT NULL,
-	UserId INT NOT NULL,
-	CONSTRAINT PK_Id_Track PRIMARY KEY CLUSTERED (TrackId),
-	CONSTRAINT FK_Track_User_Id_User FOREIGN KEY(UserId) REFERENCES dbo.[User](UserId),
-	CONSTRAINT FK_Track_Marker_Id_Marker FOREIGN KEY(MarkerId) REFERENCES dbo.Marker(MarkerId)
 )
 GO
 
