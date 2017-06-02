@@ -46,7 +46,6 @@ namespace GpsTracker.Models.DataContext.Contexts
             Person = new PersonContext(_context);
             User = new UserContext(_context);
             Marker = new MarkerContext(_context);
-            Track = new TrackContext(_context);
         }
 
         #endregion
@@ -82,11 +81,6 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// Gets or sets <see cref="Contexts.MarkerContext"/> 
         /// </summary>
         public IDbContext<Models.Marker, DataContext.Marker> Marker { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="Contexts.TrackContext"/> 
-        /// </summary>
-        public IDbContext<Models.Track, DataContext.Track> Track { get; set; }
 
         #endregion
 

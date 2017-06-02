@@ -19,22 +19,22 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 
         #region Constructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnknownTypeStrategy"/> class
-        /// </summary>
-        public UnknownTypeStrategy()
-        {
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="UnknownTypeStrategy"/> class
+        ///// </summary>
+        //public UnknownTypeStrategy()
+        //{
             
-        }
+        //}
 
-        /// <summary>
-        /// Initialized a new instance of the <see cref="UnknownTypeStrategy"/> class
-        /// </summary>
-        /// <param name="controller">App contoller instance</param>
-        public UnknownTypeStrategy(AppController controller) : base(controller)
-        {
+        ///// <summary>
+        ///// Initialized a new instance of the <see cref="UnknownTypeStrategy"/> class
+        ///// </summary>
+        ///// <param name="controller">App contoller instance</param>
+        //public UnknownTypeStrategy(AppController controller) : base(controller)
+        //{
             
-        }
+        //}
 
         #endregion
 

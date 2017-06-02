@@ -31,21 +31,21 @@ namespace GpsTracker.Service.Strategies.Base
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Strategy"/> class
+        /// Initializes a new instance of<see cref= "Strategy" /> class
         /// </summary>
-        protected Strategy()
-        {
-            
-        }
+        //protected Strategy()
+        //{
+
+        //}
 
         /// <summary>
-        /// Initialized a new instance of <see cref="Strategy"/> class
+        /// Initialized a new instance of<see cref= "Strategy" /> class
         /// </summary>
-        /// <param name="controller">App contoller instance</param>
-        protected Strategy(ApiController controller)
-        {
-            _controller = controller;
-        }
+        /// <param name = "controller" > App contoller instance</param>
+        //protected Strategy(ApiController controller)
+        //{
+        //    _controller = controller;
+        //}
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace GpsTracker.Service.Strategies.Base
         /// <summary>
         /// Gets private api controller 
         /// </summary>
-        protected ApiController Controller => _controller;
+        //protected ApiController Controller => _controller;
 
         #endregion
 

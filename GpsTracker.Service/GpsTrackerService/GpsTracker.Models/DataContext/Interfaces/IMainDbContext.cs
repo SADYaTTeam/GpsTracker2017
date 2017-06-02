@@ -34,11 +34,6 @@ namespace GpsTracker.Models.DataContext.Interfaces
         IDbContext<Models.Marker, DataContext.Marker> Marker { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="Contexts.TrackContext"/> 
-        /// </summary>
-        IDbContext<Models.Track, DataContext.Track> Track { get; set; }
-
-        /// <summary>
         /// Begin transaction in EF db context
         /// </summary>
         void BeginTransaction();

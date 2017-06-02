@@ -29,22 +29,22 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 
         #region Constructors
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="MarkerStrategy"/> class
-        /// </summary>
-        public MarkerStrategy()
-        {
-            
-        }
+        ///// <summary>
+        ///// Initializes a new instance of<see cref= "MarkerStrategy" /> class
+        ///// </summary>
+        ////public MarkerStrategy()
+        ////{
 
-        /// <summary>
-        /// Initialized a new instance of <see cref="MarkerStrategy"/> class
-        /// </summary>
-        /// <param name="controller">App contoller instance</param>
-        public MarkerStrategy(AppController controller) : base(controller)
-        {
-            
-        }
+        ////}
+
+        ///// <summary>
+        ///// Initialized a new instance of <see cref="MarkerStrategy"/> class
+        ///// </summary>
+        ///// <param name="controller">App contoller instance</param>
+        //public MarkerStrategy(AppController controller) : base(controller)
+        //{
+
+        //}
 
         #endregion
 

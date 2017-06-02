@@ -34,17 +34,17 @@ namespace GpsTracker.Service.Controllers.App
             {
                 case MessageType.Marker:
                     {
-                        strategy = new MarkerStrategy(this);
+                        strategy = new MarkerStrategy();
                         break;
                     }
                 case MessageType.Sos:
                     {
-                        strategy = new SosStrategy(this);
+                        strategy = new SosStrategy();
                         break;
                     }
                 default:
                     {
-                        strategy = new UnknownTypeStrategy(this);
+                        strategy = new UnknownTypeStrategy();
                         break;
                     }
             }
