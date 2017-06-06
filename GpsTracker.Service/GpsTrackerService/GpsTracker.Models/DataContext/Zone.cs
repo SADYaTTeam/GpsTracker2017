@@ -12,14 +12,14 @@ namespace GpsTracker.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class Marker
+    public partial class Zone
     {
-        public int MarkerId { get; set; }
-        public int UserId { get; set; }
-        public string Name { get; set; }
+        public int ZoneId { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
-        public System.DateTime Timestamp { get; set; }
+        public double Radius { get; set; }
+        public int UserId { get; set; }
+        public string Name { get; set; }
     
         public virtual User User { get; set; }
     }

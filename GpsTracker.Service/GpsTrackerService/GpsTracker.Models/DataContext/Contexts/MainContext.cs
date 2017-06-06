@@ -46,6 +46,7 @@ namespace GpsTracker.Models.DataContext.Contexts
             Person = new PersonContext(_context);
             User = new UserContext(_context);
             Marker = new MarkerContext(_context);
+            Friendlist = new FriendlistContext(_context);
         }
 
         #endregion
@@ -81,6 +82,11 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// Gets or sets <see cref="Contexts.MarkerContext"/> 
         /// </summary>
         public IDbContext<Models.Marker, DataContext.Marker> Marker { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="Contexts.FriendlistContext"/> 
+        /// </summary>
+        public IDbContext<Models.Friendlist, DataContext.Friendlist> Friendlist { get; set; }
 
         #endregion
 

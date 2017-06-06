@@ -53,12 +53,17 @@
   <ItemGroup>
     <Compile Include="DataContext\Contexts\BaseContext.cs" />
     <Compile Include="DataContext\Contexts\EventContext.cs" />
+    <Compile Include="DataContext\Contexts\FriendlistContext.cs" />
     <Compile Include="DataContext\Contexts\LogContext.cs" />
     <Compile Include="DataContext\Contexts\MainContext.cs" />
     <Compile Include="DataContext\Contexts\MarkerContext.cs" />
     <Compile Include="DataContext\Contexts\PersonContext.cs" />
     <Compile Include="DataContext\Contexts\UserContext.cs" />
+    <Compile Include="DataContext\Contexts\ZoneContext.cs" />
     <Compile Include="DataContext\Event.cs">
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Friendlist.cs">
       <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\GpsTrackerDbModel.Context.cs">
@@ -90,6 +95,9 @@
     <Compile Include="DataContext\User.cs">
       <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\Zone.cs">
+      <DependentUpon>GpsTrackerDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Mappers\FromDb.cs" />
     <Compile Include="Mappers\IntoDb.cs" />
     <Compile Include="Messages\CheckMessage.cs" />
@@ -98,10 +106,12 @@
     <Compile Include="Messages\SosMessage.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Messages\GeoMessage.cs" />
+    <Compile Include="Models\Friendlist.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Marker.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

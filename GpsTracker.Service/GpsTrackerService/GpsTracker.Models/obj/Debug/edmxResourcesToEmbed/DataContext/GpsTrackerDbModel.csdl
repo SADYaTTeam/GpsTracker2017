@@ -26,7 +26,7 @@
     <Property Name="MarkerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="Longtitude" Type="Double" Nullable="false" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
     <Property Name="Latitude" Type="Double" Nullable="false" />
     <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="7" />
     <NavigationProperty Name="User" Relationship="Self.FK_Marker_Track_Id_User" FromRole="Marker" ToRole="User" />
@@ -59,6 +59,37 @@
     <Property Name="DateCreatedAt" Type="DateTime" Nullable="false" Precision="7" />
     <NavigationProperty Name="Marker" Relationship="Self.FK_Marker_Track_Id_User" FromRole="User" ToRole="Marker" />
     <NavigationProperty Name="Person" Relationship="Self.FK_Person_User_Id_User" FromRole="User" ToRole="Person" />
+    <NavigationProperty Name="Zone" Relationship="Self.FK_Zone_UserId_User" FromRole="User" ToRole="Zone" />
+    <NavigationProperty Name="Friendlist" Relationship="Self.PK_Friendlist_Markered_User" FromRole="User" ToRole="Friendlist" />
+    <NavigationProperty Name="Friendlist1" Relationship="Self.PK_Friendlist_Sender_User" FromRole="User" ToRole="Friendlist" />
+  </EntityType>
+  <EntityType Name="Friendlist">
+    <Key>
+      <PropertyRef Name="ItemId" />
+      <PropertyRef Name="Sender" />
+      <PropertyRef Name="Markered" />
+    </Key>
+    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Sender" Type="Int32" Nullable="false" />
+    <Property Name="Markered" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.PK_Friendlist_Markered_User" FromRole="Friendlist" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="Self.PK_Friendlist_Sender_User" FromRole="Friendlist" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Zone">
+    <Key>
+      <PropertyRef Name="ZoneId" />
+      <PropertyRef Name="Longitude" />
+      <PropertyRef Name="Latitude" />
+      <PropertyRef Name="Radius" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ZoneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
+    <Property Name="Latitude" Type="Double" Nullable="false" />
+    <Property Name="Radius" Type="Double" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Zone_UserId_User" FromRole="Zone" ToRole="User" />
   </EntityType>
   <Association Name="FK_Log_Event_Id_Event">
     <End Role="Event" Type="Self.Event" Multiplicity="1" />
@@ -96,12 +127,50 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Zone_UserId_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Zone" Type="Self.Zone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Zone">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_Friendlist_Markered_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Friendlist" Type="Self.Friendlist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Friendlist">
+        <PropertyRef Name="Markered" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_Friendlist_Sender_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Friendlist" Type="Self.Friendlist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Friendlist">
+        <PropertyRef Name="Sender" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="GpsTrackingDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Event" EntityType="Self.Event" />
     <EntitySet Name="Log" EntityType="Self.Log" />
     <EntitySet Name="Marker" EntityType="Self.Marker" />
     <EntitySet Name="Person" EntityType="Self.Person" />
     <EntitySet Name="User" EntityType="Self.User" />
+    <EntitySet Name="Friendlist" EntityType="Self.Friendlist" />
+    <EntitySet Name="Zone" EntityType="Self.Zone" />
     <AssociationSet Name="FK_Log_Event_Id_Event" Association="Self.FK_Log_Event_Id_Event">
       <End Role="Event" EntitySet="Event" />
       <End Role="Log" EntitySet="Log" />
@@ -113,6 +182,18 @@
     <AssociationSet Name="FK_Person_User_Id_User" Association="Self.FK_Person_User_Id_User">
       <End Role="User" EntitySet="User" />
       <End Role="Person" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zone_UserId_User" Association="Self.FK_Zone_UserId_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Zone" EntitySet="Zone" />
+    </AssociationSet>
+    <AssociationSet Name="PK_Friendlist_Markered_User" Association="Self.PK_Friendlist_Markered_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Friendlist" EntitySet="Friendlist" />
+    </AssociationSet>
+    <AssociationSet Name="PK_Friendlist_Sender_User" Association="Self.PK_Friendlist_Sender_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Friendlist" EntitySet="Friendlist" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

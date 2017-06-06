@@ -74,7 +74,7 @@ CREATE TABLE dbo.Marker
 	[Timestamp] DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
 	CONSTRAINT PK_Id_Marker PRIMARY KEY CLUSTERED (MarkerId),
 	CONSTRAINT FK_Marker_Track_Id_User FOREIGN KEY(UserId) REFERENCES dbo.[User](UserId),
-	CONSTRAINT CH_Marker_Longtitude_Latitude CHECK(Longitude <= 180 OR Longitude >= -180 AND Latitude <= 90 OR Latitude >= -90 )
+	CONSTRAINT CH_Marker_Longitude_Latitude CHECK(Longitude <= 180 OR Longitude >= -180 AND Latitude <= 90 OR Latitude >= -90 )
 )
 GO
 
@@ -82,7 +82,7 @@ CREATE TABLE dbo.Friendlist
 (
 	ItemId INT NOT NULL IDENTITY(1, 1),
 	Sender INT NOT NULL,
-	Markered INT NOT NULL,
+	Marked INT NOT NULL,
 	CONSTRAINT PK_Friendlist_Sender_User FOREIGN KEY(Sender) REFERENCES [User](UserId),
 	CONSTRAINT PK_Friendlist_Markered_User FOREIGN KEY(Markered) REFERENCES [User](UserId),
 	CONSTRAINT CH_Friendlist_IdCheck CHECK(Sender > 0 AND Markered > 0 AND Sender <> Markered)
@@ -92,13 +92,13 @@ GO
 CREATE TABLE dbo.[Zone]
 (
 	ZoneId INT NOT NULL IDENTITY(1, 1),
-	Longtitude FLOAT NOT NULL,
+	Longitude FLOAT NOT NULL,
 	Latitude FLOAT NOT NULL,
 	Radius FLOAT NOT NULL,
 	UserId INT NOT NULL,
 	Name NVARCHAR(100) NULL,
 	CONSTRAINT FK_Zone_UserId_User FOREIGN KEY(UserId) REFERENCES dbo.[User](UserId),
-	CONSTRAINT CH_Zone_Longtitude_Latitude CHECK(Longitude <= 180 OR Longitude >= -180 AND Latitude <= 90 OR Latitude >= -90 )
+	CONSTRAINT CH_Zone_Longitude_Latitude CHECK(Longitude <= 180 OR Longitude >= -180 AND Latitude <= 90 OR Latitude >= -90 )
 )
 GO
 
