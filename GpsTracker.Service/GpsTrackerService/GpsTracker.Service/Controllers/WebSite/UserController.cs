@@ -90,12 +90,13 @@ namespace GpsTracker.Service.Controllers.WebSite
                         Message = "There're no users with this login"
                     };
                 }
-                var person = MainContext.Instance.Person.GetBy(x => x.UserId == user.UserId).FirstOrDefault();
+                var person = MainContext.Instance.Person.GetBy(x => x.UserId == user.UserId);
                 if (person == null)
                 {
-                    throw new Exception("There's no person data about this user in db.");
+                    throw new Exception("There's no person data about this user in db." +
+                                        "Create it through website(http://notbadtracker.azurewebsites.net/)");
                 }
-                if (MainContext.Instance.Person.Update(person.PersonId, newInfo))
+                if (MainContext.Instance.Person.Update(person.ToList()[0].PersonId, newInfo))
                 {
                     return new ResultMessage()
                     {
