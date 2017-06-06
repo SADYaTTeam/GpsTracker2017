@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -29,10 +29,11 @@
         <a class="navbar-brand" href="index.html">GPS Tracker</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <a href="#about"><button class="btn btn-black navbar-btn">Dowload</button></a>
-        <a><button class="btn btn-black navbar-btn" data-toggle="collapse" data-target="#about_panel">About</button></a>
+        <a href="#about"><button class="btn-black">Dowload</button></a>
+        <a><button class="btn-black" data-toggle="collapse" data-target="#about_panel">About</button></a>
         <div class="nav navbar-nav navbar-right">
-          <button class="btn btn-black navbar-btn" data-toggle="collapse" data-target="#user_panel">ID: 8172424</button>
+          <img src="boy.png" id="current_user">
+          <button class="btn-black" data-toggle="collapse" data-target="#user_panel">Username</button>
         </div>
         <div class="input-group nav navbar-nav navbar-right navbar-inverse align-middle" style="width: 300px;margin-top: 7px">
           <div class="input-group-btn search-panel">
@@ -74,11 +75,14 @@
 
   <div class="w3-conrainer w3-white collapse panel" id="about_panel">
     <div class="w3-twothird w3-container">
-      <h2>Over 25 Years Of Experience</h2>
-      <p>Founded in 1991, TomTom has grown from a Dutch-based start-up company into a leading multi-national, global brand with products sold to customers across various markets reaching over 800 million people around the world every day.</p>
-      <h2>Global Coverage</h2>
-      <p>We have one of the most extensive digital map databases with a portfolio of 14 trillion data points reaching more than 4 billion people worldwide.  To create and maintain our various products and services, we process billions of data points every
-        day on a truly global scale.</p>
+      <div class="w3-conrainer w3-row">
+        <h2>1 month of experience</h2>
+        <p>Founded in 2017, the team consisting of: Chuiko Sergey,Svityi Andrii, Susulovskyi Taras and Darya Boychuk started the project  "GPS navigator".</p>
+      </div>
+      <div class="w3-conrainer w3-row">
+        <h2>Result</h2>
+        <p>We have created a web based solution for tracking the position of the device, viewing and monitoring of the traversed path of movement.</p>
+      </div>
     </div>
     <div class="w3-third w3-container">
       <h2>Brand Assets</h2>
@@ -117,13 +121,14 @@
 
 
   <div id="settings_panel">
-   <!-- <div class="w3-sidebar w3-bar-block w3-card-2" style="width:130px;background-color: #222222; color: white">
+    <div class="w3-sidebar w3-bar-block w3-card-2" style="width:130px;background-color: #222222; color: white">
       <h3 class="w3-bar-item">Settings</h3>
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Right')">User info</button>
       <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Zoom')">Personal info</button>
-      <button style="display: none" class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Left')">Devices</button>
-    </div> 
--->
-    <div style="background-color: white">
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Left')">Friend list</button>
+    </div>
+
+    <div style="background-color: white; margin-left: 130px">
 
       <div id="Zoom" class="w3-container city w3-animate-opacity">
         <div class="w3-row w3-margin-top">
@@ -177,7 +182,7 @@
           <div class="w3-half w3-container">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-              <input name="phone" placeholder="(098)391-1212" class="form-control" type="text">
+              <input name="phone" placeholder="+38(098)391-1212" class="form-control" type="text">
             </div>
           </div>
         </div>
@@ -209,14 +214,53 @@
             <label class="control-label">Default avatar</label>
           </div>
           <div class="w3-quarter w3-container">
-            <img src="avatar.jpg" class="w3-circle" alt="Norway" style="width:85%">
+            <img src="avatar.jpg" class="w3-circle" alt="Norway" style="width:70%">
+          </div>
+        </div>
+        <div class="w3-row w3-margin-top">
+          <div class="w3-quarter w3-container">
+          </div>
+          <div class="w3-half w3-container">
+            <button class="w3-button w3-green w3-left w3-round-xlarge w3-hover-green">Submit</button>
           </div>
         </div>
       </div>
       <div id="Left" class="w3-container city w3-animate-left" style="display:none">
-        <h2>Devices</h2>
+        <h2>Friends</h2>
+      </div>
+      <div id="Right" class="w3-container city w3-animate-right" style="display:none">
+        <div class="w3-row w3-margin-top">
+          <div class="w3-quarter w3-container">
+            <label class="control-label">Username</label>
+          </div>
+          <div class="w3-half w3-container">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <input name="username" placeholder="Username" class="form-control" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="w3-row w3-margin-top">
+          <div class="w3-quarter w3-container">
+            <label class="control-label">Password</label>
+          </div>
+          <div class="w3-half w3-container">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input name="upassword" placeholder="Password" class="form-control" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="w3-row w3-margin-top">
+          <div class="w3-quarter w3-container">
+          </div>
+          <div class="w3-half w3-container">
+            <button class="w3-button w3-green w3-left w3-round-xlarge w3-hover-green">Submit</button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
   </div>
   <script>
     function openLink(evt, animName) {
