@@ -1,13 +1,24 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GpsTracker.Models.DataContext.Contexts;
-using System.Linq;
-
+﻿// <copyright file="UserTest.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Model.Test
 {
+    #region using...
+    using System;
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Models.DataContext.Contexts;
+    #endregion
+
+    /// <summary>
+    /// Class for test user context
+    /// </summary>
     [TestClass]
     public class UserTest
     {
+        /// <summary>
+        /// Method testes Insert(insert test user) method of UserContext
+        /// </summary>
         [TestMethod]
         public void UserInsert()
         {
@@ -20,6 +31,9 @@ namespace GpsTracker.Model.Test
             }));
         }
 
+        /// <summary>
+        /// Method testes GetAll method of UserContext
+        /// </summary>
         [TestMethod]
         public void UserGetAll()
         {
@@ -27,6 +41,10 @@ namespace GpsTracker.Model.Test
             Assert.IsNotNull(result);
         }
 
+        /// <summary>
+        /// Method testes Update(set last inserted user admin status
+        /// and login = "Updated Login") method of UserContext
+        /// </summary>
         [TestMethod]
         public void UserUpdate()
         {
@@ -37,12 +55,18 @@ namespace GpsTracker.Model.Test
             Assert.IsTrue(MainContext.Instance.User.Update(item.UserId, item));
         }
 
+        /// <summary>
+        /// Method testes GetBy(Login == "Updated Login") method of UserContext
+        /// </summary>
         [TestMethod]
         public void UserGetBy()
         {
             Assert.IsNotNull(MainContext.Instance.User.GetBy(x => x.Login == "Updated Login"));
         }
 
+        /// <summary>
+        /// Method testes Delete(delete last inserted user) method of UserContext
+        /// </summary>
         [TestMethod]
         public void UserDelete()
         {

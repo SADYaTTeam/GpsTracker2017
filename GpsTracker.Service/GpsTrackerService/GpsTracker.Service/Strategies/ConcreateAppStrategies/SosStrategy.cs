@@ -1,28 +1,48 @@
-﻿using GpsTracker.Service.Strategies.Base;
-using System;
-//using System.Collections.Generic;
-using System.Linq;
-//using System.Web;
-using GpsTracker.Models.Messages;
-using GpsTracker.Models.Models;
-using System.Web.Http;
-using GpsTracker.Service.Controllers;
-using GpsTracker.Models.DataContext.Contexts;
-using System.Diagnostics;
-
+﻿// <copyright file="SosStrategy.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 {
+    #region using...
+    using System;
+    using System.Linq;
+    using System.Diagnostics;
+    using System.Web.Http;
+    using Base;
+    using Models.Messages;
+    using Models.Models;    
+    using Controllers;
+    using Models.DataContext.Contexts;
+    using Controllers.App;
+    #endregion
+
+    /// <summary>
+    /// Represents strategy to treate sos-type messages
+    /// </summary>
     public class SosStrategy : Strategy
     {
-        #region Constructors
-
-        public SosStrategy() : base() { }
-
-        public SosStrategy(AppController controller) : base(controller) { }
+        #region Fields
 
         #endregion
 
-        #region Fields
+        #region Constructors
+
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="SosStrategy"/> class
+        ///// </summary>
+        //public SosStrategy()
+        //{
+            
+        //}
+
+        ///// <summary>
+        ///// Initialized a new instance of the <see cref="SosStrategy"/> class
+        ///// </summary>
+        ///// <param name="controller">App contoller instance</param>
+        //public SosStrategy(AppController controller) : base(controller)
+        //{
+
+        //}
 
         #endregion
 
@@ -32,7 +52,13 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 
         #region Methods
 
-        public override IHttpActionResult Execute(GeoMessage message)
+        /// <summary>
+        /// Treating incoming sos-type message
+        /// </summary>
+        /// <param name="message">Sos-type message</param>
+        /// <returns>Returns Success(0) if process was successful and 
+        /// InternalServerError(-1) if there're is some server exception</returns>
+        public override ResultMessage Execute(GeoMessage message)
         {
             try
             {
@@ -53,15 +79,28 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                     temp.Timestamp = DateTime.Now;
                 }
                 WriteToDb(message);
-                return new System.Web.Http.Results.OkResult(_controller);
+                return new ResultMessage()
+                {
+                    Type = ResultType.Success,
+                    Message = "Server succesfully read incoming sos message"
+                };
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
-                return new System.Web.Http.Results.InternalServerErrorResult(_controller);
+                return new ResultMessage()
+                {
+                    Type = ResultType.UnknownError,
+                    Message = "Internal server error " +
+                              $"{ex.Message}"
+                };
             }
         }
 
+        /// <summary>
+        /// Write to log message about sos call
+        /// </summary>
+        /// <param name="message">Information about sos call</param>
         protected override void WriteToDb(GeoMessage message)
         {
             try

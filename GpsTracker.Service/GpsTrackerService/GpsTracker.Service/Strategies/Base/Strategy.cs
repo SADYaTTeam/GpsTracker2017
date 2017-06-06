@@ -1,49 +1,94 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Web;
-using System.Web.Http;
-//using System.Web.Http.Results;
-using GpsTracker.Models.Messages;
-using GpsTracker.Models.Models;
-using GpsTracker.Models.DataContext.Contexts;
-using System.Linq;
+﻿// <copyright file="Strategy.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
+
+using System;
 
 namespace GpsTracker.Service.Strategies.Base
 {
-    public abstract class Strategy
-    {
-        #region Constructors
-        
-        public Strategy(){ }
+    #region using...
+    using System.Web.Http;
+    using System.Linq;
+    using Models.Messages;
+    using Models.Models;
+    using Models.DataContext.Contexts;
+    #endregion
 
-        public Strategy(ApiController controller)
-        {
-            _controller = controller;
-        }
+    /// <summary>
+    /// Class represents base class for strategies
+    /// </summary>
+    public abstract class Strategy/*: IDisposable*/
+    {
+        #region Fields
+
+        ///// <summary>
+        ///// Represents conntroller, that initialize strategy
+        ///// </summary>
+        //private readonly ApiController _controller;
 
         #endregion
 
-        #region Fields
+        #region Constructors
 
-        protected ApiController _controller;
+        /// <summary>
+        /// Initializes a new instance of<see cref= "Strategy" /> class
+        /// </summary>
+        //protected Strategy()
+        //{
+
+        //}
+
+        /// <summary>
+        /// Initialized a new instance of<see cref= "Strategy" /> class
+        /// </summary>
+        /// <param name = "controller" > App contoller instance</param>
+        //protected Strategy(ApiController controller)
+        //{
+        //    _controller = controller;
+        //}
 
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets private api controller 
+        /// </summary>
+        //protected ApiController Controller => _controller;
+
         #endregion
 
         #region Methods
 
-        public virtual IHttpActionResult Execute(GeoMessage message)
+        /// <summary>
+        /// Virtual method for treating incoming marker message
+        /// </summary>
+        /// <param name="message">Marker message</param>
+        /// <returns>Allways return UnknownServerError(-1) in base strategy class</returns>
+        public virtual ResultMessage Execute(GeoMessage message)
         {
-            return new System.Web.Http.Results.BadRequestResult(_controller);
+            return new ResultMessage(){Type = ResultType.UnknownError, Message = "Server tries to execute base strategy method."};
         }
 
-        protected virtual void WriteToDb(GeoMessage message) { }
+        /// <summary>
+        /// Virtual method for writing to db information
+        /// </summary>
+        /// <param name="message"></param>
+        protected virtual void WriteToDb(GeoMessage message)
+        {
+            
+        }
 
+        /// <summary>
+        /// Gets user with deviceId from db
+        /// </summary>
+        /// <param name="message">Marker message</param>
+        /// <returns>Return info of user, that have deviceId from message. 
+        /// If There're no users with that deviceId - insert new with login,
+        /// password and equal to deviceId and return information about him</returns>
         protected virtual User GetOrCreateUser(GeoMessage message)
         {
+
             var exist = MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId);
             if (exist == null)
             {
@@ -62,6 +107,14 @@ namespace GpsTracker.Service.Strategies.Base
             }
             return exist.ToList()[0];
         }
+
+        ///// <summary>
+        ///// Disposes unmanaged ApiController
+        ///// </summary>
+        //public virtual void Dispose()
+        //{
+        //    _controller.Dispose();
+        //}
 
         #endregion
     }

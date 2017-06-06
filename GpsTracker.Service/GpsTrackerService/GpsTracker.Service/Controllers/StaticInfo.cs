@@ -1,16 +1,38 @@
-﻿using GpsTracker.Models.Models;
-//using System;
-using System.Collections.Generic;
-//using System.Linq;
-//using System.Web;
-using GpsTracker.Models.Messages;
-
+﻿// <copyright file="StaticInfo.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Service.Controllers
 {
+    #region using...
+    using System.Collections.Generic;
+    using Models.Models;
+    using Models.Messages;
+    #endregion
+
+    /// <summary>
+    /// Class represents static info for entire service
+    /// </summary>
     public static class StaticInfo
     {
+        #region Fields
+
+        /// <summary>
+        /// Representes static list of sos calles
+        /// </summary>
+        private static HashSet<SosMessage> _sosList;
+
+        /// <summary>
+        /// Represents static list of markers
+        /// </summary>
+        private static HashSet<Marker> _markerList;
+
+        #endregion
+
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="StaticInfo"/> class
+        /// </summary>
         static StaticInfo()
         {
             _sosList = new HashSet<SosMessage>();
@@ -19,30 +41,17 @@ namespace GpsTracker.Service.Controllers
 
         #endregion
 
-        #region Fields
-
-        private static HashSet<SosMessage> _sosList;
-        private static HashSet<Marker> _markerList;
-
-        #endregion
-
         #region Properties
 
-        public static HashSet<SosMessage> SosList
-        {
-            get
-            {
-                return _sosList ?? (_sosList = new HashSet<SosMessage>());
-            }
-        }
+        /// <summary>
+        /// Gets static list of sos calles
+        /// </summary>
+        public static HashSet<SosMessage> SosList => _sosList ?? (_sosList = new HashSet<SosMessage>());
 
-        public static HashSet<Marker> MarkerList
-        {
-            get
-            {
-                return _markerList ?? (_markerList = new HashSet<Marker>());
-            }
-        }
+        /// <summary>
+        /// Gets static list of markers
+        /// </summary>
+        public static HashSet<Marker> MarkerList => _markerList ?? (_markerList = new HashSet<Marker>());
 
         #endregion
 

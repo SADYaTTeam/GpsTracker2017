@@ -1,5 +1,7 @@
+// <copyright file="AssemblyInfo.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("GpsTracker.Model.Test")]

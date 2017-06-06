@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿// <copyright file="FromDb.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Models.Mappers
 {
+    /// <summary>
+    /// Class represents opportunity to map DataContext and Models
+    /// </summary>
     public static class FromDb
     {
+        /// <summary>
+        /// Map <see cref="DataContext.Event"/> to <see cref="Models.Event"/>
+        /// </summary>
         public static Models.Event Convert(this DataContext.Event evnt)
         {
             return new Models.Event()
@@ -17,6 +20,9 @@ namespace GpsTracker.Models.Mappers
             };
         }
 
+        /// <summary>
+        /// Map <see cref="DataContext.Log"/> to <see cref="Models.Log"/>
+        /// </summary>
         public static Models.Log Convert(this DataContext.Log log)
         {
             return new Models.Log()
@@ -29,6 +35,9 @@ namespace GpsTracker.Models.Mappers
             };
         }
 
+        /// <summary>
+        /// Map <see cref="DataContext.Person"/> to <see cref="Models.Person"/>
+        /// </summary>
         public static Models.Person Convert(this DataContext.Person person)
         {
             return new Models.Person()
@@ -46,6 +55,9 @@ namespace GpsTracker.Models.Mappers
             };
         }
 
+        /// <summary>
+        /// Map <see cref="DataContext.User"/> to <see cref="Models.User"/>
+        /// </summary>
         public static Models.User Convert(this DataContext.User user)
         {
             return new Models.User()
@@ -59,6 +71,9 @@ namespace GpsTracker.Models.Mappers
             };
         }
 
+        /// <summary>
+        /// Map <see cref="DataContext.Marker"/> to <see cref="Models.Marker"/>
+        /// </summary>
         public static Models.Marker Convert(this DataContext.Marker marker)
         {
             return new Models.Marker()
@@ -68,16 +83,6 @@ namespace GpsTracker.Models.Mappers
                 Latitude = marker.Latitude,
                 UserId = marker.UserId,
                 Timestamp = marker.Timestamp
-            };
-        }
-
-        public static Models.Track Convert(this DataContext.Track track)
-        {
-            return new Models.Track()
-            {
-                TrackId = track.TrackId,
-                UserId = track.UserId,
-                MarkerId = track.MarkerId
             };
         }
     }

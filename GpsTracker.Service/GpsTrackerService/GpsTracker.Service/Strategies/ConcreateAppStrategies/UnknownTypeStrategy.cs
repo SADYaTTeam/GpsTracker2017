@@ -1,26 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Results;
-using GpsTracker.Models.Models;
-using GpsTracker.Service.Strategies.Base;
-using GpsTracker.Service.Controllers;
-
+﻿// <copyright file="UnjnownTypeStrategy.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
 {
+    #region using...
+    using Base;
+    using Controllers.App;
+    #endregion
+
+    /// <summary>
+    /// Represents strategy to treate unknown-type messages
+    /// </summary>
     public class UnknownTypeStrategy : Strategy
     {
-        #region Constructors
-
-        public UnknownTypeStrategy(): base() { }
-
-        public UnknownTypeStrategy(AppController controller) : base(controller) { }
+        #region Fields
 
         #endregion
 
-        #region Fields
+        #region Constructors
+
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="UnknownTypeStrategy"/> class
+        ///// </summary>
+        //public UnknownTypeStrategy()
+        //{
+            
+        //}
+
+        ///// <summary>
+        ///// Initialized a new instance of the <see cref="UnknownTypeStrategy"/> class
+        ///// </summary>
+        ///// <param name="controller">App contoller instance</param>
+        //public UnknownTypeStrategy(AppController controller) : base(controller)
+        //{
+            
+        //}
 
         #endregion
 

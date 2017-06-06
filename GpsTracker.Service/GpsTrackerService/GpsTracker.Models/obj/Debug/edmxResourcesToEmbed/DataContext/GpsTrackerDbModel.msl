@@ -48,15 +48,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Track">
-      <EntityTypeMapping TypeName="GpsTrackingDBModel.Track">
-        <MappingFragment StoreEntitySet="Track">
-          <ScalarProperty Name="TrackId" ColumnName="TrackId" />
-          <ScalarProperty Name="MarkerId" ColumnName="MarkerId" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="User">
       <EntityTypeMapping TypeName="GpsTrackingDBModel.User">
         <MappingFragment StoreEntitySet="User">

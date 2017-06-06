@@ -14,12 +14,6 @@ namespace GpsTracker.Models.DataContext
     
     public partial class Marker
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Marker()
-        {
-            this.Track = new HashSet<Track>();
-        }
-    
         public int MarkerId { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
@@ -28,7 +22,5 @@ namespace GpsTracker.Models.DataContext
         public System.DateTime Timestamp { get; set; }
     
         public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Track> Track { get; set; }
     }
 }

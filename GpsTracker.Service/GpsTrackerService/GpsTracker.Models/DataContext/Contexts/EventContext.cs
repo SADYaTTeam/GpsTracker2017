@@ -1,27 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using GpsTracker.Models.DataContext.Interfaces;
-using GpsTracker.Models.Models;
-using GpsTracker.Models.Mappers;
-using System.Diagnostics;
-
+﻿// <copyright file="EventContext.cs" company="SADYaTTeam">
+//     SADYaTTeam 2017.
+// </copyright>
 namespace GpsTracker.Models.DataContext.Contexts
 {
-    public class EventContext : BaseContext, IDbContext<Models.Event, DataContext.Event>
+    #region using...
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Diagnostics;
+    using Interfaces;
+    using Mappers;
+    using Models;
+    #endregion
+
+    /// <summary>
+    /// Class represents work with event EF context
+    /// </summary>
+    public class EventContext : BaseContext, IDbContext<Event, DataContext.Event>
     {
-        #region Constructors
-
-        public EventContext() : base() { }
-
-        public EventContext(GpsTrackingDBEntities context):base(context) { }
+        #region Fields
 
         #endregion
 
-        #region Fields
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventContext" /> class
+        /// </summary>
+        public EventContext()
+        {
+            
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventContext" /> class with selected entity
+        /// </summary>
+        /// <param name="context">EF data context</param>
+        public EventContext(GpsTrackingDBEntities context) : base(context)
+        {
+            
+        }
 
         #endregion
 
@@ -31,53 +50,71 @@ namespace GpsTracker.Models.DataContext.Contexts
 
         #region Methods
 
+        /// <summary>
+        /// Delete event with selected EventId from table
+        /// </summary>
+        /// <remarks>See details about error in debug</remarks>
+        /// <param name="id">Id of deleting event</param>
+        /// <returns>Returns true if event was deleted and false if there're some errors
+        /// (see details in debug)</returns>
         public bool Delete(int id)
         {
-            var temp = _context.Event.FirstOrDefault(x => x.EventId == id);
+            var temp = Context.Event.FirstOrDefault(x => x.EventId == id);
             if (temp == null)
             {
                 return false;
             }
-            _context.Event.Remove(temp);
+            Context.Event.Remove(temp);
             return SaveChanges();
         }
 
-        public IEnumerable<Models.Event> GetAll()
+        /// <summary>
+        /// Get all rows from current table
+        /// </summary>
+        /// <returns>Returns all rows or null if there're no rows in table</returns>
+        public IEnumerable<Event> GetAll()
         {
-            var temp = _context.Event.ToList();
-            if(temp.Count == 0)
-            {
-                return null;
-            }
-            var result = new List<Models.Event>(temp.Count);
-            foreach(var item in temp)
-            {
-                result.Add(item.Convert());
-            }
-            return result;
-        }
-
-        public IEnumerable<Models.Event> GetBy(Expression<Func<Event, bool>> expression)
-        {
-            var temp = _context.Event.Where(expression).ToList();
+            var temp = Context.Event.ToList();
             if (temp.Count == 0)
             {
                 return null;
             }
-            var result = new List<Models.Event>(temp.Count);
-            foreach (var item in temp)
-            {
-                result.Add(item.Convert());
-            }
+            var result = new List<Event>(temp.Count);
+            result.AddRange(temp.Select(item => item.Convert()));
             return result;
         }
 
-        public bool Insert(Models.Event newItem)
+        /// <summary>
+        /// Get all rows that satisfied the condition
+        /// </summary>
+        /// <param name="expression">Lambda-expression that represents condition</param>
+        /// <returns>Returns all rows that satisfied condition or null
+        /// if there'are no rows</returns>
+        public IEnumerable<Event> GetBy(Expression<Func<DataContext.Event, bool>> expression)
         {
-            var transaction = _context.Database.BeginTransaction();
+            var temp = Context.Event.Where(expression).ToList();
+            if (temp.Count == 0)
+            {
+                return null;
+            }
+            var result = new List<Event>(temp.Count);
+            result.AddRange(temp.Select(item => item.Convert()));
+            return result;
+        }
+
+        /// <summary>
+        /// Insert new event to current table
+        /// </summary>
+        /// <param name="newItem">New event for table</param>
+        /// <returns>Returns true if new event been inserted
+        /// and false if there're some errors
+        /// (see details in debug)</returns>
+        public bool Insert(Event newItem)
+        {
+            var transaction = Context.Database.BeginTransaction();
             try
             {
-                _context.Database.ExecuteSqlCommand("INSERT INTO Event(Name)" +
+                Context.Database.ExecuteSqlCommand("INSERT INTO Event(Name)" +
                                                     $"VALUES('{newItem.Name}')");
                 transaction.Commit();
             }
@@ -92,9 +129,17 @@ namespace GpsTracker.Models.DataContext.Contexts
             return true;
         }
 
-        public bool Update(int id, Models.Event newItem)
+        /// <summary>
+        /// Update event with select id
+        /// </summary>
+        /// <remarks>Old event take all info from new(except Id)</remarks>
+        /// <param name="id">Id of selected event</param>
+        /// <param name="newItem">Represents new info for selected event</param>
+        /// <returns>Returns true if event was updated and false if there're 
+        /// some errors(see details in debug)</returns>
+        public bool Update(int id, Event newItem)
         {
-            var temp = _context.Event.FirstOrDefault(x => x.EventId == id);
+            var temp = Context.Event.FirstOrDefault(x => x.EventId == id);
             if (temp == null)
             {
                 return false;
