@@ -17,6 +17,7 @@ namespace GpsTracker.Models.DataContext
         public int ItemId { get; set; }
         public int Sender { get; set; }
         public int Marked { get; set; }
+        public System.DateTime CreatedAt { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

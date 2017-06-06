@@ -65,7 +65,8 @@
         <MappingFragment StoreEntitySet="Friendlist">
           <ScalarProperty Name="ItemId" ColumnName="ItemId" />
           <ScalarProperty Name="Sender" ColumnName="Sender" />
-          <ScalarProperty Name="Markered" ColumnName="Markered" />
+          <ScalarProperty Name="Marked" ColumnName="Marked" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

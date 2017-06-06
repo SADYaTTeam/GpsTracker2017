@@ -60,19 +60,21 @@
     <NavigationProperty Name="Marker" Relationship="Self.FK_Marker_Track_Id_User" FromRole="User" ToRole="Marker" />
     <NavigationProperty Name="Person" Relationship="Self.FK_Person_User_Id_User" FromRole="User" ToRole="Person" />
     <NavigationProperty Name="Zone" Relationship="Self.FK_Zone_UserId_User" FromRole="User" ToRole="Zone" />
-    <NavigationProperty Name="Friendlist" Relationship="Self.PK_Friendlist_Markered_User" FromRole="User" ToRole="Friendlist" />
+    <NavigationProperty Name="Friendlist" Relationship="Self.PK_Friendlist_Marked_User" FromRole="User" ToRole="Friendlist" />
     <NavigationProperty Name="Friendlist1" Relationship="Self.PK_Friendlist_Sender_User" FromRole="User" ToRole="Friendlist" />
   </EntityType>
   <EntityType Name="Friendlist">
     <Key>
       <PropertyRef Name="ItemId" />
       <PropertyRef Name="Sender" />
-      <PropertyRef Name="Markered" />
+      <PropertyRef Name="Marked" />
+      <PropertyRef Name="CreatedAt" />
     </Key>
     <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Sender" Type="Int32" Nullable="false" />
-    <Property Name="Markered" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="User" Relationship="Self.PK_Friendlist_Markered_User" FromRole="Friendlist" ToRole="User" />
+    <Property Name="Marked" Type="Int32" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="User" Relationship="Self.PK_Friendlist_Marked_User" FromRole="Friendlist" ToRole="User" />
     <NavigationProperty Name="User1" Relationship="Self.PK_Friendlist_Sender_User" FromRole="Friendlist" ToRole="User" />
   </EntityType>
   <EntityType Name="Zone">
@@ -139,7 +141,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="PK_Friendlist_Markered_User">
+  <Association Name="PK_Friendlist_Marked_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Friendlist" Type="Self.Friendlist" Multiplicity="*" />
     <ReferentialConstraint>
@@ -147,7 +149,7 @@
         <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="Friendlist">
-        <PropertyRef Name="Markered" />
+        <PropertyRef Name="Marked" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -187,7 +189,7 @@
       <End Role="User" EntitySet="User" />
       <End Role="Zone" EntitySet="Zone" />
     </AssociationSet>
-    <AssociationSet Name="PK_Friendlist_Markered_User" Association="Self.PK_Friendlist_Markered_User">
+    <AssociationSet Name="PK_Friendlist_Marked_User" Association="Self.PK_Friendlist_Marked_User">
       <End Role="User" EntitySet="User" />
       <End Role="Friendlist" EntitySet="Friendlist" />
     </AssociationSet>

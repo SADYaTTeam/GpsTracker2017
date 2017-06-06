@@ -79,7 +79,7 @@ namespace GpsTracker.Models.Mappers
             return new Models.Marker()
             {
                 MarkerId = marker.MarkerId,
-                Longtitude = marker.Longtitude,
+                Longtitude = marker.Longitude,
                 Latitude = marker.Latitude,
                 UserId = marker.UserId,
                 Timestamp = marker.Timestamp

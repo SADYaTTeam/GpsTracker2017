@@ -103,6 +103,7 @@
     <Compile Include="Messages\CheckMessage.cs" />
     <Compile Include="Messages\LoginMessage.cs" />
     <Compile Include="Messages\ResultMessage.cs" />
+    <Compile Include="Messages\SearchMessage.cs" />
     <Compile Include="Messages\SosMessage.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Messages\GeoMessage.cs" />

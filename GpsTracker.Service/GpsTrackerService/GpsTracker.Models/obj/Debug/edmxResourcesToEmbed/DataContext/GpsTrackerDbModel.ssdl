@@ -13,11 +13,13 @@ warning 6002: The table/view 'GpsTrackingDB.dbo.Friendlist' does not have a prim
     <Key>
       <PropertyRef Name="ItemId" />
       <PropertyRef Name="Sender" />
-      <PropertyRef Name="Markered" />
+      <PropertyRef Name="Marked" />
+      <PropertyRef Name="CreatedAt" />
     </Key>
     <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Sender" Type="int" Nullable="false" />
-    <Property Name="Markered" Type="int" Nullable="false" />
+    <Property Name="Marked" Type="int" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <EntityType Name="Log">
     <Key>
@@ -131,7 +133,7 @@ warning 6002: The table/view 'GpsTrackingDB.dbo.Zone' does not have a primary ke
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="PK_Friendlist_Markered_User">
+  <Association Name="PK_Friendlist_Marked_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Friendlist" Type="Self.Friendlist" Multiplicity="*" />
     <ReferentialConstraint>
@@ -139,7 +141,7 @@ warning 6002: The table/view 'GpsTrackingDB.dbo.Zone' does not have a primary ke
         <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="Friendlist">
-        <PropertyRef Name="Markered" />
+        <PropertyRef Name="Marked" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -165,7 +167,8 @@ warning 6002: The table/view 'GpsTrackingDB.dbo.Zone' does not have a primary ke
       <DefiningQuery>SELECT 
     [Friendlist].[ItemId] AS [ItemId], 
     [Friendlist].[Sender] AS [Sender], 
-    [Friendlist].[Markered] AS [Markered]
+    [Friendlist].[Marked] AS [Marked], 
+    [Friendlist].[CreatedAt] AS [CreatedAt]
     FROM [dbo].[Friendlist] AS [Friendlist]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="Zone" EntityType="Self.Zone" store:Type="Tables" store:Schema="dbo">
@@ -194,7 +197,7 @@ warning 6002: The table/view 'GpsTrackingDB.dbo.Zone' does not have a primary ke
       <End Role="User" EntitySet="User" />
       <End Role="Zone" EntitySet="Zone" />
     </AssociationSet>
-    <AssociationSet Name="PK_Friendlist_Markered_User" Association="Self.PK_Friendlist_Markered_User">
+    <AssociationSet Name="PK_Friendlist_Marked_User" Association="Self.PK_Friendlist_Marked_User">
       <End Role="User" EntitySet="User" />
       <End Role="Friendlist" EntitySet="Friendlist" />
     </AssociationSet>

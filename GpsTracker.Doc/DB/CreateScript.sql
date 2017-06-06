@@ -83,9 +83,10 @@ CREATE TABLE dbo.Friendlist
 	ItemId INT NOT NULL IDENTITY(1, 1),
 	Sender INT NOT NULL,
 	Marked INT NOT NULL,
+	CreatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
 	CONSTRAINT PK_Friendlist_Sender_User FOREIGN KEY(Sender) REFERENCES [User](UserId),
-	CONSTRAINT PK_Friendlist_Markered_User FOREIGN KEY(Markered) REFERENCES [User](UserId),
-	CONSTRAINT CH_Friendlist_IdCheck CHECK(Sender > 0 AND Markered > 0 AND Sender <> Markered)
+	CONSTRAINT PK_Friendlist_Marked_User FOREIGN KEY(Marked) REFERENCES [User](UserId),
+	CONSTRAINT CH_Friendlist_IdCheck CHECK(Sender > 0 AND Marked > 0 AND Sender <> Marked),
 )
 GO
 
