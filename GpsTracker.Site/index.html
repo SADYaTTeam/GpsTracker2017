@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -29,10 +29,10 @@
         <a class="navbar-brand" href="index.html">GPS Tracker</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <a href="#about"><button class="btn btn-black navbar-btn">Dowload</button></a>
-        <a><button class="btn btn-black navbar-btn" data-toggle="collapse" data-target="#about_panel">About</button></a>
+        <a href="#about"><button class="btn-black">Dowload</button></a>
+        <a><button class="btn-black" data-toggle="collapse" data-target="#about_panel">About</button></a>
         <div class="nav navbar-nav navbar-right">
-          <button class="btn btn-black navbar-btn" data-toggle="collapse" data-target="#login_panel"><span class="glyphicon glyphicon-log-in"></span> Log in</button>
+          <button class="btn-black" data-toggle="collapse" data-target="#login_panel"><span class="glyphicon glyphicon-log-in"></span> Log in</button>
         </div>
         <div class="input-group nav navbar-nav navbar-right navbar-inverse align-middle" style="width: 300px;margin-top: 7px">
           <div class="input-group-btn search-panel">
@@ -55,18 +55,21 @@
     </div>
   </nav>
 
-  <div class="w3-conrainer w3-white collapse panel" id="about_panel">
-    <div class="w3-twothird w3-container">
-      <h2>Over 25 Years Of Experience</h2>
-      <p>Founded in 1991, TomTom has grown from a Dutch-based start-up company into a leading multi-national, global brand with products sold to customers across various markets reaching over 800 million people around the world every day.</p>
-      <h2>Global Coverage</h2>
-      <p>We have one of the most extensive digital map databases with a portfolio of 14 trillion data points reaching more than 4 billion people worldwide.  To create and maintain our various products and services, we process billions of data points every
-        day on a truly global scale.</p>
+  <div class="w3-conrainer w3-white collapse" id="about_panel">
+    <div class="w3-twothird w3-container" style="display: inline-block">
+      <div class="w3-conrainer w3-row">
+        <h2>1 month of experience</h2>
+        <p>Founded in 2017, the team consisting of: Chuiko Sergey,Svityi Andrii, Susulovskyi Taras and Darya Boychuk started the project  "GPS navigator".</p>
+      </div>
+      <div class="w3-conrainer w3-row">
+        <h2>Result</h2>
+        <p>We have created a web based solution for tracking the position of the device, viewing and monitoring of the traversed path of movement.</p>
+      </div>
     </div>
-    <div class="w3-third w3-container">
+    <div class="w3-third w3-container" style="display: inline-block">
       <h2>Brand Assets</h2>
       <div class="w3-row">
-        <div class="w3-col" style="width:25%">
+        <div class="w3-col w3-quarter">
           <div class="circle w3-green w3-right">
           </div>
         </div>
@@ -104,10 +107,10 @@
       <input type="password" class="input_login" name="upswd">
       <div class="w3-display-container w3-black" style="height: 50px">
         <div class="w3-display-left">
-          <a href="user.html"><button class="w3-button w3-white w3-left w3-round-xlarge w3-hover-green">Log in</button></a>
+          <a href="user.html" class="w3-button w3-white w3-left w3-round-xlarge w3-hover-green"  style="text-decoration:none" >Log in</a>
         </div>
         <div class="w3-display-right">
-          <a href="user.html">
+          <a href="index.html">
             <p class="w3-right w3 lightblue" style="font-size: 15px; color: blue">Forgot password?</p>
           </a>
         </div>
