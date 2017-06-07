@@ -29,9 +29,9 @@ public class MainActivity extends Activity {
     private Button button;
     private Button buttonSaveSettings;
 
-    private String updateInterval;
-    private String fatestInterval;
-    private String displacement;
+    private int updateInterval;
+    private int fatestInterval;
+    private int displacement;
 
     //endregion Variables
 
@@ -47,10 +47,8 @@ public class MainActivity extends Activity {
                 Secure.ANDROID_ID);
         Log.i("deviceId", deviceId.toString());
         saveAndroidIdToFile();
-        startService(new Intent(this, MyService.class));
-        //Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-//        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        getApplicationContext().startActivity(i);
+        //startService(new Intent(this, MyService.class));
+
         //minimizeApp();
 
 
@@ -110,7 +108,9 @@ public class MainActivity extends Activity {
                     try {
                         Toast.makeText(getApplicationContext(), "JSON sended to server",
                                 Toast.LENGTH_LONG).show();
-                        startService(new Intent(this, MyService.class));
+                        MyService myService = new MyService();
+                        myService.sendSOS_JSON();
+                       // startService(new Intent(this, MyService.class));
                     } catch (Exception exc) {
                         Log.e("AsyncT", exc.getMessage(), exc);
                     }
@@ -128,33 +128,29 @@ public class MainActivity extends Activity {
 
     //endregion SOS_BUTTON
 
-    public void dumbFuck(View v){
-        button = (Button) findViewById(R.id.buttonSettings);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(i);
-            }
-        });
-    }
-
     public void ApplyChanges(View v){
         editTextUpdateInterval = (EditText) findViewById(R.id.editTextUpdateInterval);
         editTextFatestInterval = (EditText) findViewById(R.id.editTextFatestInterval);
         editTextDisplacement = (EditText) findViewById(R.id.editTextDisplacement);
-        buttonSaveSettings = (Button) findViewById(R.id.buttonSettings);
+        buttonSaveSettings = (Button) findViewById(R.id.buttonSettingsSave);
         buttonSaveSettings.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                updateInterval = editTextUpdateInterval.getText().toString();
-                fatestInterval = editTextFatestInterval.getText().toString();
-                displacement = editTextDisplacement.getText().toString();
+                updateInterval = Integer.valueOf(editTextUpdateInterval.getText().toString()) ;
+                fatestInterval = Integer.valueOf(editTextFatestInterval.getText().toString());
+                displacement = Integer.valueOf(editTextDisplacement.getText().toString());
+                StartMyService();
                 Log.i("SETTINGS", "updateInterval: " + updateInterval + "fatestInterval: " + fatestInterval +  "displacement: " + displacement);
             }
         });
     }
 
+    public void StartMyService(){
+        Intent intent = new Intent(this, MyService.class);
+        intent.putExtra("updateInterval", updateInterval);
+        intent.putExtra("fatestInterval", fatestInterval);
+        intent.putExtra("displacement", displacement);
+        this.startService(intent);
+    }
 
 }
