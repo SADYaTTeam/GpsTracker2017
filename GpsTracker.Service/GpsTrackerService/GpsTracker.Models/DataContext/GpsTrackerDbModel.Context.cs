@@ -13,10 +13,10 @@ namespace GpsTracker.Models.DataContext
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GpsTrackingDatabaseEntities : DbContext
+    public partial class GpsTrackingDBEntities : DbContext
     {
-        public GpsTrackingDatabaseEntities()
-            : base("name=GpsTrackingDatabaseEntities")
+        public GpsTrackingDBEntities()
+            : base("name=GpsTrackingDBEntities")
         {
         }
     

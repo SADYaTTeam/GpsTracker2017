@@ -25,9 +25,11 @@ class AsyncT extends AsyncTask<Void, Void, Void> {
     private double latitude;
     private double longitude;
     private String deviceId;
+    private int messageType;
+    private final String logTag = "AsyncT";
 
     @Override
-    protected Void doInBackground( Void... params) {
+    protected Void doInBackground(final Void... params) {
 
         try {
             URL url = new URL("http://gpstrackerservice.azurewebsites.net/api/app"); //Enter URL here
@@ -42,10 +44,9 @@ class AsyncT extends AsyncTask<Void, Void, Void> {
             jsonObject.put("Latitude", latitude);
             jsonObject.put("Longitude", longitude);
             //TODO Put real deviceId in JSON here
-            //jsonObject.put("DeviceId", "e085e0245a8c654f");
             jsonObject.put("DeviceId", deviceId);
-            jsonObject.put("Type", 1);
-            Log.i("JSON_Array", jsonObject.toString());
+            jsonObject.put("Type", messageType);
+            Log.i(logTag, "JSON_Array: " + jsonObject.toString());
 
 
             OutputStream temp = httpURLConnection.getOutputStream();
@@ -55,17 +56,17 @@ class AsyncT extends AsyncTask<Void, Void, Void> {
 
             try {
                 wr.writeBytes(jsonObject.toString(2));
-                int ResponceCode = httpURLConnection.getResponseCode();
-                Log.i("Responce", "" + ResponceCode + " " + httpURLConnection.getResponseMessage().toString());
-                Log.i("Responce2", httpURLConnection.getHeaderFieldKey(0) + " " + httpURLConnection.getHeaderField(0));
-                Log.i("Responce3", httpURLConnection.getHeaderFieldKey(1) + " " + httpURLConnection.getHeaderField(1));
-                Log.i("Responce4", httpURLConnection.getHeaderFieldKey(2) + " " + httpURLConnection.getHeaderField(2));
-                Log.i("Responce5", httpURLConnection.getHeaderFieldKey(3) + " " + httpURLConnection.getHeaderField(3));
-                Log.i("Responce6", httpURLConnection.getHeaderFieldKey(4) + " " + httpURLConnection.getHeaderField(4));
+                Log.i(logTag, "Responce: " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage().toString());
+//                /*Log.i("Responce",  httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage().toString());
+//                Log.i("Responce2", httpURLConnection.getHeaderFieldKey(0) + " " + httpURLConnection.getHeaderField(0));
+//                Log.i("Responce3", httpURLConnection.getHeaderFieldKey(1) + " " + httpURLConnection.getHeaderField(1));
+//                Log.i("Responce4", httpURLConnection.getHeaderFieldKey(2) + " " + httpURLConnection.getHeaderField(2));
+//                Log.i("Responce5", httpURLConnection.getHeaderFieldKey(3) + " " + httpURLConnection.getHeaderField(3));
+//                Log.i("Responce6", httpURLConnection.getHeaderFieldKey(4) + " " + httpURLConnection.getHeaderField(4));*/
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.e("PostJSON", e.getMessage().toString());
-                Log.i("PostJSON", "Length: " + wr.size());
+                Log.e(logTag, "PostJSON: " + e.getMessage().toString());
+                Log.i(logTag, "PostJSON: " +  "Length: " + wr.size());
             }
 
             wr.flush();
@@ -86,11 +87,11 @@ class AsyncT extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    public void setData(final double latitude, final double longitude, String deviceId) {
+    public void setData(final double latitude, final double longitude, final String deviceId, final int messageType) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.deviceId = deviceId;
-
+        this.messageType = messageType;
     }
 
 

@@ -40,3 +40,10 @@ E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTrack
 E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\System.Web.Http.WebHost.xml
 E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Release\GpsTracker.Service.dll
 E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Release\GpsTracker.Service.pdb
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.dll
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.SqlServer.dll
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\GpsTracker.Models.dll
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.xml
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.SqlServer.xml
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\GpsTracker.Models.pdb
+E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\GpsTracker.Models.dll.config

@@ -11,8 +11,8 @@ namespace GpsTracker.Models.Models
         public int MarkerId { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
-        public float Longtitude { get; set; }
-        public float Latitude { get; set; }
+        public double Longtitude { get; set; }
+        public double Latitude { get; set; }
         public DateTime Timestamp { get; set; }
     }
 }

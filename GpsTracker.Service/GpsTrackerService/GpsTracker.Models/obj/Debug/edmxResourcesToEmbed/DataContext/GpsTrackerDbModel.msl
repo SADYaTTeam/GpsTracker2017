@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="GpsTrackingDatabaseModelStoreContainer" CdmEntityContainer="GpsTrackingDatabaseEntities">
+  <EntityContainerMapping StorageEntityContainer="GpsTrackingDBModelStoreContainer" CdmEntityContainer="GpsTrackingDBEntities">
     <EntitySetMapping Name="Event">
-      <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Event">
+      <EntityTypeMapping TypeName="GpsTrackingDBModel.Event">
         <MappingFragment StoreEntitySet="Event">
           <ScalarProperty Name="EventId" ColumnName="EventId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -10,7 +10,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Log">
-      <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Log">
+      <EntityTypeMapping TypeName="GpsTrackingDBModel.Log">
         <MappingFragment StoreEntitySet="Log">
           <ScalarProperty Name="LogId" ColumnName="LogId" />
           <ScalarProperty Name="EventId" ColumnName="EventId" />
@@ -21,7 +21,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Marker">
-      <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Marker">
+      <EntityTypeMapping TypeName="GpsTrackingDBModel.Marker">
         <MappingFragment StoreEntitySet="Marker">
           <ScalarProperty Name="MarkerId" ColumnName="MarkerId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -33,7 +33,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Person">
-      <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Person">
+      <EntityTypeMapping TypeName="GpsTrackingDBModel.Person">
         <MappingFragment StoreEntitySet="Person">
           <ScalarProperty Name="PersonId" ColumnName="PersonId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -49,7 +49,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Track">
-      <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.Track">
+      <EntityTypeMapping TypeName="GpsTrackingDBModel.Track">
         <MappingFragment StoreEntitySet="Track">
           <ScalarProperty Name="TrackId" ColumnName="TrackId" />
           <ScalarProperty Name="MarkerId" ColumnName="MarkerId" />
@@ -58,7 +58,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="User">
-      <EntityTypeMapping TypeName="GpsTrackingDatabaseModel.User">
+      <EntityTypeMapping TypeName="GpsTrackingDBModel.User">
         <MappingFragment StoreEntitySet="User">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Login" ColumnName="Login" />

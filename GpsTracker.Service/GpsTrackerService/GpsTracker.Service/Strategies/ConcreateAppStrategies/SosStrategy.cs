@@ -1,8 +1,9 @@
 ﻿using GpsTracker.Service.Strategies.Base;
 using System;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+//using System.Web;
+using GpsTracker.Models.Messages;
 using GpsTracker.Models.Models;
 using System.Web.Http;
 using GpsTracker.Service.Controllers;
@@ -35,22 +36,28 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
         {
             try
             {
-                var temp = StaticInfo.SosList.FirstOrDefault(x => x.DeviceId == message.DeviceId);
+                var index = GetOrCreateUser(message).UserId;
+                var temp = StaticInfo.SosList.FirstOrDefault(x => x.UserId == index);
                 if (temp == null)
                 {
-                    StaticInfo.SosList.Add(new Log()
+                    StaticInfo.SosList.Add(new SosMessage()
                     {
-                        DeviceId = message.DeviceId,
-                        EventDate = DateTime.Now,
-                        EventId = MainContext.Instance.Event.GetBy(x => x.Name == "SOS_BUTTON_CLICK").ToList()[0].EventId
+                        Latitude = message.Latitude,
+                        Longitude = message.Longitude,
+                        UserId = index,
+                        Timestamp = DateTime.Now
                     });
                 }
-                temp.EventDate = DateTime.Now;
-                WriteToDb(message); //Async
+                else
+                {
+                    temp.Timestamp = DateTime.Now;
+                }
+                WriteToDb(message);
                 return new System.Web.Http.Results.OkResult(_controller);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                Debug.WriteLine($"Exception in SosStrategy.Execute: {ex.Message}");
                 return new System.Web.Http.Results.InternalServerErrorResult(_controller);
             }
         }
@@ -63,10 +70,11 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                 {
                     DeviceId = message.DeviceId,
                     EventDate = DateTime.Now,
-                    EventId = MainContext.Instance.Event.GetBy(x => x.Name == "SOS_BUTTON_CLICK").ToList()[0].EventId
+                    EventId = MainContext.Instance.Event.GetBy(x => x.Name == "SOS_BUTTON_CLICK").ToList()[0].EventId,
+                    Message = $"Sos call on the mark: {message.Latitude}, {message.Longitude}"
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Internal DB Exception:{ex.Message}");
             }
