@@ -7,6 +7,8 @@ import android.os.Environment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import android.provider.Settings.Secure;
 
@@ -20,6 +22,7 @@ public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
     private static String deviceId;
     private DataMessage message;
+    private Button button;
     //endregion Variables
 
     //region Activity
@@ -27,7 +30,7 @@ public class MainActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
-//        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.myscreen);
 
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
@@ -35,8 +38,12 @@ public class MainActivity extends Activity {
         Log.i("deviceId", deviceId.toString());
         saveAndroidIdToFile();
         startService(new Intent(this, MyService.class));
-
+        Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplicationContext().startActivity(i);
         //minimizeApp();
+
+
     }
 
     @Override
@@ -110,4 +117,16 @@ public class MainActivity extends Activity {
     }
 
     //endregion SOS_BUTTON
+
+    public void dumbFuck(View v){
+        button = (Button) findViewById(R.id.buttonSettings);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(i);
+            }
+        });
+    }
 }

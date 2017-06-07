@@ -1,0 +1,45 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="value_first_name"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_first_name" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="value_last_name"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_last_name" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="value_middle_name"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_middle_name" />
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/pref_gender_titles"
+        android:entryValues="@array/pref_gender_values"
+        android:key="value_gender"
+        android:title="@string/pref_title_gender" />
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="value_email"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_email" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="value_phone"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_phone" />
+</PreferenceScreen>
