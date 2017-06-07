@@ -1,111 +1,108 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel='stylesheet' href='css/style.css'>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/w3.css">
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script>
-    $(document).ready(function(e) {
-      $('.search-panel .dropdown-menu').find('a').click(function(e) {
-        e.preventDefault();
-        var param = $(this).attr("href").replace("#", "");
-        var concept = $(this).text();
-        $('.search-panel span#search_concept').text(concept);
-        $('.input-group #search_param').val(param);
-      });
-    });
-  </script>
+	<meta charset="utf-8" />
+	<title>Not bad tracker</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/media.css">
+	<link rel="stylesheet" type="text/css" href="css/w3.css">
 </head>
-
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="index.html">GPS Tracker</a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <a href="#about"><button class="btn-black">Dowload</button></a>
-        <a><button class="btn-black" data-toggle="collapse" data-target="#about_panel">About</button></a>
-        <div class="nav navbar-nav navbar-right">
-          <button class="btn-black" data-toggle="collapse" data-target="#login_panel"><span class="glyphicon glyphicon-log-in"></span> Log in</button>
-        </div>
-        <div class="input-group nav navbar-nav navbar-right navbar-inverse align-middle" style="width: 300px;margin-top: 7px">
-          <div class="input-group-btn search-panel">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                     <span id="search_concept">Search by</span> <span class="caret"></span>
-                   </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#contains">ID</a></li>
-              <li class="divider"></li>
-              <li><a href="#less_than">Login</a></li>
-            </ul>
-          </div>
-          <input type="hidden" name="search_param" value="all" id="search_param">
-          <input type="text" class="form-control" name="x">
-          <span class="input-group-btn">
-                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-          </span>
-        </div>
-      </div>
-    </div>
-  </nav>
+	
+	<header>
+		<nav class="navbar-inverse">
+			<div class="container">
+				<div class="row">
+					<div class="navbar-header col-2">
+						<button class="navbar-toggle collapsed menu_btn" data-toggle="collapse" data-target="#top_menu">
+							
+						</button>
 
-  <div class="w3-conrainer w3-white collapse" id="about_panel">
-    <div class="w3-conrainer w3-row">
-      <h2 class="w3-center">1 month of experience</h2>
-      <p>Founded in 2017, the team consisting of: Chuiko Sergey,Svityi Andrii, Susulovskyi Taras and Darya Boychuk started the project "GPS navigator".</p>
-    </div>
-    <div class="w3-conrainer w3-row">
-      <h2 class="w3-center">Result</h2>
-      <p>We have created a web based solution for tracking the position of the device, viewing and monitoring of the traversed path of movement.</p>
-    </div>
-  </div>
+						<a href="index.html" class="navbar-brand logo">
+							GpsTracker
+						</a>
+					</div>
+
+					<div class="collapse navbar-collapse navbar-right col-10" id="top_menu">
+						<ul class="menu">
+							<li class="col-1"><a href="#" class="btn btn-default">download</a>
+							</li>
+							<li class="col-1">
+								<button onclick="showLogin()" class="btn btn-default">Sign in</button>
+								<div id="sign-in" class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom">
+
+								</div>
+							</li>
+							<li class="col-7">
+								<div class="form-inline">
+									<select class="form-control" id="search_dropdown">
+	    								<option value="" disabled selected>Search by</option>
+    									<option value="id">Id</option>
+    									<option value="login">Login</option>
+									</select>
+									<input type="text" class="form-control" id="search">
+								</div>
+							</li>
+							<li class="col-1">
+								<button onclick="showLogin()" class="btn btn-default">Sign in</button>
+								<div id="sign-in" class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom">
+									<form class="form-signin">
+										<input class="form-control" type="text" placeholder="Login" id="login" required>
+										<input class="form-control" type="text" placeholder="Password" id="pass" required>
+										<button class="form-control btn">Sign In</button>
+									</form>
+    							</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="top_line"></div>
+			</div>
+		</nav>
+	</header>
+
+	<section class="map_layout container-fluid">
+		<div class="container">
+			<div class="row">
+			<div class="col-md-12">
+				<div class="map_block">
+					<div id="map">
+						<script>
+      					var map;
+      					function initMap() {
+        					map = new google.maps.Map(document.getElementById('map'), {
+         					center: {lat: 49.805257, lng:  23.990453},
+          					zoom: 15
+        					});
 
 
-  <div id="login_panel" class="collapse panel">
-    <form class="login_form">
-      Username<br>
-      <input type="text" class="input_login" name="uname">
-      <br>Password<br>
-      <input type="password" class="input_login" name="upswd">
-      <div class="w3-display-container w3-black" style="height: 50px">
-        <div class="w3-display-left">
-          <a href="user.html" class="w3-button w3-white w3-left w3-round-xlarge w3-hover-green" style="text-decoration:none">Log in</a>
-        </div>
-      </div>
-    </form>
-  </div>
+        					var marker = new google.maps.Marker({
+    						position: {lat: 49.805257, lng:  23.990453},
+    						animation: google.maps.Animation.BOUNCE
+  							});
+  						marker.setMap(map);
+      					}
 
-  <div id="map_container">
-    <div id="map" style="width:100%;height:100%"></div>
-  </div>
-  <footer class="navbar-fixed-bottom navbar-inverse">
-    <div class="container">
-      <p class="text-muted text-center">Copyright &copy; 2017 KAMANDA. All rights reserverd.</p>
-    </div>
-  </footer>
-  <script>
-    function myMap() {
-      var mapOptions = {
-        center: new google.maps.LatLng(51.5, -0.12),
-        zoom: 10,
-        mapTypeId: 'roadmap'
-      }
-      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    }
-  </script>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm39wrggcAiB5PRUWSIAI2g1tXWX3cQlI&callback=myMap"></script>
-  <!--
-To use this code on your website, get a free API key from Google.
-Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
--->
 
+    					</script>
+    					<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm39wrggcAiB5PRUWSIAI2g1tXWX3cQlI&callback=initMap"
+    async defer></script>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+
+	<footer class="panel panel-footer">
+		<p class="text-muted text-center">Copyright &copy; 2017 SADYaTTeam. All rights reserverd.</p>
+	</footer>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/view_scripts.js"></script>
 </body>
-
 </html>
