@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.provider.Settings.Secure;
 
@@ -22,7 +23,16 @@ public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
     private static String deviceId;
     private DataMessage message;
+    private EditText editTextUpdateInterval;
+    private EditText editTextFatestInterval;
+    private EditText editTextDisplacement;
     private Button button;
+    private Button buttonSaveSettings;
+
+    private String updateInterval;
+    private String fatestInterval;
+    private String displacement;
+
     //endregion Variables
 
     //region Activity
@@ -30,7 +40,7 @@ public class MainActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
-        setContentView(R.layout.myscreen);
+        setContentView(R.layout.settings_layout);
 
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
@@ -38,9 +48,9 @@ public class MainActivity extends Activity {
         Log.i("deviceId", deviceId.toString());
         saveAndroidIdToFile();
         startService(new Intent(this, MyService.class));
-        Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getApplicationContext().startActivity(i);
+        //Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+//        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        getApplicationContext().startActivity(i);
         //minimizeApp();
 
 
@@ -129,4 +139,22 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+    public void ApplyChanges(View v){
+        editTextUpdateInterval = (EditText) findViewById(R.id.editTextUpdateInterval);
+        editTextFatestInterval = (EditText) findViewById(R.id.editTextFatestInterval);
+        editTextDisplacement = (EditText) findViewById(R.id.editTextDisplacement);
+        buttonSaveSettings = (Button) findViewById(R.id.buttonSettings);
+        buttonSaveSettings.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                updateInterval = editTextUpdateInterval.getText().toString();
+                fatestInterval = editTextFatestInterval.getText().toString();
+                displacement = editTextDisplacement.getText().toString();
+                Log.i("SETTINGS", "updateInterval: " + updateInterval + "fatestInterval: " + fatestInterval +  "displacement: " + displacement);
+            }
+        });
+    }
+
+
 }

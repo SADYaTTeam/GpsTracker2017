@@ -62,6 +62,7 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
     private static int FATEST_INTERVAL = 5000; // 5 sec
     private static int DISPLACEMENT = 50; // 10 meters
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -228,5 +229,7 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, this);
     }
+
+
 
 }

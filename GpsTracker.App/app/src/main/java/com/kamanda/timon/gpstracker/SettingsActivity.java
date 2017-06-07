@@ -193,6 +193,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("value_time_interval"));
             bindPreferenceSummaryToValue(findPreference("value_range_interval"));
             bindPreferenceSummaryToValue(findPreference("value_time_of_marker"));
+
+
         }
 
         @Override
