@@ -9,8 +9,22 @@ function show(id) {
 
 function showLogin() {
     show("sign-in")
+    var blur = document.getElementById("main_layout");
+    if (blur.className.indexOf("blur") == -1) {
+    	blur.className += " blur";
+    } else{
+    	blur.className = blur.className.replace(" blur", "");
+    }
 }
 
 function showAbout() {
     show("about")
+}
+
+function myMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(49.839683, 24.029717),
+        zoom: 15,
+    }
+var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
 }

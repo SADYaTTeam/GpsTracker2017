@@ -33,7 +33,7 @@ namespace GpsTracker.Model.Test
             Assert.IsTrue(MainContext.Instance.Marker.Insert(new Models.Models.Marker()
             {
                 Latitude = 20,
-                Longtitude = -20,
+                Longitude = -20,
                 UserId = index
             }));
         }

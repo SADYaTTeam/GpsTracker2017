@@ -164,7 +164,7 @@ namespace GpsTracker.Models.DataContext.Contexts
             }
             temp.UserId = newItem.UserId;
             temp.Name = newItem.Name;
-            temp.Longtitude = newItem.Longtitude;
+            temp.Longitude = newItem.Longitude;
             temp.Latitude = newItem.Latitude;
             temp.Timestamp = newItem.Timestamp;
             return SaveChanges();

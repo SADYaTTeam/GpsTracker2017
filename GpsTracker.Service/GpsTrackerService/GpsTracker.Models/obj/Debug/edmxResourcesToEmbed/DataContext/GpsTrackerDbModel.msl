@@ -26,7 +26,7 @@
           <ScalarProperty Name="MarkerId" ColumnName="MarkerId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Longtitude" ColumnName="Longtitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="Latitude" ColumnName="Latitude" />
           <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
         </MappingFragment>

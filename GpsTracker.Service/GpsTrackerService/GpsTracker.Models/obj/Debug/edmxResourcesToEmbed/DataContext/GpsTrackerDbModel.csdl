@@ -26,7 +26,7 @@
     <Property Name="MarkerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="Longtitude" Type="Double" Nullable="false" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
     <Property Name="Latitude" Type="Double" Nullable="false" />
     <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="7" />
     <NavigationProperty Name="User" Relationship="Self.FK_Marker_Track_Id_User" FromRole="Marker" ToRole="User" />

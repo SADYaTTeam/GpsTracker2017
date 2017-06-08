@@ -11,12 +11,12 @@
 	<link rel="stylesheet" type="text/css" href="css/w3.css">
 </head>
 <body>
-	
+<div class="" id="main_layout">
 	<header>
 		<nav class="navbar-inverse">
 			<div class="container">
 				<div class="row">
-					<div class="navbar-header col-2">
+					<div class="navbar-header col-5">
 						<button class="navbar-toggle collapsed menu_btn" data-toggle="collapse" data-target="#top_menu">
 							
 						</button>
@@ -26,17 +26,20 @@
 						</a>
 					</div>
 
-					<div class="collapse navbar-collapse navbar-right col-10" id="top_menu">
+					<div class="collapse navbar-collapse navbar-right col-7" id="top_menu">
 						<ul class="menu">
-							<li class="col-1"><a href="#" class="btn btn-default">download</a>
+							<li class="col-2"><a href="#" class="btn btn-default">Download</a>
 							</li>
 							<li class="col-1">
-								<button onclick="showLogin()" class="btn btn-default">Sign in</button>
-								<div id="sign-in" class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom">
-
+								<button onclick="showAbout()" class="btn btn-default">About</button>
+								<div id="about" class="w3-dropdown-content w3-bar-block w3-card-4 w3-display-topmiddle">
+									<h2>1 month of experience</h2>
+									<p>Founded in 2017, the team consisting of: Chuiko Sergey,Svityi Andrii, Susulovskyi Taras and Darya Boychuk started the project "GPS navigator".</p>
+									<h2>Result</h2>
+									<p>We have created a web based solution for tracking the position of the device, viewing and monitoring of the traversed path of movement.</p>
 								</div>
 							</li>
-							<li class="col-7">
+							<!--<li class="col-7">
 								<div class="form-inline">
 									<select class="form-control" id="search_dropdown">
 	    								<option value="" disabled selected>Search by</option>
@@ -45,64 +48,32 @@
 									</select>
 									<input type="text" class="form-control" id="search">
 								</div>
-							</li>
-							<li class="col-1">
-								<button onclick="showLogin()" class="btn btn-default">Sign in</button>
-								<div id="sign-in" class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom">
-									<form class="form-signin">
-										<input class="form-control" type="text" placeholder="Login" id="login" required>
-										<input class="form-control" type="text" placeholder="Password" id="pass" required>
-										<button class="form-control btn">Sign In</button>
-									</form>
-    							</div>
+							</li>-->
+							<li class="col-4">
+								<form class="form-signin form-inline">
+									<input class="form-control" type="text" placeholder="Login" id="login" required>
+									<input class="form-control" type="text" placeholder="Password" id="pass" required>
+									<button class="form-control btn" id="sign_button">Sign In</button>
+								</form>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="top_line"></div>
 			</div>
 		</nav>
 	</header>
 
-	<section class="map_layout container-fluid">
-		<div class="container">
-			<div class="row">
-			<div class="col-md-12">
-				<div class="map_block">
-					<div id="map">
-						<script>
-      					var map;
-      					function initMap() {
-        					map = new google.maps.Map(document.getElementById('map'), {
-         					center: {lat: 49.805257, lng:  23.990453},
-          					zoom: 15
-        					});
-
-
-        					var marker = new google.maps.Marker({
-    						position: {lat: 49.805257, lng:  23.990453},
-    						animation: google.maps.Animation.BOUNCE
-  							});
-  						marker.setMap(map);
-      					}
-
-
-
-    					</script>
-    					<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm39wrggcAiB5PRUWSIAI2g1tXWX3cQlI&callback=initMap"
-    async defer></script>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-	</section>
+	<section id="googleMap" style="width:100%;height:89vh;"></section>
 
 	<footer class="panel panel-footer">
 		<p class="text-muted text-center">Copyright &copy; 2017 SADYaTTeam. All rights reserverd.</p>
 	</footer>
+
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/view_scripts.js"></script>
+	<script src="js/main/sign-in.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8xt0oziJPSxsF6_Zm52PKhkT1idPNr40&callback=myMap"></script>
+</div>	
 </body>
 </html>
