@@ -76,10 +76,11 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
 //            Log.i(logTag, "mGoogleApiClient is not null");
 //            mGoogleApiClient.connect();
 //        }
-        updateInterval = (Integer) intent.getExtras().get("updateInterval");
-        fatestInterval = (Integer) intent.getExtras().get("fatestInterval");
-        displacement = (Integer) intent.getExtras().get("displacement");
+        if (intent.hasExtra("updateInterval")) updateInterval = (Integer) intent.getExtras().get("updateInterval");
+        if (intent.hasExtra("fatestInterval")) fatestInterval = (Integer) intent.getExtras().get("fatestInterval");
+        if (intent.hasExtra("displacement")) displacement = (Integer) intent.getExtras().get("displacement");
         Log.i("SETTINGS_SERVICE", "updateInterval: " + updateInterval + " fatestInterval: " + fatestInterval + " displacement: " + displacement);
+
         createLocationRequest();
         try {
             mGoogleApiClient.connect();
@@ -234,6 +235,7 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
     }
 
     public void sendSOS_JSON() {
+        Location location;
         AsyncT asyncT = new AsyncT();
         asyncT.setData(message.getLatitude(), message.getLongitude(), deviceId, MESSAGE_TYPE_SOS);
         asyncT.execute();

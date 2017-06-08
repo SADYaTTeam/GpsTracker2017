@@ -16,6 +16,7 @@ import android.provider.Settings.Secure;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Objects;
 
 public class MainActivity extends Activity {
 
@@ -47,6 +48,8 @@ public class MainActivity extends Activity {
                 Secure.ANDROID_ID);
         Log.i("deviceId", deviceId.toString());
         saveAndroidIdToFile();
+        Intent intent = new Intent(this, MyService.class);
+        this.startService(intent);
         //startService(new Intent(this, MyService.class));
 
         //minimizeApp();
@@ -110,7 +113,7 @@ public class MainActivity extends Activity {
                                 Toast.LENGTH_LONG).show();
                         MyService myService = new MyService();
                         myService.sendSOS_JSON();
-                       // startService(new Intent(this, MyService.class));
+                        // startService(new Intent(this, MyService.class));
                     } catch (Exception exc) {
                         Log.e("AsyncT", exc.getMessage(), exc);
                     }
@@ -128,24 +131,38 @@ public class MainActivity extends Activity {
 
     //endregion SOS_BUTTON
 
-    public void ApplyChanges(View v){
+    public void ApplyChanges(View v) {
         editTextUpdateInterval = (EditText) findViewById(R.id.editTextUpdateInterval);
         editTextFatestInterval = (EditText) findViewById(R.id.editTextFatestInterval);
         editTextDisplacement = (EditText) findViewById(R.id.editTextDisplacement);
         buttonSaveSettings = (Button) findViewById(R.id.buttonSettingsSave);
-        buttonSaveSettings.setOnClickListener(new View.OnClickListener(){
+        buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateInterval = Integer.valueOf(editTextUpdateInterval.getText().toString()) ;
-                fatestInterval = Integer.valueOf(editTextFatestInterval.getText().toString());
-                displacement = Integer.valueOf(editTextDisplacement.getText().toString());
+                if (Objects.equals(editTextUpdateInterval.getText().toString(), "")) {
+                    updateInterval = 10000;
+                } else {
+                    updateInterval = Integer.valueOf(editTextUpdateInterval.getText().toString());
+                }
+                if (Objects.equals(editTextFatestInterval.getText().toString(), "")) {
+                    fatestInterval = 5000;
+                } else {
+                    fatestInterval = Integer.valueOf(editTextFatestInterval.getText().toString());
+                }
+                if (Objects.equals(editTextDisplacement.getText().toString(), "")) {
+                    displacement = 50;
+                } else {
+                    displacement = Integer.valueOf(editTextDisplacement.getText().toString());
+                }
+
                 StartMyService();
-                Log.i("SETTINGS", "updateInterval: " + updateInterval + "fatestInterval: " + fatestInterval +  "displacement: " + displacement);
+                Log.i("SETTINGS", "updateInterval: " + updateInterval + "fatestInterval: " + fatestInterval + "displacement: " + displacement);
             }
         });
     }
 
-    public void StartMyService(){
+    public void StartMyService() {
+        this.stopService(new Intent(this, MyService.class));
         Intent intent = new Intent(this, MyService.class);
         intent.putExtra("updateInterval", updateInterval);
         intent.putExtra("fatestInterval", fatestInterval);
