@@ -2,9 +2,12 @@
 package com.kamanda.timon.gpstracker;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Environment;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,6 +37,9 @@ public class MainActivity extends Activity {
     private int fatestInterval;
     private int displacement;
 
+    boolean mBounded;
+    MyService mServer;
+
     //endregion Variables
 
     //region Activity
@@ -61,12 +67,35 @@ public class MainActivity extends Activity {
     protected void onStart() {
         Log.i(TAG, "onStart");
         super.onStart();
+        Intent mIntent = new Intent(this, MyService.class);
+        bindService(mIntent, mConnection, BIND_AUTO_CREATE);
     }
+
+    ServiceConnection mConnection = new ServiceConnection() {
+
+        public void onServiceDisconnected(ComponentName name) {
+            Toast.makeText(MainActivity.this, "Service is disconnected", Toast.LENGTH_SHORT).show();
+            mBounded = false;
+            mServer = null;
+        }
+
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Toast.makeText(MainActivity.this, "Service is connected", Toast.LENGTH_SHORT).show();
+            mBounded = true;
+            MyService.LocalBinder mLocalBinder = (MyService.LocalBinder)service;
+            mServer = mLocalBinder.getMyServiceInstance();
+        }
+    };
+
 
     @Override
     protected void onStop() {
         Log.i(TAG, "onStop");
         super.onStop();
+        if(mBounded) {
+            unbindService(mConnection);
+            mBounded = false;
+        }
     }
 
 
@@ -107,12 +136,11 @@ public class MainActivity extends Activity {
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_UP:
                 if (action == KeyEvent.ACTION_DOWN) {
-                    //TODO Send SOS message in JSON to server
+                    //TODO Send SOS message in JSON to mServer
                     try {
-                        Toast.makeText(getApplicationContext(), "JSON sended to server",
+                        Toast.makeText(getApplicationContext(), "JSON sended to mServer",
                                 Toast.LENGTH_LONG).show();
-                        MyService myService = new MyService();
-                        myService.sendSOS_JSON();
+                        mServer.sendSOS_JSON();
                         // startService(new Intent(this, MyService.class));
                     } catch (Exception exc) {
                         Log.e("AsyncT", exc.getMessage(), exc);

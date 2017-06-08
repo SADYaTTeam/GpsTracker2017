@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
@@ -76,9 +77,12 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
 //            Log.i(logTag, "mGoogleApiClient is not null");
 //            mGoogleApiClient.connect();
 //        }
-        if (intent.hasExtra("updateInterval")) updateInterval = (Integer) intent.getExtras().get("updateInterval");
-        if (intent.hasExtra("fatestInterval")) fatestInterval = (Integer) intent.getExtras().get("fatestInterval");
-        if (intent.hasExtra("displacement")) displacement = (Integer) intent.getExtras().get("displacement");
+        if (intent.hasExtra("updateInterval"))
+            updateInterval = (Integer) intent.getExtras().get("updateInterval");
+        if (intent.hasExtra("fatestInterval"))
+            fatestInterval = (Integer) intent.getExtras().get("fatestInterval");
+        if (intent.hasExtra("displacement"))
+            displacement = (Integer) intent.getExtras().get("displacement");
         Log.i("SETTINGS_SERVICE", "updateInterval: " + updateInterval + " fatestInterval: " + fatestInterval + " displacement: " + displacement);
 
         createLocationRequest();
@@ -107,11 +111,20 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
         Log.i(logTag, "onDestroy");
     }
 
-    @Nullable
+
+    IBinder mBinder = new LocalBinder();
+
+
     @Override
-    public IBinder onBind(final Intent intent) {
+    public IBinder onBind(Intent intent) {
         Log.i(logTag, "onBind");
-        return null;
+        return mBinder;
+    }
+
+    public class LocalBinder extends Binder {
+        public MyService getMyServiceInstance() {
+            return MyService.this;
+        }
     }
 
 
@@ -210,7 +223,7 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
         //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         mLocationRequest.setSmallestDisplacement(displacement);
-        Log.i("LOCATION_REQUEST", "updateInterval: " + updateInterval + " fatestInterval: " + fatestInterval +  " displacement: " + displacement);
+        Log.i("LOCATION_REQUEST", "updateInterval: " + updateInterval + " fatestInterval: " + fatestInterval + " displacement: " + displacement);
     }
 
     /**
@@ -234,10 +247,23 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
                 mGoogleApiClient, this);
     }
 
+
     public void sendSOS_JSON() {
-        Location location;
         AsyncT asyncT = new AsyncT();
-        asyncT.setData(message.getLatitude(), message.getLongitude(), deviceId, MESSAGE_TYPE_SOS);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+        asyncT.setData(mLastLocation.getLatitude(), mLastLocation.getLongitude(), deviceId, MESSAGE_TYPE_SOS);
+        Log.i("sendSOS_JSON", mLastLocation.getLatitude() + ", " + mLastLocation.getLongitude() + " Message Type: " + MESSAGE_TYPE_SOS);
         asyncT.execute();
     }
 }
