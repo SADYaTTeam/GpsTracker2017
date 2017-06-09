@@ -112,39 +112,23 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// (see details in debug)</returns>
         public bool Insert(Models.Person newItem)
         {
-            var transaction = Context.Database.BeginTransaction();
             try
             {
-                Context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] ON");
-                try
-                {
-                    var max = (from item in Context.Person
-                               select item.PersonId).ToList().Max();
-                    newItem.PersonId = max + 1;
-                }
-                catch (InvalidOperationException operationEx)
-                {
-                    Debug.WriteLine($"Person set is empty. InvalidOperationException: {operationEx.Message}");
-                    newItem.PersonId = 1;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Unknown exception with message: {ex.Message}");
-                }
                 Context.Person.Add(newItem.Convert());
-                Context.SaveChanges();
-                Context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
-                transaction.Commit();
+                if (Context.SaveChanges() != 0)
+                {
+                    return true;
+                }
+                return false;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception:{ex.Message}");
-                transaction.Rollback();
-                DisposeTransaction(transaction);
+                Debug.WriteLine("Exception in PersonContext file.\n" +
+                                $"Type:{ex.GetType()}\n" +
+                                $"Message:{ex.Message}\n" +
+                                $"InnerText:{ex.InnerException?.Message}");
                 return false;
             }
-            DisposeTransaction(transaction);
-            return true;
         }
 
         /// <summary>
