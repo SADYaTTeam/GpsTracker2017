@@ -111,22 +111,23 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// (see details in debug)</returns>
         public bool Insert(Event newItem)
         {
-            var transaction = Context.Database.BeginTransaction();
             try
             {
-                Context.Database.ExecuteSqlCommand("INSERT INTO Event(Name)" +
-                                                    $"VALUES('{newItem.Name}')");
-                transaction.Commit();
+                Context.Event.Add(newItem.Convert());
+                if (Context.SaveChanges() != 0)
+                {
+                    return true;
+                }
+                return false;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception:{ex.Message}");
-                transaction.Rollback();
-                DisposeTransaction(transaction);
+                Debug.WriteLine("Exception in EventContext file.\n" +
+                                $"Type:{ex.GetType()}\n" +
+                                $"Message:{ex.Message}\n" +
+                                $"InnerText:{ex.InnerException?.Message}");
                 return false;
             }
-            DisposeTransaction(transaction);
-            return true;
         }
 
         /// <summary>

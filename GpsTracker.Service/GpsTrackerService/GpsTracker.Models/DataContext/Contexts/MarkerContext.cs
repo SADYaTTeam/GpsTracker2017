@@ -111,40 +111,24 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// (see details in debug)</returns>
         public bool Insert(Models.Marker newItem)
         {
-            var transaction = Context.Database.BeginTransaction();
             try
             {
-                Context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Marker ON");
-                try
-                {
-                    var max = (from item in Context.Marker
-                               select item.MarkerId).ToList().Max();
-                    newItem.MarkerId = max + 1;
-                }
-                catch (InvalidOperationException ex)
-                {
-                    Debug.WriteLine($"Marker set is empty. Exception:{ex.Message}");
-                    newItem.MarkerId = 1;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Unknown exception with message:{ex.Message}");
-                }
                 newItem.Timestamp = DateTime.Now;
                 Context.Marker.Add(newItem.Convert());
-                Context.SaveChanges();
-                Context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Marker OFF");
-                transaction.Commit();
+                if (Context.SaveChanges() != 0)
+                {
+                    return true;
+                }
+                return false;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception:{ex.Message}");
-                transaction.Rollback();
-                DisposeTransaction(transaction);
+                Debug.WriteLine("Exception in MarkerContext file.\n" +
+                                $"Type:{ex.GetType()}\n" +
+                                $"Message:{ex.Message}\n" +
+                                $"InnerText:{ex.InnerException?.Message}");
                 return false;
             }
-            DisposeTransaction(transaction);
-            return true;
         }
 
         /// <summary>

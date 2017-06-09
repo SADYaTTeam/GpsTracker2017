@@ -58,6 +58,7 @@ CREATE TABLE dbo.[Person]
 	Phone NVARCHAR(13) NULL,
 	CONSTRAINT PK_Id_Person PRIMARY KEY CLUSTERED (PersonId),
 	CONSTRAINT FK_Person_User_Id_User FOREIGN KEY(UserId) REFERENCES dbo.[User](UserId),
+	CONSTRAINT UQ_Person_UserId UNIQUE (UserId),
 	CONSTRAINT CH_Person_BirthDate CHECK (DateOfBirth > '1950-01-01' AND DateOfBirth < DATEADD(YEAR, -10, SYSDATETIME())),
 	CONSTRAINT CH_Person_Phone CHECK (Phone LIKE '+380%[0-9]%'), 
 	CONSTRAINT CH_Person_Email CHECK (Email LIKE '[a-z]%[a-z]@[a-z]%[a-z].[a-z][a-z]%')
@@ -92,7 +93,7 @@ GO
 CREATE TABLE dbo.[Zone]
 (
 	ZoneId INT NOT NULL IDENTITY(1, 1),
-	Longtitude FLOAT NOT NULL,
+	Longitude FLOAT NOT NULL,
 	Latitude FLOAT NOT NULL,
 	Radius FLOAT NOT NULL,
 	UserId INT NOT NULL,

@@ -110,40 +110,24 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// (see details in debug)</returns>
         public bool Insert(Models.Log newItem)
         {
-            var transaction = Context.Database.BeginTransaction();
             try
             {
-                Context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] ON");
-                try
-                {
-                    var max = (from item in Context.Log
-                               select item.LogId).ToList().Max();
-                    newItem.LogId = max + 1;
-                }
-                catch (InvalidOperationException operationEx)
-                {
-                    Debug.WriteLine($"Log set is empty. InvalidOperationException: {operationEx.Message}");
-                    newItem.LogId = 1;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Unknown exception with message: {ex.Message}");
-                }
                 newItem.EventDate = DateTime.Now;
                 Context.Log.Add(newItem.Convert());
-                Context.SaveChanges();
-                Context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [User] OFF");
-                transaction.Commit();
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine($"Exception:{ex.Message}");
-                transaction.Rollback();
-                DisposeTransaction(transaction);
+                if (Context.SaveChanges() != 0)
+                {
+                    return true;
+                }
                 return false;
             }
-            DisposeTransaction(transaction);
-            return true;
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception in LogContext file.\n" +
+                                $"Type:{ex.GetType()}\n" +
+                                $"Message:{ex.Message}\n" +
+                                $"InnerText:{ex.InnerException?.Message}");
+                return false;
+            }
         }
 
         /// <summary>
