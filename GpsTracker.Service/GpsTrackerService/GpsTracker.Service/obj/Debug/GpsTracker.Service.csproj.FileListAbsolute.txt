@@ -49,14 +49,8 @@ E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\GpsTracker.Service.dll.config
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\GpsTracker.Service.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\GpsTracker.Service.pdb
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.dll
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.SqlServer.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\GpsTracker.Models.dll
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\Newtonsoft.Json.dll
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\System.Net.Http.Formatting.dll
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\System.Web.Http.dll
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\System.Web.Http.WebHost.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.xml
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.SqlServer.xml
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\GpsTracker.Models.pdb
@@ -69,3 +63,9 @@ E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\GpsTracker.Service.csprojResolveAssemblyReference.cache
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\GpsTracker.Service.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\GpsTracker.Service.pdb
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.dll
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\EntityFramework.SqlServer.dll
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\System.Net.Http.Formatting.dll
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\System.Web.Http.dll
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\bin\System.Web.Http.WebHost.dll

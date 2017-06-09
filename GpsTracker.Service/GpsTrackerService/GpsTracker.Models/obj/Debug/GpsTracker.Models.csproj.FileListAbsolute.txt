@@ -1,10 +1,6 @@
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\GpsTracker.Models.dll.config
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\GpsTracker.Models.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\GpsTracker.Models.pdb
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.dll
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.SqlServer.dll
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\StyleCop.CSharp.dll
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\StyleCop.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\Microsoft.Build.Utilities.v3.5.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.xml
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.SqlServer.xml
@@ -12,3 +8,7 @@ E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\b
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.csprojResolveAssemblyReference.cache
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.pdb
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.dll
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\EntityFramework.SqlServer.dll
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\StyleCop.CSharp.dll
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\bin\Debug\StyleCop.dll

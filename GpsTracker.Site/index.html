@@ -39,7 +39,7 @@
 									<p>We have created a web based solution for tracking the position of the device, viewing and monitoring of the traversed path of movement.</p>
 								</div>
 							</li>
-							<!--<li class="col-7">
+							<li class="col-3 authorized">
 								<div class="form-inline">
 									<select class="form-control" id="search_dropdown">
 	    								<option value="" disabled selected>Search by</option>
@@ -48,12 +48,17 @@
 									</select>
 									<input type="text" class="form-control" id="search">
 								</div>
-							</li>-->
-							<li class="col-4">
-								<form class="form-signin form-inline">
+							</li>
+							<li class="col-1 authorized">
+								<div class="form_inline">
+									<img src=".glyphicon-user">
+								</div>
+							</li>
+							<li class="col-4 unauthorized">
+								<form class="form-signin form-inline" id="sing_form" action="index.html">
 									<input class="form-control" type="text" placeholder="Login" id="login" required>
 									<input class="form-control" type="text" placeholder="Password" id="pass" required>
-									<button class="form-control btn" id="sign_button">Sign In</button>
+									<button class="form-control btn" id="sign_button" onclick="return false;">Sign In</button>
 								</form>
 							</li>
 						</ul>
@@ -70,6 +75,7 @@
 	</footer>
 
 	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/view_scripts.js"></script>
 	<script src="js/main/sign-in.js"></script>

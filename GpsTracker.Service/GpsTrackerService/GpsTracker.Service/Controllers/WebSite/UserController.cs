@@ -14,8 +14,9 @@ namespace GpsTracker.Service.Controllers.WebSite
     #endregion
 
     /// <summary>
-    /// Class represents web api 2 controller for website (path ".../api/web")
+    /// Class represents web api 2 controller for website (path ".../api/web/user")
     /// </summary>
+    /// <remarks>Mostly work with user info</remarks>
     [RoutePrefix("api/web/user")]
     public class UserController : ApiController
     {
@@ -28,42 +29,46 @@ namespace GpsTracker.Service.Controllers.WebSite
         /// exceptions while process</returns>
         [HttpPost]
         [Route("login")]
-        public ResultMessage LogInUser([FromBody]  LoginMessage message)
+        public User LogInUser([FromBody]  LoginMessage message)
         {
             try
             {
                 if (string.IsNullOrEmpty(message.Login) && string.IsNullOrEmpty((message.Password)))
                 {
-                    return new ResultMessage()
-                    {
-                        Type = ResultType.Decline,
-                        Message = "Login or password is empty."
-                    };
+                    return null;
+                    //return new ResultMessage()
+                    //{
+                    //    Type = ResultType.Decline,
+                    //    Message = "Login or password is empty."
+                    //};
                 }
                 var user = MainContext.Instance.User.GetBy(x => x.Login == message.Login &&
                                                                 x.Password == message.Password);
                 if (user == null)
                 {
-                    return new ResultMessage()
-                    {
-                        Type = ResultType.Decline,
-                        Message = "There's no user with this login and password."
-                    };
+                    return null;
+                    //return new ResultMessage()
+                    //{
+                    //    Type = ResultType.Decline,
+                    //    Message = "There's no user with this login and password."
+                    //};
                 }
-                return new ResultMessage()
-                {
-                    Type = ResultType.Success,
-                    Message = "User successfully log in."
-                };
+                return user.ToList()[0];
+                //return new ResultMessage()
+                //{
+                //    Type = ResultType.Success,
+                //    Message = "User successfully log in."
+                //};
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Internal server exception: {ex.Message}");
-                return new ResultMessage()
-                {
-                    Type = ResultType.UnknownError,
-                    Message = $"Internal server exception: {ex.Message}"
-                };
+                return null;
+                //return new ResultMessage()
+                //{
+                //    Type = ResultType.UnknownError,
+                //    Message = $"Internal server exception: {ex.Message}"
+                //};
             }
         }
 

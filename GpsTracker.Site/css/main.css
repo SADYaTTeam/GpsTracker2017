@@ -54,11 +54,6 @@ nav .container
 	margin: 0px;
 }
 
-.menu li
-{
-	display: inline-block;
-}
-
 .menu li a
 {
 	padding: 10px;
@@ -106,6 +101,21 @@ nav .container
 .panel-footer
 {
 	margin-bottom: 0px;
+}
+
+.authorized
+{
+	display: none !important;
+}
+
+.unauthorized
+{
+	display: inline-block !important;
+}
+
+.menu li
+{
+	display: inline-block;
 }
 /*
 .m0
