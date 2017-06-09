@@ -70,14 +70,14 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                     StaticInfo.MarkerList.Add(new Marker()
                     {
                         Latitude = message.Latitude,
-                        Longtitude = message.Longitude,
+                        Longitude = message.Longitude,
                         Timestamp = DateTime.Now,
                         UserId = _user.UserId
                     });
                 }
                 else
                 {
-                    temp.Longtitude = message.Longitude;
+                    temp.Longitude = message.Longitude;
                     temp.Latitude = message.Latitude;
                     temp.Timestamp = DateTime.Now;
                 }
@@ -109,7 +109,7 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
             MainContext.Instance.Marker.Insert(new Marker()
             {
                 Latitude = message.Latitude,
-                Longtitude = message.Longitude,
+                Longitude = message.Longitude,
                 UserId = _user.UserId
             });
         }

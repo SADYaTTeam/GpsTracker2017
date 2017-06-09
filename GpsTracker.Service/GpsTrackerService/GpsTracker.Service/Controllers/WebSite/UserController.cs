@@ -28,7 +28,7 @@ namespace GpsTracker.Service.Controllers.WebSite
         /// exceptions while process</returns>
         [HttpPost]
         [Route("login")]
-        public ResultMessage LogInUser([FromBody] LoginMessage message)
+        public ResultMessage LogInUser([FromBody]  LoginMessage message)
         {
             try
             {

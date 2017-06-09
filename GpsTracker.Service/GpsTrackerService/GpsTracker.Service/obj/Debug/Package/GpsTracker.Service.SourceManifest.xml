@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
-  <IisApp path="E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\Package\PackageTmp" />
-  <setAcl path="E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\Package\PackageTmp" setAclResourceType="Directory" />
-  <setAcl path="E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+  <IisApp path="E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\Package\PackageTmp" />
+  <setAcl path="E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Service\obj\Debug\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
 </sitemanifest>
