@@ -34,6 +34,16 @@ namespace GpsTracker.Models.DataContext.Interfaces
         IDbContext<Models.Marker, DataContext.Marker> Marker { get; set; }
 
         /// <summary>
+        /// Gets or sets <see cref="Contexts.FriendlistContext"/> 
+        /// </summary>
+        IDbContext<Models.Friendlist, DataContext.Friendlist> Friendlist { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="Contexts.ZoneContext"/> 
+        /// </summary>
+        IDbContext<Models.Zone, DataContext.Zone> Zone { get; set; }
+
+        /// <summary>
         /// Begin transaction in EF db context
         /// </summary>
         void BeginTransaction();

@@ -137,7 +137,7 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// <remarks>Old person take all info from new(except Id)</remarks>
         /// <param name="id">Id of selected person</param>
         /// <param name="newItem">Represents new info for selected person</param>
-        /// <returns>Returns true if perosn was updated and false if there're 
+        /// <returns>Returns true if person was updated and false if there're 
         /// some errors(see details in debug)</returns>
         public bool Update(int id, Models.Person newItem)
         {

@@ -30,5 +30,7 @@ namespace GpsTracker.Models.DataContext
         public virtual DbSet<Marker> Marker { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Friendlist> Friendlist { get; set; }
+        public virtual DbSet<Zone> Zone { get; set; }
     }
 }

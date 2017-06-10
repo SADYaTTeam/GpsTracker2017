@@ -9,5 +9,9 @@ namespace GpsTracker.Models.Messages
     public class CheckMessage
     {
         public string DeviceId { get; set; }
+        public int? UserId { get; set; }
+        public int? LogId { get; set; }
+        public int? PersonId { get; set; }
+        public int? EventId { get; set; }
     }
 }
