@@ -47,6 +47,12 @@
 		animation: none !important;
 	}
 
+
+.btn-sm
+{
+	display: inline-block;
+}
+
 .menu li button
 {
 	display: block;

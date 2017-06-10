@@ -11,6 +11,14 @@ $(function(){
         //alert(JSON.stringify(temp));
     });
 
+    function authorize()
+    {
+        var authorized = $(".authorized").toArray();
+        var unauthorized = $(".unauthorized").toArray();
+        $(authorized).switchClass("authorized", "unauthorized");
+        $(unauthorized).switchClass("unauthorized", "authorized");
+    }
+
     $("#sign_button").bind("click", function send() {
         var user = {
             Login: $("#login").val(),
@@ -23,7 +31,7 @@ $(function(){
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function(userData){
-                if(userData.UserId != null)
+                if(userData != null)
                 {
                     USER = userData;
                     $.ajax({
@@ -37,12 +45,20 @@ $(function(){
                             {
                                 PERSON = null;
                             }
-                            var authorized = $(".authorized").toArray();
-                            var unauthorized = $(".unauthorized").toArray();
-                            $(authorized).switchClass("authorized", "unauthorized");
-                            $(unauthorized).switchClass("unauthorized", "authorized");
+                            $("#login_area").text(USER.Login)
+                            authorize();
+                            if(PERSON.image != null)
+                            {
+                                $("#avatar").atr("src", "data:image/png;base64," + PERSON.Image);
+                            }
                         }
                     });
+                }
+                else
+                {
+                    $("#login").val("");
+                    $("#pass").val("");
+                    alert("Wrong login or password");
                 }
             }
         });        

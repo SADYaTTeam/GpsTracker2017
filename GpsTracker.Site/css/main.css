@@ -82,14 +82,11 @@ nav .container
 
 #about
 {
+	position: absolute;
+	z-index: 99;
 	text-transform: none;
 	padding: 5px;
 	margin-top: 50px;
-}
-
-#sign-in
-{
-	filter: blur(0px);
 }
 
 .map_layout
@@ -116,6 +113,46 @@ nav .container
 .menu li
 {
 	display: inline-block;
+}
+
+.text-center
+{
+	margin-bottom: 0px;
+}
+
+.panel-footer
+{
+	padding-bottom: 0px;
+}
+
+#avatar
+{
+	width: 35px;
+	height: 35px;
+	background-color: #fff;
+}
+
+.glyphcon
+{
+	color: white;
+}
+
+.navbar-toggle
+{
+	margin:0px;
+	padding: 0px 15px;
+	border: 0px;
+}
+
+.navbar-toggle span
+{
+	color: white;
+}
+
+#login_area
+{
+	font-size: 14px;
+	color: white;
 }
 /*
 .m0
