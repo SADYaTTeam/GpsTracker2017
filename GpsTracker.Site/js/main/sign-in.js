@@ -18,9 +18,9 @@ $(function(){
         $(authorized).switchClass("authorized", "unauthorized");
         $(unauthorized).switchClass("unauthorized", "authorized");
     }
-
-    $("#SIGN_OUT_BUTTON").BIND("CLICK",FUNCTION(){
-        AUTHORIZE();
+    
+    $("#sign_out_button").bind("click",function(){
+        authorize();
     });
 
     $("#sign_button").bind("click", function send() {

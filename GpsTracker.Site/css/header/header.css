@@ -1,0 +1,142 @@
+*
+{
+	padding: 0;
+	margin: 0;
+}
+
+body
+{
+	font-family: 'Verdana', sans-serif;
+	min-width: 320px;
+	font-size: 16px;
+	height: 100%;
+}
+
+nav
+{
+	height: 47px;
+	line-height: 47px;
+}
+
+nav .container
+{
+	height: 47px;
+	line-height: 47px;	
+}
+
+.navbar-brand
+{
+	height: 47px;	
+}
+.navbar-brand a
+{
+	color:#9d9d9d;
+}
+
+.navbar-brand a:hover
+{
+	color:#ffffff;
+	text-decoration: none;
+}
+
+#top_menu
+{
+	border: 0px;
+}
+
+.menu
+{
+	margin: 0px;
+}
+
+.menu li a
+{
+	padding: 10px;
+}
+
+
+.btn
+{
+	background-color: transparent;
+	border: 0px;
+	color: #ffffff;
+
+}
+
+.btn:hover,
+.btn:focus
+{
+	background-color: #009900;
+	color: #ffffff;
+}
+
+.form-signin button
+{
+	background-color: #333;
+}
+
+#about
+{
+	position: absolute;
+	z-index: 99;
+	text-transform: none;
+	padding: 5px;
+	margin-top: 50px;
+}
+
+.map_layout
+{
+	width: 100%;
+	height: 500px;
+}
+
+.authorized
+{
+	display: none !important;
+}
+
+.unauthorized
+{
+	display: inline-block !important;
+}
+
+.menu li
+{
+	display: inline-block;
+}
+
+.text-center
+{
+	margin-bottom: 0px;
+}
+
+
+#avatar
+{
+	width: 35px;
+	height: 35px;
+	background-color: #fff;
+}
+
+.glyphcon
+{
+	color: white;
+}
+
+.navbar-toggle
+{
+	margin:0px;
+	padding: 0px 15px;
+	border: 0px;
+}
+
+.navbar-toggle span
+{
+	color: white;
+}
+
+#login_area
+{
+	font-size: 14px;
+	color: white;
+}
