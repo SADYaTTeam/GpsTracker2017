@@ -13,17 +13,19 @@
 		<?php include("pages/header.html");?>
 	</header>
 
-	<section>
-		<div class="profile_menu_nav col-3">
-			<ul class="nav nav-pills nav-stacked">
-			  <li class="active">hgfjghj</li>
-			  <li class="dropdown">fgjfgj</li>
-			  <li>ghjfgjj</li>
-			  <li>ghjfgjj</li>
-			</ul>
-		</div>
-		<div class="profile_content col-9">
-			
+	<section class="container-fluid">
+		<div class="row">
+			<div class="profile_menu_nav col-3">
+				<ul class="nav nav-pills nav-stacked">
+				  <li class="active">hgfjghj</li>
+				  <li class="dropdown">fgjfgj</li>
+				  <li>ghjfgjj</li>
+				  <li>ghjfgjj</li>
+				</ul>
+			</div>
+			<div class="profile_content col-9">
+				
+			</div>
 		</div>
 	</section>
 

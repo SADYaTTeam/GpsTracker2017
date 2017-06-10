@@ -1,0 +1,10 @@
+.profile_content
+{
+	height: 600px;
+	background-color: red;
+}
+
+section *
+{
+	display:inline-block;
+}
