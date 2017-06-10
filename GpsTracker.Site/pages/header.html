@@ -1,0 +1,56 @@
+<nav class="navbar-inverse">
+	<div class="container">
+		<div class="row">
+			<div class="navbar-header col-5">
+				<button class="navbar-toggle collapsed menu_btn" data-toggle="collapse" data-target="#top_menu">
+					<span class="glyphicon">&#xe055;</span> 
+				</button>
+
+				<a href="index.html" class="navbar-brand logo">
+					GpsTracker
+				</a>
+			</div>
+
+			<div class="collapse navbar-collapse navbar-right col-7" id="top_menu">
+				<ul class="menu">
+					<li class="col-2"><a href="#" class="btn btn-default">Download</a>
+					</li>
+					<li class="col-1">
+						<button onclick="show()" class="btn btn-default">About</button>
+						<div id="about" class="w3-dropdown-content w3-bar-block w3-card-4 w3-display-topmiddle">
+							<h2 class="text-center">1 month of experience</h2>
+							<p>Founded in 2017, the team consisting of: Chuiko Sergey,Svityi Andrii, Susulovskyi Taras and Darya Boychuk started the project "GPS tracker".</p>
+							<h2 class="text-center">Result</h2>
+							<p>We have created a web based solution for tracking the position of the device, viewing and monitoring of the traversed path of movement.</p>
+						</div>
+					</li>
+<!-- 							<li class="col-3 authorized">
+<div class="form-inline">
+<select class="form-control" id="search_dropdown">
+								<option value="" disabled selected>Search by</option>
+								<option value="id">Id</option>
+								<option value="login">Login</option>
+</select>
+<input type="text" class="form-control" id="search">
+</div>
+</li> -->
+					<li class="col-1 authorized">
+						<div class="form_inline">
+							<img id="avatar" class="img-circle" src="img/avatar.svg">
+							<span id="login_area"></span>
+							<a href="pages/profile.php" class="btn-sm btn">Profile</a>
+							<button class="btn-sm btn" id="sign_out_button" onclick="authorize()">Sign out</button>
+						</div>
+					</li>
+					<li class="col-4 unauthorized">
+						<form class="form-signin form-inline" id="sing_form" action="index.html">
+							<input class="form-control" type="text" placeholder="Login" id="login" required>
+							<input class="form-control" type="password" placeholder="Password" id="pass" required>
+							<button class="form-control btn" id="sign_button" onclick="return false;">Sign In</button>
+						</form>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>

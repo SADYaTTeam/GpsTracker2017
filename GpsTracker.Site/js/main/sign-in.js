@@ -19,6 +19,10 @@ $(function(){
         $(unauthorized).switchClass("unauthorized", "authorized");
     }
 
+    $("#SIGN_OUT_BUTTON").BIND("CLICK",FUNCTION(){
+        AUTHORIZE();
+    });
+
     $("#sign_button").bind("click", function send() {
         var user = {
             Login: $("#login").val(),
@@ -41,15 +45,13 @@ $(function(){
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function(personData){
-                            if(personData == null)
-                            {
-                                PERSON = null;
-                            }
+                            PERSON = personData;
                             $("#login_area").text(USER.Login)
                             authorize();
-                            if(PERSON.image != null)
+                            if(PERSON.Photo != null)
                             {
-                                $("#avatar").atr("src", "data:image/png;base64," + PERSON.Image);
+                                document.getElementById("avatar").src = "data:image/png;base64," + PERSON.Photo;
+                                //$("#avatar").atr("src", "data:image/png;base64," + PERSON.Photo);
                             }
                         }
                     });

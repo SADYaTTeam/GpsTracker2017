@@ -1,19 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<title>Not bad tracker</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/fonts.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<link rel="stylesheet" type="text/css" href="css/media.css">
-	<link rel="stylesheet" type="text/css" href="css/w3.css">
 </head>
 <body>
-<div class="" id="main_layout">
-	<header>
-		<nav class="navbar-inverse">
+	<nav class="navbar-inverse">
 			<div class="container">
 				<div class="row">
 					<div class="navbar-header col-5">
@@ -54,7 +44,7 @@
 									<img id="avatar" class="img-circle" src="img/avatar.svg">
 									<span id="login_area"></span>
 									<button class="btn-sm btn">Profile</button>
-									<button class="btn-sm btn">Sign out</button>
+									<button class="btn-sm btn" id="sign_out_button" onclick="authorize()">Sign out</button>
 								</div>
 							</li>
 							<li class="col-4 unauthorized">
@@ -69,21 +59,5 @@
 				</div>
 			</div>
 		</nav>
-	</header>
-
-	<section id="googleMap" style="width:100%;height:89vh;"></section>
-
-	<footer class="panel panel-footer">
-		<p class="text-muted text-center">Copyright &copy; 2017 SADYaTTeam. All rights reserverd.</p>
-		<p class="text-muted text-center credits">Icon made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com">www.flaticon.com</a></p>
-	</footer>
-
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/view_scripts.js"></script>
-	<script src="js/main/sign-in.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8xt0oziJPSxsF6_Zm52PKhkT1idPNr40&callback=myMap"></script>
-</div>	
 </body>
 </html>
