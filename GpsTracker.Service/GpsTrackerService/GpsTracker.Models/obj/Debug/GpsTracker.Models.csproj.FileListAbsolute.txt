@@ -12,3 +12,4 @@ E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\b
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.csprojResolveAssemblyReference.cache
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.pdb
+D:\university\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Models\obj\Debug\GpsTracker.Models.csprojResolveAssemblyReference.cache
