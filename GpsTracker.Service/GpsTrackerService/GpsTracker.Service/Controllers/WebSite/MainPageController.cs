@@ -1,4 +1,4 @@
-﻿// <copyright file="FriendlistContext.cs" company="SADYaTTeam">
+﻿// <copyright file="MaiPageController.cs" company="SADYaTTeam">
 //     SADYaTTeam 2017.
 // </copyright>
 namespace GpsTracker.Service.Controllers.WebSite
@@ -15,6 +15,10 @@ namespace GpsTracker.Service.Controllers.WebSite
     using GpsTracker.Models.Messages;
     using System.Diagnostics;
     #endregion
+    /// <summary>
+    /// Class represents web api 2 controller for website (path ".../api/web/main")
+    /// </summary>
+    /// <remarks>Mostly work with main</remarks>
     [RoutePrefix("api/web/main")]
     public class MainPageController : ApiController
     {
