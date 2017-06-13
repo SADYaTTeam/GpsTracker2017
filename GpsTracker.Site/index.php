@@ -25,7 +25,7 @@
 	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/view_scripts.js"></script>
-	<script src="js/main/sign-in.js"></script>
+	<script src="js/sign-in.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8xt0oziJPSxsF6_Zm52PKhkT1idPNr40&callback=myMap"></script>
 </div>	
 </body>
