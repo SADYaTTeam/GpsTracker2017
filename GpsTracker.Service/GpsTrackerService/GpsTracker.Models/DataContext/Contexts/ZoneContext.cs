@@ -1,20 +1,16 @@
 ﻿// <copyright file="ZoneContext.cs" company="SADYaTTeam">
 //     SADYaTTeam 2017.
 // </copyright>
-
-using System.Diagnostics;
-using System.Linq.Expressions;
-using GpsTracker.Models.Mappers;
-
 namespace GpsTracker.Models.DataContext.Contexts
 {
     #region using...
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using GpsTracker.Models.DataContext.Interfaces;
+    using System.Diagnostics;
+    using System.Linq.Expressions;
+    using Mappers;
+    using Interfaces;
     using Models;
     #endregion
     public class ZoneContext : BaseContext, IDbContext<Zone, DataContext.Zone>

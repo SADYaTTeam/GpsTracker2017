@@ -1,9 +1,6 @@
 ﻿// <copyright file="FriendlistContext.cs" company="SADYaTTeam">
 //     SADYaTTeam 2017.
 // </copyright>
-
-using GpsTracker.Models.DataContext.Interfaces;
-
 namespace GpsTracker.Service.Controllers.WebSite
 {
     #region using...
