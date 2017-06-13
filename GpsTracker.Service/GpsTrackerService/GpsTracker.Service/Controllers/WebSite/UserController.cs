@@ -174,5 +174,25 @@ namespace GpsTracker.Service.Controllers.WebSite
                 };
             }
         }
+
+        /// <summary>
+        /// Return user info by UserId
+        /// </summary>
+        /// <param name="message">UserId</param>
+        /// <returns>User info about user with this UserId</returns>
+        [HttpPost]
+        [Route("id")]
+        public User LogInOnId([FromBody] CheckMessage message)
+        {
+            try
+            {
+                return MainContext.Instance.User.GetBy(x => x.UserId == message.UserId)?.ToList()[0];
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Exception in UserController.cs : {e.Message}");
+                return null;
+            }
+        }
     }
 }

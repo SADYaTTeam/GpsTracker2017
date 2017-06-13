@@ -1,19 +1,18 @@
 ﻿// <copyright file="FriendlistContext.cs" company="SADYaTTeam">
 //     SADYaTTeam 2017.
 // </copyright>
-
-using System.Diagnostics;
-
 namespace GpsTracker.Models.DataContext.Contexts
 {
     #region using...
     using System;
+    using System.Diagnostics;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
+    using System.Linq.Expressions;    
     using Interfaces;
     using Mappers;
     using Models;
+    using Comparers;
     #endregion
 
     public class FriendlistContext: BaseContext, IDbContext<Friendlist, DataContext.Friendlist>
@@ -148,6 +147,18 @@ namespace GpsTracker.Models.DataContext.Contexts
             temp.Sender = newItem.Sender;
             temp.Marked = newItem.Marked;
             return SaveChanges();
+        }
+
+        /// <summary>
+        /// Return indexes of friends of the user
+        /// </summary>
+        /// <param name="userId">User id</param>
+        /// <returns>Returns enumeration of indexes of friends of the user with selected userId</returns>
+        public IEnumerable<int> GetFriendOfUser(int userId)
+        {
+            var temp = Context.Friendlist.Where(x => x.Marked == userId);
+            var temp1 = Context.Friendlist.Where(x => x.Sender == userId);
+            return temp.AsEnumerable().Intersect(temp1.AsEnumerable(), new FriendlistComparer()).Select(x=>x.Sender);
         }
 
         #endregion

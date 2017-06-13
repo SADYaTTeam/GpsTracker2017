@@ -22,7 +22,7 @@
 	</footer>
 
 	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/view_scripts.js"></script>
 	<script src="js/sign-in.js"></script>

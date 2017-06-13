@@ -88,6 +88,7 @@ CREATE TABLE dbo.Friendlist
 	CONSTRAINT PK_Friendlist_Sender_User FOREIGN KEY(Sender) REFERENCES [User](UserId),
 	CONSTRAINT PK_Friendlist_Marked_User FOREIGN KEY(Marked) REFERENCES [User](UserId),
 	CONSTRAINT CH_Friendlist_IdCheck CHECK(Sender > 0 AND Marked > 0 AND Sender <> Marked),
+	CONSTRAINT UQ_FriendList_Sender_Marked UNIQUE(Sender, Marked)
 )
 GO
 
