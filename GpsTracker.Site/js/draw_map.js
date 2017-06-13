@@ -26,6 +26,7 @@ var markers = [
 
 function initMap() {
     // Create the map.
+    
     map = new google.maps.Map(document.getElementById('googleMap'), {
         zoom: 15,
         center: { lat: 49.802929, lng: 24.003286 },
@@ -51,24 +52,9 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-    // Construct the circle for each value in citymap.
-    // Note: We scale the area of the circle based on the population.
-    for (var zone in zones) {
-        // Add the circle for this city to the map.
-        var zoneCirle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: zones[zone].center,
-            //radius: Math.sqrt(zones[zone].population) * 100
-            radius: 50
-        });
-    }
-    drawMarkers();
-    drawPath();
+    drawZones(zones);
+    drawMarkers(markers);
+    drawPath(markers);
 }
 
 function drawMarkers() {
@@ -115,6 +101,24 @@ function drawMarkers(markers) {
     };
 }
 
+function drawZones(zones) { // Construct the circle for each value in citymap.
+    // Note: We scale the area of the circle based on the population.
+    for (var zone in zones) {
+        // Add the circle for this city to the map.
+        var zoneCirle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: zones[zone].center,
+            //radius: Math.sqrt(zones[zone].population) * 100
+            radius: 50
+        });
+    }
+};
+
 function geocodeLatLng(latlng, geocoder, map, infowindow) {
     geocoder.geocode({ 'location': latlng }, function (results, status) {
         if (status === 'OK') {
@@ -136,7 +140,7 @@ function geocodeLatLng(latlng, geocoder, map, infowindow) {
     });
 }
 
-function drawPath() {
+function drawPath(markers) {
 
     var myPath = new Array();
     for (i = 0; i < markers.length; i++) {
