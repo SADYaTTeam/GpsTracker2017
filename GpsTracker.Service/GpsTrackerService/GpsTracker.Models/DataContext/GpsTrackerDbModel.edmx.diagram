@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3577538892724c47af41dd09f1f0d421" Name="Diagram1">
+      <Diagram DiagramId="f41a60db77134f0fbf3d4522e2d88200" Name="Diagram1">
         <EntityTypeShape EntityType="GpsTrackingDBModel.Event" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GpsTrackingDBModel.Log" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GpsTrackingDBModel.Marker" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />

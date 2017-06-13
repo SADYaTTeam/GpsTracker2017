@@ -33,28 +33,28 @@ function initMap() {
         mapTypeId: 'terrain'
     });
 
-     var infoWindow = new google.maps.InfoWindow({map: map});
+    //  var infoWindow = new google.maps.InfoWindow({map: map});
 
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
+    // // Try HTML5 geolocation.
+    // if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(function (position) {
+    //         var pos = {
+    //             lat: position.coords.latitude,
+    //             lng: position.coords.longitude
+    //         };
 
-            map.setCenter(pos);
-        }, function () {
-            handleLocationError(true, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
+    //         map.setCenter(pos);
+    //     }, function () {
+    //         //handleLocationError(true, map.getCenter());
+    //     });
+    // } else {
+    //     // Browser doesn't support Geolocation
+    //     handleLocationError(false, infoWindow, map.getCenter());
+    // }
 
-    drawZones(zones);
-    drawMarkers(markers);
-    drawPath(markers);
+    // drawZones(zones);
+    // drawMarkers(markers);
+    // drawPath(markers);
 }
 
 function drawMarkers() {
@@ -66,7 +66,7 @@ function drawMarkers() {
             fillColor: '#00FF00',
             fillOpacity: 0.35
         });
-        //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
 
         //Geocoding markers
         geocoder = new window.google.maps.Geocoder;
@@ -82,13 +82,14 @@ function drawMarkers() {
 function drawMarkers(markers) {
     var marker, i;
     for (i = 0; i < markers.length; i++) {
+        
         marker = new window.google.maps.Marker({
-            position: new window.google.maps.LatLng(markers[i][1], markers[i][2]),
+            position: new window.google.maps.LatLng(markers[i].Latitude, markers[i].Longitude),
             map: map,
             fillColor: '#00FF00',
             fillOpacity: 0.35
         });
-        //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
 
         //Geocoding markers
         geocoder = new window.google.maps.Geocoder;

@@ -18,6 +18,7 @@ E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTrack
 E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\GpsTracker.Model.Test.dll.config
 E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\GpsTracker.Model.Test.dll
 E:\Study\Sigma_Practice\GpsTracker\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\GpsTracker.Model.Test.pdb
+E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\obj\Debug\GpsTracker.Model.Test.csprojResolveAssemblyReference.cache
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
@@ -35,6 +36,5 @@ E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Te
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\GpsTracker.Models.dll.config
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
-E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\obj\Debug\GpsTracker.Model.Test.csprojResolveAssemblyReference.cache
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\obj\Debug\GpsTracker.Model.Test.dll
 E:\Study\GpsTracker2017\GpsTracker.Service\GpsTrackerService\GpsTracker.Model.Test\obj\Debug\GpsTracker.Model.Test.pdb
