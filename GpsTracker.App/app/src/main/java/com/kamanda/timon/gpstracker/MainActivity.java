@@ -2,17 +2,24 @@
 package com.kamanda.timon.gpstracker;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Environment;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.provider.Settings.Secure;
 
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Objects;
 
 public class MainActivity extends Activity {
 
@@ -20,6 +27,19 @@ public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
     private static String deviceId;
     private DataMessage message;
+    private EditText editTextUpdateInterval;
+    private EditText editTextFatestInterval;
+    private EditText editTextDisplacement;
+    private Button button;
+    private Button buttonSaveSettings;
+
+    private int updateInterval;
+    private int fatestInterval;
+    private int displacement;
+
+    boolean mBounded;
+    MyService mServer;
+
     //endregion Variables
 
     //region Activity
@@ -27,28 +47,55 @@ public class MainActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
-//        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.settings_layout);
 
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
         Log.i("deviceId", deviceId.toString());
         saveAndroidIdToFile();
-        startService(new Intent(this, MyService.class));
+        Intent intent = new Intent(this, MyService.class);
+        this.startService(intent);
+        //startService(new Intent(this, MyService.class));
 
         //minimizeApp();
+
+
     }
 
     @Override
     protected void onStart() {
         Log.i(TAG, "onStart");
         super.onStart();
+        Intent mIntent = new Intent(this, MyService.class);
+        bindService(mIntent, mConnection, BIND_AUTO_CREATE);
     }
+
+    ServiceConnection mConnection = new ServiceConnection() {
+
+        public void onServiceDisconnected(ComponentName name) {
+            Toast.makeText(MainActivity.this, "Service is disconnected", Toast.LENGTH_SHORT).show();
+            mBounded = false;
+            mServer = null;
+        }
+
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Toast.makeText(MainActivity.this, "Service is connected", Toast.LENGTH_SHORT).show();
+            mBounded = true;
+            MyService.LocalBinder mLocalBinder = (MyService.LocalBinder)service;
+            mServer = mLocalBinder.getMyServiceInstance();
+        }
+    };
+
 
     @Override
     protected void onStop() {
         Log.i(TAG, "onStop");
         super.onStop();
+        if(mBounded) {
+            unbindService(mConnection);
+            mBounded = false;
+        }
     }
 
 
@@ -89,11 +136,12 @@ public class MainActivity extends Activity {
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_UP:
                 if (action == KeyEvent.ACTION_DOWN) {
-                    //TODO Send SOS message in JSON to server
+                    //TODO Send SOS message in JSON to mServer
                     try {
-                        Toast.makeText(getApplicationContext(), "JSON sended to server",
+                        Toast.makeText(getApplicationContext(), "JSON sended to mServer",
                                 Toast.LENGTH_LONG).show();
-                        startService(new Intent(this, MyService.class));
+                        mServer.sendSOS_JSON();
+                        // startService(new Intent(this, MyService.class));
                     } catch (Exception exc) {
                         Log.e("AsyncT", exc.getMessage(), exc);
                     }
@@ -110,4 +158,44 @@ public class MainActivity extends Activity {
     }
 
     //endregion SOS_BUTTON
+
+    public void ApplyChanges(View v) {
+        editTextUpdateInterval = (EditText) findViewById(R.id.editTextUpdateInterval);
+        editTextFatestInterval = (EditText) findViewById(R.id.editTextFatestInterval);
+        editTextDisplacement = (EditText) findViewById(R.id.editTextDisplacement);
+        buttonSaveSettings = (Button) findViewById(R.id.buttonSettingsSave);
+        buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Objects.equals(editTextUpdateInterval.getText().toString(), "")) {
+                    updateInterval = 10000;
+                } else {
+                    updateInterval = Integer.valueOf(editTextUpdateInterval.getText().toString());
+                }
+                if (Objects.equals(editTextFatestInterval.getText().toString(), "")) {
+                    fatestInterval = 5000;
+                } else {
+                    fatestInterval = Integer.valueOf(editTextFatestInterval.getText().toString());
+                }
+                if (Objects.equals(editTextDisplacement.getText().toString(), "")) {
+                    displacement = 50;
+                } else {
+                    displacement = Integer.valueOf(editTextDisplacement.getText().toString());
+                }
+
+                StartMyService();
+                Log.i("SETTINGS", "updateInterval: " + updateInterval + "fatestInterval: " + fatestInterval + "displacement: " + displacement);
+            }
+        });
+    }
+
+    public void StartMyService() {
+        this.stopService(new Intent(this, MyService.class));
+        Intent intent = new Intent(this, MyService.class);
+        intent.putExtra("updateInterval", updateInterval);
+        intent.putExtra("fatestInterval", fatestInterval);
+        intent.putExtra("displacement", displacement);
+        this.startService(intent);
+    }
+
 }
