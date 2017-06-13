@@ -32,6 +32,25 @@ function initMap() {
         mapTypeId: 'terrain'
     });
 
+     var infoWindow = new google.maps.InfoWindow({map: map});
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            map.setCenter(pos);
+        }, function () {
+            handleLocationError(true, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+
     // Construct the circle for each value in citymap.
     // Note: We scale the area of the circle based on the population.
     for (var zone in zones) {
