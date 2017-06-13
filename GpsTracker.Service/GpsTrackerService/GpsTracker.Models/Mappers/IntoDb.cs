@@ -85,5 +85,35 @@ namespace GpsTracker.Models.Mappers
                 Timestamp = marker.Timestamp
             };
         }
+
+
+        /// <summary>
+        /// Map <see cref="Models.Zone"/> to <see cref="DataContext.Zone"/>
+        /// </summary>
+        public static DataContext.Zone Convert(this Models.Zone zone)
+        {
+            return new DataContext.Zone()
+            {
+                UserId = zone.UserId,
+                Longitude = zone.Longitude,
+                Latitude = zone.Latitude,
+                Name = zone.Name,
+                Radius = zone.Radius,
+                ZoneId = zone.ZoneId
+            };
+        }
+
+        /// <summary>
+        /// Map <see cref="DataContext.Friendlist"/> to <see cref="Models.Friendlist"/>
+        /// </summary>
+        public static DataContext.Friendlist Convert(this Models.Friendlist item)
+        {
+            return new DataContext.Friendlist()
+            {
+                ItemId = item.ItemId,
+                Marked = item.Marked,
+                Sender = item.Sender
+            };
+        }
     }
 }

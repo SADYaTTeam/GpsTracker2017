@@ -112,28 +112,24 @@ namespace GpsTracker.Models.DataContext.Contexts
         /// (see details in debug)</returns>
         public bool Insert(Models.User newItem)
         {
-            var transaction = Context.Database.BeginTransaction();
             try
             {
-                Context.Database.ExecuteSqlCommand("INSERT INTO [User](Login, Password, DeviceId, IsAdmin)" +
-                                                    "VALUES" +
-                                                    "(" +
-                                                    $"'{newItem.Login}'," +
-                                                    $"'{newItem.Password}'," +
-                                                    $"'{newItem.DeviceId}'," +
-                                                    $"{Convert.ToInt32(newItem.IsAdmin)}" +
-                                                    ")");
-                transaction.Commit();
+                newItem.DateCreatedAt = DateTime.Now;
+                Context.User.Add(newItem.Convert());
+                if (Context.SaveChanges() != 0)
+                {
+                    return true;
+                }
+                return false;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception:{ex.Message}");
-                transaction.Rollback();
-                DisposeTransaction(transaction);    
+                Debug.WriteLine("Exception in UserContext file.\n" +
+                                $"Type:{ex.GetType()}\n" +
+                                $"Message:{ex.Message}\n" +
+                                $"InnerText:{ex.InnerException?.Message}");
                 return false;
             }
-            DisposeTransaction(transaction);
-            return true;
         }
 
         /// <summary>

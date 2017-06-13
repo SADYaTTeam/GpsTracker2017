@@ -1,0 +1,90 @@
+.container-fluid
+{
+	padding:0px;
+}
+body
+{
+	height: 100%;
+}
+
+.profile_content
+{
+
+}
+
+section
+{
+	height: 89vh;
+}
+
+.row
+{
+	margin: 0px;
+}
+
+section *
+{
+	display:inline;
+}
+
+#date_input
+{
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.profile_menu_nav
+{
+	background-color: #333;
+	height: 100%;
+}
+
+.profile_menu_nav button
+{
+	display: block;
+	width: 100%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.hidden
+{
+	display: none;
+}
+
+.visible
+{
+	display: block;
+}
+
+input[type='file'] {
+  color: transparent;
+  margin-bottom: 5px;
+}
+
+#small-avatar
+{
+	width: 30px;
+	height: 35px;
+}
+
+#medium-avatar
+{
+	width: 75px;
+	height: 80px;
+}
+
+#save_button
+{
+	background-color: #333;
+	margin-bottom: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+#save_button:hover,
+#save_button:focus
+{
+	background-color: #009900;
+	color: #ffffff;
+}
