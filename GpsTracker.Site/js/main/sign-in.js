@@ -1,81 +1,84 @@
-// var temp = {
-//     user: USER,
-//     person: PERSON
-// }
-// var USER;
-// var PERSON;
+$(function () {
+    var temp = {
+        user: USER,
+        person: PERSON
+    }
+    var USER;
+    var PERSON;
 
-// $(window).bind("load", function () {
-//     alert(JSON.stringify(temp));
-// });
-// $("#sign_button").bind("click", function send() {
-//     var user = {
-//         Login: $("#login").val(),
-//         Password: $("#pass").val(),
-//     }
-//     var jsonResponse;
-//     var userId;
-  
-//     var deviceId;
-//     var jsonResponse2;
-//     var jsonResponse3;
+    function getUser() {
+        return {UserId:USER.UserId};
+    }
 
-//     // 1. Создаём новый объект XMLHttpRequest
-//     var xhr = new XMLHttpRequest();
 
-//     // 2. Конфигурируем его: GET-запрос на URL 'phones.json'
-//     xhr.open('POST', 'api/web/user/login', false);
-//     xhr.setRequestHeader("Content-Type", "application/json");
-//     // 3. Отсылаем запрос
-//     xhr.send(JSON.stringify(user));
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
 
-//     // 4. Если код ответа сервера не 200, то это ошибка
-//     if (xhr.status != 200) {
-//         // обработать ошибку
-//         alert(xhr.status + ': ' + xhr.statusText); // пример вывода: 404: Not Found
-//     } else {
-//         // вывести результат
-//         alert(xhr.responseText); // responseText -- текст ответа.
-//         jsonResponse = JSON.parse(xhr.responseText);
-//         userId = jsonResponse["UserId"];
-//         deviceId = jsonResponse["DeviceId"];
-//         USER = jsonResponse;
-//     }
+    $(window).bind("load", function () {
 
-//     var person = {
-//         userId: userId
-//     }
+    });
 
-//     var xhr2 = new XMLHttpRequest();
+    function authorize() {
+        var authorized = $(".authorized").toArray();
+        var unauthorized = $(".unauthorized").toArray();
+        $(authorized).switchClass("authorized", "unauthorized");
+        $(unauthorized).switchClass("unauthorized", "authorized");
+    }
 
-//     xhr2.open('POST', 'api/web/person', false);
-//     xhr2.setRequestHeader("Content-Type", "application/json");
-//     xhr2.send(JSON.stringify(person));
-//     if (xhr2.status != 200) {
-//         // обработать ошибку
-//         alert(xhr2.status + ': ' + xhr2.statusText); // пример вывода: 404: Not Found
-//     } else {
-//         // вывести результат
-//         alert(xhr2.responseText); // responseText -- текст ответа.
-//         jsonResponse2 = JSON.parse(xhr2.responseText);
-//         PERSON = jsonResponse2;
-//     }
+    $("#sign_out_button").bind("click", function () {
+        authorize();
+    });
 
-//     var xhr3 = new XMLHttpRequest();
-
-//     xhr3.open('GET', 'index.html', false);
-//     xhr3.setRequestHeader("Content-Type", "application/json");
-//     xhr3.send(JSON.stringify(temp));
-//     if (xhr3.status != 200) {
-//         // обработать ошибку
-//         alert(xhr3.status + ': ' + xhr3.statusText); // пример вывода: 404: Not Found
-//     } else {
-//         // вывести результат
-//         //alert(xhr3.responseText); // responseText -- текст ответа.
-        
-//     }
-//     //console.log(JSON.stringify(USER));
-//     //console.log(JSON.stringify(PERSON));
-//     //alert(USER);
-//     //alert(PERSON);
-// });
+    $("#sign_button").bind("click", function send() {
+        var user = {
+            Login: $("#login").val(),
+            Password: $("#pass").val(),
+        }
+        $.ajax({
+            url: 'api/web/user/login',
+            type: "POST",
+            data: JSON.stringify(user),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (userData) {
+                if (userData != null) {
+                    USER = userData;
+                    $.ajax({
+                        url: 'api/web/person',
+                        type: "POST",
+                        data: JSON.stringify({ UserId: userData.UserId }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (personData) {
+                            PERSON = personData;
+                            $("#login_area").text(USER.Login)
+                            authorize();
+                            if (PERSON.Photo != null) {
+                                document.getElementById("avatar").src = "data:image/png;base64," + PERSON.Photo;
+                            }
+                        }
+                    });
+                    document.cookie = "UserId=" + USER.UserId;
+                }
+                else {
+                    $("#login").val("");
+                    $("#pass").val("");
+                    alert("Wrong login or password");
+                }
+            }
+        });
+    });
+})

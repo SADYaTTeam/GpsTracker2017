@@ -93,6 +93,28 @@ function drawMarkers() {
     };
 }
 
+function drawMarkers(markers) {
+    var marker, i;
+    for (i = 0; i < markers.length; i++) {
+        marker = new window.google.maps.Marker({
+            position: new window.google.maps.LatLng(markers[i][1], markers[i][2]),
+            map: map,
+            fillColor: '#00FF00',
+            fillOpacity: 0.35
+        });
+        //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+
+        //Geocoding markers
+        geocoder = new window.google.maps.Geocoder;
+        infowindow = new window.google.maps.InfoWindow;
+        window.google.maps.event.addListener(marker, 'click', function () {
+            geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
+        });
+
+
+    };
+}
+
 function geocodeLatLng(latlng, geocoder, map, infowindow) {
     geocoder.geocode({ 'location': latlng }, function (results, status) {
         if (status === 'OK') {
