@@ -17,8 +17,6 @@ var zones = {
     }
 };
 
-var markersArray = new Array();
-
 function initMap() {
     // Create the map.
     
@@ -74,10 +72,15 @@ function drawMarkers() {
     };
 }
 
-function drawMarkers(markers) {
-    var marker, i;
-    for (i = 0; i < markersArray.length; i++) {
-        markersArray[i].setMap(null);
+function drawMarkers(markers, iconPath, oldMarkers) {
+    var marker;
+    var i;
+    var markersArray = new Array();
+    if(oldMarkers != null)
+    {
+        for (i = 0; i < oldMarkers.length; i++) {
+            oldMarkers[i].setMap(null);
+        }
     }
     for (i = 0; i < markers.length; i++) {
         
@@ -87,7 +90,7 @@ function drawMarkers(markers) {
             fillColor: '#00FF00',
             fillOpacity: 0.35
         });
-        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        marker.setIcon(iconPath);
 
         //Geocoding markers
         geocoder = new window.google.maps.Geocoder;
@@ -98,6 +101,7 @@ function drawMarkers(markers) {
         });
         markersArray.push(marker);
     };
+    return markersArray;
 }
 
 function drawZones(zones) { // Construct the circle for each value in citymap.
