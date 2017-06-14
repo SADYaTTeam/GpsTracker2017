@@ -17,12 +17,7 @@ var zones = {
     }
 };
 
-var markers = [
-    ['Title A', 49.802830, 24.001280, 1],
-    ['Title B', 49.832361, 24.018122, 2],
-    ['Title C', 49.835098, 24.008206, 3],
-    ['Title D', 49.773674, 24.010949, 4]
-];
+var markersArray = new Array();
 
 function initMap() {
     // Create the map.
@@ -81,6 +76,9 @@ function drawMarkers() {
 
 function drawMarkers(markers) {
     var marker, i;
+    for (i = 0; i < markersArray.length; i++) {
+        markersArray[i].setMap(null);
+    }
     for (i = 0; i < markers.length; i++) {
         
         marker = new window.google.maps.Marker({
@@ -96,9 +94,9 @@ function drawMarkers(markers) {
         infowindow = new window.google.maps.InfoWindow;
         window.google.maps.event.addListener(marker, 'click', function () {
             geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
+       
         });
-
-
+        markersArray.push(marker);
     };
 }
 
