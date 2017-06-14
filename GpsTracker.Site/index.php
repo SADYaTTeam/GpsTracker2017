@@ -25,9 +25,9 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/view_scripts.js"></script>
+	<script src="js/main/map.js" async></script>
 	<script src="js/sign-in.js"></script>
 	<script src="js/draw_map.js"></script>
-	<script src="js/main/map.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8xt0oziJPSxsF6_Zm52PKhkT1idPNr40&callback=initMap"></script>
 </div>	
 </body>

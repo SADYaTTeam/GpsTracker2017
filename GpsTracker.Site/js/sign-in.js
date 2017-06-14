@@ -42,19 +42,7 @@ function checkCookie() {
                 if(userData != null)
                 {
                     USER = userData;
-                    $.ajax({
-                        url: 'api/web/marker',
-                        type: "POST",
-                        data: JSON.stringify({ UserId: userData.UserId }),
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
-                            var trueData = data.map(function(item){
-                             return {Longitude:item.Longitude, Latitude:item.Latitude, Info:item.Name};
-                            });
-                            drawMarkers(trueData);
-                        }
-                    });
+                    showMarkers(USER);
                     $.ajax({
                         url: 'api/web/person',
                         type: "POST",
