@@ -25,11 +25,11 @@
 					<p class="label" id="message"></p>
 					<div class="form-group">
 						<label for="login" class="col-lg-2">Login</label>
-						<div class="col-lg-8"><input type="text" class="form-control" id="login" placeholder="Enter new login"></div>
+						<div class="col-lg-8"><input type="text" class="form-control" id="login_field" placeholder="Enter new login"></div>
 					</div>
 					<div class="form-group">
 						<label for="password" class="col-lg-2">Password</label>
-						<div class="col-lg-8"><input type="text" class="form-control" id="password" placeholder="Enter new password"></div>
+						<div class="col-lg-8"><input type="text" class="form-control" id="password_field" placeholder="Enter new password"></div>
 					</div>
 				</form>
 				<form class="form-horizontal hidden" id="person_form">
@@ -50,32 +50,32 @@
 						<label class="col-lg-2">Gender</label>
 						<div class="col-lg-8">
 							<label class="radio-inline">
-						      <input type="radio" name="gender" value="true">Male
+						      <input type="radio" name="gender" id="male" value="true">Male
 						    </label>
 						    <label class="radio-inline">
-						      <input type="radio" name="gender" value="false">Female
+						      <input type="radio" name="gender" id="female" value="false">Female
 						    </label>
 					    </div>
 					</div>
 					<div class="form-group form-inline">
 						<label class="col-lg-2">Birthday</label>
 						<div class="input-group col-lg-8" id="date_input">
-			              <input name="day" placeholder="Day" class="form-control" type="text" style="width: 55px">
-			              <select name="month" class="form-control" style="width: 115px">
-						    <option value="January">January</option>
-						    <option value="February">February</option>
-						    <option value="March">March</option>
-						    <option value="April">April</option>
-						    <option value="May">May</option>
-						    <option value="June">June</option>
-						    <option value="July">July</option>
-						    <option value="August">August</option>
-						    <option value="September">September</option>
-						    <option value="October">October</option>
-						    <option value="November">November</option>
-						    <option value="December">December</option>
+			              <input name="day" placeholder="Day" class="form-control" type="text" style="width: 55px" id="day">
+			              <select name="month" class="form-control" style="width: 115px" id="month">
+						    <option value="0">January</option>
+						    <option value="1">February</option>
+						    <option value="2">March</option>
+						    <option value="3">April</option>
+						    <option value="4">May</option>
+						    <option value="5">June</option>
+						    <option value="6">July</option>
+						    <option value="7">August</option>
+						    <option value="8">September</option>
+						    <option value="9">October</option>
+						    <option value="10">November</option>
+						    <option value="11">December</option>
 						  </select>
-			              <input name="year" placeholder="Year" class="form-control" type="text" style="width: 55px">
+			              <input name="year" placeholder="Year" class="form-control" type="text" style="width: 55px" id="year">
 			             </div>
 					</div>
 					<div class="form-group">
@@ -89,14 +89,14 @@
 					<div class="form-group">
 						<label class="col-lg-2">Photo</label>
 						<div class="col-lg-8">
-							<input type="file" name="picture" id="picture" title=""/>
+							<input type="file" name="picture" id="picture" target="small-avatar" title=""/>
 							<img class="img-circle" id="small-avatar" src="">
 							<img class="img-circle" id="medium-avatar" src="">
 						</div>
 					</div>
 				</form>
 			</div>
-			<button class="btn-lg btn" id="save_button">Save</button>
+			<button class="btn-lg btn content_button" id="save_button">Save</button>
 		</div>
 	</section>
 
@@ -109,5 +109,6 @@
 	<script src="js/sign-in.js"></script>
 	<script src="js/view_scripts.js"></script>
 	<script src="js/profile/profile.js"></script>
+	<script> withMap = false </script>
 </body>
 </html>

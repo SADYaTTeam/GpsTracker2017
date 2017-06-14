@@ -42,3 +42,19 @@ function showMarkers(userData)
 		}
  	}, 1000);
 }
+
+function clearMarkers()
+{
+	if(sosMarkers != null)
+	{
+		for (i = 0; i < sosMarkers.length; i++) {
+            sosMarkers[i].setMap(null);
+        }
+	}
+	if(markers != null)
+	{
+		for (i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+	}
+}
