@@ -2,22 +2,20 @@ var map;
 var geocoder;
 var infowindow;
 
-var zones = {
-    home: {
-        center: { lat: 49.802830, lng: 24.001280 },
-    },
-    lvivCenter: {
-        center: { lat: 49.832361, lng: 24.018122 },
-    },
-    polithech: {
-        center: { lat: 49.835098, lng: 24.008206 },
-    },
-    auchan: {
-        center: { lat: 49.773674, lng: 24.010949 },
-    }
-};
-
-var markersArray = new Array();
+// var zones = {
+//     home: {
+//         center: { lat: 49.802830, lng: 24.001280 },
+//     },
+//     lvivCenter: {
+//         center: { lat: 49.832361, lng: 24.018122 },
+//     },
+//     polithech: {
+//         center: { lat: 49.835098, lng: 24.008206 },
+//     },
+//     auchan: {
+//         center: { lat: 49.773674, lng: 24.010949 },
+//     }
+// };
 
 function initMap() {
     // Create the map.
@@ -27,57 +25,17 @@ function initMap() {
         center: { lat: 49.802929, lng: 24.003286 },
         mapTypeId: 'terrain'
     });
-
-    //  var infoWindow = new google.maps.InfoWindow({map: map});
-
-    // // Try HTML5 geolocation.
-    // if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition(function (position) {
-    //         var pos = {
-    //             lat: position.coords.latitude,
-    //             lng: position.coords.longitude
-    //         };
-
-    //         map.setCenter(pos);
-    //     }, function () {
-    //         //handleLocationError(true, map.getCenter());
-    //     });
-    // } else {
-    //     // Browser doesn't support Geolocation
-    //     handleLocationError(false, infoWindow, map.getCenter());
-    // }
-
-    // drawZones(zones);
-    // drawMarkers(markers);
-    // drawPath(markers);
 }
 
-function drawMarkers() {
-    var marker, i;
-    for (i = 0; i < markers.length; i++) {
-        marker = new window.google.maps.Marker({
-            position: new window.google.maps.LatLng(markers[i][1], markers[i][2]),
-            map: map,
-            fillColor: '#00FF00',
-            fillOpacity: 0.35
-        });
-        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-
-        //Geocoding markers
-        geocoder = new window.google.maps.Geocoder;
-        infowindow = new window.google.maps.InfoWindow;
-        window.google.maps.event.addListener(marker, 'click', function () {
-            geocodeLatLng(this.getPosition(), geocoder, map, infowindow); 
-        });
-
-        
-    };
-}
-
-function drawMarkers(markers) {
-    var marker, i;
-    for (i = 0; i < markersArray.length; i++) {
-        markersArray[i].setMap(null);
+function drawMarkers(markers, iconPath, oldMarkers) {
+    var marker;
+    var i;
+    var markersArray = new Array();
+    if(oldMarkers != null)
+    {
+        for (i = 0; i < oldMarkers.length; i++) {
+            oldMarkers[i].setMap(null);
+        }
     }
     for (i = 0; i < markers.length; i++) {
         
@@ -87,7 +45,7 @@ function drawMarkers(markers) {
             fillColor: '#00FF00',
             fillOpacity: 0.35
         });
-        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        marker.setIcon(iconPath);
 
         //Geocoding markers
         geocoder = new window.google.maps.Geocoder;
@@ -98,6 +56,7 @@ function drawMarkers(markers) {
         });
         markersArray.push(marker);
     };
+    return markersArray;
 }
 
 function drawZones(zones) { // Construct the circle for each value in citymap.
