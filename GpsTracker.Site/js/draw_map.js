@@ -2,28 +2,16 @@ var map;
 var geocoder;
 var infowindow;
 
-// var zones = {
-//     home: {
-//         center: { lat: 49.802830, lng: 24.001280 },
-//     },
-//     lvivCenter: {
-//         center: { lat: 49.832361, lng: 24.018122 },
-//     },
-//     polithech: {
-//         center: { lat: 49.835098, lng: 24.008206 },
-//     },
-//     auchan: {
-//         center: { lat: 49.773674, lng: 24.010949 },
-//     }
-// };
-
 function initMap() {
     // Create the map.
     
     map = new google.maps.Map(document.getElementById('googleMap'), {
         zoom: 15,
+        maxZoon: 20,
+        minZoom: 3,
         center: { lat: 49.802929, lng: 24.003286 },
-        mapTypeId: 'terrain'
+        mapTypeId: 'roadmap',
+        gestureHandling: 'greedy'
     });
 }
 
@@ -52,7 +40,7 @@ function drawMarkers(markers, iconPath, oldMarkers) {
         infowindow = new window.google.maps.InfoWindow;
         window.google.maps.event.addListener(marker, 'click', function () {
             geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
-       
+            infomarker.setMap(null);
         });
         markersArray.push(marker);
     };
@@ -71,7 +59,6 @@ function drawZones(zones) { // Construct the circle for each value in citymap.
             fillOpacity: 0.35,
             map: map,
             center: zones[zone].center,
-            //radius: Math.sqrt(zones[zone].population) * 100
             radius: 50
         });
     }
@@ -82,13 +69,13 @@ function geocodeLatLng(latlng, geocoder, map, infowindow) {
         if (status === 'OK') {
             if (results[1]) {
                 map.setZoom(15);
-                var marker = new google.maps.Marker({
+                infomarker = new google.maps.Marker({
                     position: latlng,
-                    map: map
+                    map: map,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                 });
-                //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
                 infowindow.setContent(results[1].formatted_address);
-                infowindow.open(map, marker);
+                infowindow.open(map, infomarker);
             } else {
                 window.alert('No results found');
             }
