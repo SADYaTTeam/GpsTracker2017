@@ -59,18 +59,20 @@
         </activity>
 
         <service
-            android:name=".MyService"
+            android:name=".SendLocationToUrlService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kamanda.timon.gpstracker.MainActivity" />
-        </activity>
+        <activity android:name=".GoogleSignInActivity" />
+
+        <service
+            android:name=".geofence.GeofencingService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".geofence.ReceiveTransitionsIntentService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
