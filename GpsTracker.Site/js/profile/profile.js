@@ -97,6 +97,10 @@ $(function(){
 		showMenu("person");
 	});
 
+	$("save_button").bind("click", function(){
+		
+	})
+
 	$("#picture").change(function(evt){
 		var tgt = evt.target || window.event.srcElement,
         files = tgt.files;
