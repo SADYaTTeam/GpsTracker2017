@@ -1,3 +1,4 @@
+withMap = false;
 function showMenu(menu)
 {
 	var form;
