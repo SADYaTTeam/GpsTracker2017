@@ -76,6 +76,8 @@ namespace GpsTracker.Service.Strategies.ConcreateAppStrategies
                 }
                 else
                 {
+                    temp.Longitude = message.Longitude;
+                    temp.Latitude = message.Latitude;
                     temp.Timestamp = DateTime.Now;
                 }
                 WriteToDb(message);

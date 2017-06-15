@@ -109,6 +109,7 @@
     <Compile Include="Controllers\WebSite\MainPageController.cs" />
     <Compile Include="Controllers\WebSite\MarkerController.cs" />
     <Compile Include="Controllers\WebSite\PersonController.cs" />
+    <Compile Include="Controllers\WebSite\SosController.cs" />
     <Compile Include="Controllers\WebSite\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
