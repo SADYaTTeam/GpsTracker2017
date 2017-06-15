@@ -2,12 +2,20 @@
 package com.kamanda.timon.gpstracker;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +24,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.provider.Settings.Secure;
 
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +53,11 @@ public class MainActivity extends Activity {
     private int displacement;
 
     boolean mBounded;
-    MyService mServer;
+    SendLocationToUrlService mServer;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     //endregion Variables
 
@@ -48,27 +67,52 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
         setContentView(R.layout.settings_layout);
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mAuth = FirebaseAuth.getInstance();
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
         Log.i("deviceId", deviceId.toString());
-        saveAndroidIdToFile();
-        Intent intent = new Intent(this, MyService.class);
+        sendDeviceIdNotification();
+        //saveAndroidIdToFile();
+        Intent intent = new Intent(this, SendLocationToUrlService.class);
         this.startService(intent);
-        //startService(new Intent(this, MyService.class));
-
+        //startService(new Intent(this, SendLocationToUrlService.class));
         //minimizeApp();
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
 
+//        if (savedInstanceState == null) {
+//            // Begin the transaction
+//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            // Replace the contents of the container with the new fragment
+//            ft.replace(R.id.container, new PlaceholderFragment());
+//            // or ft.add(R.id.your_placeholder, new FooFragment());
+//            // Complete the changes added above
+//            ft.commit();
+//        }
     }
+
 
     @Override
     protected void onStart() {
         Log.i(TAG, "onStart");
         super.onStart();
-        Intent mIntent = new Intent(this, MyService.class);
+        Intent mIntent = new Intent(this, SendLocationToUrlService.class);
         bindService(mIntent, mConnection, BIND_AUTO_CREATE);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     ServiceConnection mConnection = new ServiceConnection() {
@@ -82,7 +126,7 @@ public class MainActivity extends Activity {
         public void onServiceConnected(ComponentName name, IBinder service) {
             Toast.makeText(MainActivity.this, "Service is connected", Toast.LENGTH_SHORT).show();
             mBounded = true;
-            MyService.LocalBinder mLocalBinder = (MyService.LocalBinder)service;
+            SendLocationToUrlService.LocalBinder mLocalBinder = (SendLocationToUrlService.LocalBinder) service;
             mServer = mLocalBinder.getMyServiceInstance();
         }
     };
@@ -92,9 +136,14 @@ public class MainActivity extends Activity {
     protected void onStop() {
         Log.i(TAG, "onStop");
         super.onStop();
-        if(mBounded) {
+        if (mBounded) {
             unbindService(mConnection);
             mBounded = false;
+        }
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(001);
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
@@ -141,7 +190,7 @@ public class MainActivity extends Activity {
                         Toast.makeText(getApplicationContext(), "JSON sended to mServer",
                                 Toast.LENGTH_LONG).show();
                         mServer.sendSOS_JSON();
-                        // startService(new Intent(this, MyService.class));
+                        // startService(new Intent(this, SendLocationToUrlService.class));
                     } catch (Exception exc) {
                         Log.e("AsyncT", exc.getMessage(), exc);
                     }
@@ -167,20 +216,26 @@ public class MainActivity extends Activity {
         buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Objects.equals(editTextUpdateInterval.getText().toString(), "")) {
-                    updateInterval = 10000;
-                } else {
-                    updateInterval = Integer.valueOf(editTextUpdateInterval.getText().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    if (Objects.equals(editTextUpdateInterval.getText().toString(), "")) {
+                        updateInterval = 10000;
+                    } else {
+                        updateInterval = Integer.valueOf(editTextUpdateInterval.getText().toString());
+                    }
                 }
-                if (Objects.equals(editTextFatestInterval.getText().toString(), "")) {
-                    fatestInterval = 5000;
-                } else {
-                    fatestInterval = Integer.valueOf(editTextFatestInterval.getText().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    if (Objects.equals(editTextFatestInterval.getText().toString(), "")) {
+                        fatestInterval = 5000;
+                    } else {
+                        fatestInterval = Integer.valueOf(editTextFatestInterval.getText().toString());
+                    }
                 }
-                if (Objects.equals(editTextDisplacement.getText().toString(), "")) {
-                    displacement = 50;
-                } else {
-                    displacement = Integer.valueOf(editTextDisplacement.getText().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    if (Objects.equals(editTextDisplacement.getText().toString(), "")) {
+                        displacement = 50;
+                    } else {
+                        displacement = Integer.valueOf(editTextDisplacement.getText().toString());
+                    }
                 }
 
                 StartMyService();
@@ -190,12 +245,78 @@ public class MainActivity extends Activity {
     }
 
     public void StartMyService() {
-        this.stopService(new Intent(this, MyService.class));
-        Intent intent = new Intent(this, MyService.class);
+        this.stopService(new Intent(this, SendLocationToUrlService.class));
+        Intent intent = new Intent(this, SendLocationToUrlService.class);
         intent.putExtra("updateInterval", updateInterval);
         intent.putExtra("fatestInterval", fatestInterval);
         intent.putExtra("displacement", displacement);
         this.startService(intent);
     }
 
+
+    public void sendDeviceIdNotification() {
+
+        //Get an instance of NotificationManager//
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                        .setContentTitle("Device ID: ")
+                        .setOngoing(true)
+                        .setContentText(deviceId);
+
+
+        // Gets an instance of the NotificationManager service//
+
+        NotificationManager mNotificationManager =
+
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        //When you issue multiple notifications about the same type of event, it’s best practice for your app to try to update an existing notification with this new information, rather than immediately creating a new notification. If you want to update this notification at a later date, you need to assign it an ID. You can then use this ID whenever you issue a subsequent notification. If the previous notification is still visible, the system will update this existing notification, rather than create a new one. In this example, the notification’s ID is 001//
+
+        mNotificationManager.notify(001, mBuilder.build());
+
+    }
+
+    private void createAccount(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, R.string.auth_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    private void signIn(String email, String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            Toast.makeText(MainActivity.this, R.string.auth_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
 }
+
