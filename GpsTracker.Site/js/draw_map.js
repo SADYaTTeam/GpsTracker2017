@@ -24,8 +24,11 @@ function initMap() {
     
     map = new google.maps.Map(document.getElementById('googleMap'), {
         zoom: 15,
+        maxZoon: 20,
+        minZoom: 3,
         center: { lat: 49.802929, lng: 24.003286 },
-        mapTypeId: 'terrain'
+        mapTypeId: 'roadmap',
+        gestureHandling: 'greedy'
     });
 
     //  var infoWindow = new google.maps.InfoWindow({map: map});
@@ -48,30 +51,8 @@ function initMap() {
     // }
 
     // drawZones(zones);
-    // drawMarkers(markers);
+    //drawMarkers(markers);
     // drawPath(markers);
-}
-
-function drawMarkers() {
-    var marker, i;
-    for (i = 0; i < markers.length; i++) {
-        marker = new window.google.maps.Marker({
-            position: new window.google.maps.LatLng(markers[i][1], markers[i][2]),
-            map: map,
-            fillColor: '#00FF00',
-            fillOpacity: 0.35
-        });
-        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-
-        //Geocoding markers
-        geocoder = new window.google.maps.Geocoder;
-        infowindow = new window.google.maps.InfoWindow;
-        window.google.maps.event.addListener(marker, 'click', function () {
-            geocodeLatLng(this.getPosition(), geocoder, map, infowindow); 
-        });
-
-        
-    };
 }
 
 function drawMarkers(markers) {
@@ -112,7 +93,6 @@ function drawZones(zones) { // Construct the circle for each value in citymap.
             fillOpacity: 0.35,
             map: map,
             center: zones[zone].center,
-            //radius: Math.sqrt(zones[zone].population) * 100
             radius: 50
         });
     }
@@ -127,7 +107,6 @@ function geocodeLatLng(latlng, geocoder, map, infowindow) {
                     position: latlng,
                     map: map
                 });
-                //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
                 infowindow.setContent(results[1].formatted_address);
                 infowindow.open(map, marker);
             } else {
