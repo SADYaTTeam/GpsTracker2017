@@ -116,7 +116,7 @@ namespace GpsTracker.Service.Controllers.WebSite
         {
             try
             {
-                return MainContext.Instance.User.GetBy(x => x.DeviceId == message.DeviceId)?.ToList()[0];
+                return MainContext.Instance.User.GetBy(x => x.UserId == message.UserId)?.ToList()[0];
             }
             catch (Exception e)
             {

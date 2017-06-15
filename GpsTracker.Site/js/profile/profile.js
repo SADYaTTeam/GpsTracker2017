@@ -1,4 +1,5 @@
 withMap = false;
+var option = 0;
 function showMenu(menu)
 {
 	var form;
@@ -7,16 +8,19 @@ function showMenu(menu)
 		case "user":
 		{
 			form="#user_form";
+			option = 0;
 			break;
 		}
 		case "person":
 		{
 			form="#person_form";
+			option = 1;
 			break;
 		}
 		case "list":
 		{
 			form="#friendlist_form";
+			option = 2;
 			break;
 		}
 		default:
@@ -58,6 +62,7 @@ function fillPersonInfo(person)
 			case true:
 			{
 				$("#male").prop("checked", true);
+   
 				break;
 			}
 			case false:
@@ -75,7 +80,7 @@ function fillPersonInfo(person)
 		$("#year").val(date.getFullYear());
 		$("#email").val(person.Email);
 		$("#phone").val(person.Phone);
-		$("#small-avatar, #medium-avatar").attr("src", "data:image/png;base64," + person.Photo)
+		$("#small-avatar, #medium-avatar").attr("src", "data:image/png;base64," + person.Photo);
 	}
 }
 
@@ -98,8 +103,70 @@ $(function(){
 	});
 
 	$("save_button").bind("click", function(){
-		
-	})
+		var temp;
+		try{
+			switch(option)
+			{
+				case 0:
+				{
+					if(USER != null)
+					{
+						temp = USER;
+						temp.Login = $("#login_field").val();
+						temp.Password = $("#password_field").val();
+						$.ajax({
+					        url: 'api/web/user/edit',
+					        type: "POST",
+					        data: JSON.stringify(temp),
+					        dataType: "json",
+					        contentType: "application/json; charset=utf-8",
+					        success: function(data)
+					        {
+					        	$("#message").html(data.Message);
+					        }
+					    });
+					}
+					break;
+				}
+				case 1:
+				{
+					if(PERSON != null)
+					{
+						temp = PERSON;
+						temp.FirstName = $("#first_name").val();
+						temp.MiddleName = $("#middle_name").val();
+						temp.LastName = $("#last_name").val();
+						temp.Gender = $('input[name=gender]:checked', '#myForm').val();
+						temp.DateOfBirth.setFullYear(parseInt($("#year").val(), 10), parseInt($("#month option:selected").val(), 10), parseInt($("#day").val(), 10));
+						temp.Email = $("#email").val();
+						temp.Phone = $("#phone").val();
+						var imgString = $("#small-avatar").attr("src");
+						temp.Photo = imgString.substring(imgstring.indexOf("data:image/png;base64,"+ 1));
+						$.ajax({
+					        url: 'api/web/person/edit',
+					        type: "POST",
+					        data: JSON.stringify(temp),
+					        dataType: "json",
+					        contentType: "application/json; charset=utf-8",
+					        success: function(data)
+					        {
+					        	$("#message").html(data.Message);
+					        }
+					    });
+					}
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
+		}
+		catch(err)
+		{
+			$("#message").html("Not valid data.");
+		}
+	});
 
 	$("#picture").change(function(evt){
 		var tgt = evt.target || window.event.srcElement,

@@ -56,8 +56,16 @@ namespace GpsTracker.Service.Controllers.WebSite
                     };
                 }
                 var user = users.FirstOrDefault();
-                var person = MainContext.Instance.Person.GetBy(x => x.UserId == user.UserId);
-                if (MainContext.Instance.Person.Update(person.ToList()[0].PersonId, newInfo))
+                var person = MainContext.Instance.Person.GetBy(x => x.UserId == user.UserId).ToList()[0];
+                if (person == newInfo)
+                {
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Decline,
+                        Message = "You didn't change info."
+                    };
+                }
+                if (MainContext.Instance.Person.Update(person.PersonId, newInfo))
                 {
                     return new ResultMessage()
                     {

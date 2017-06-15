@@ -29,5 +29,31 @@ namespace GpsTracker.Models.Models
         public string Email { get; set; }
 
         public string Phone { get; set; }
+
+        public static bool operator ==(Person a, Person b)
+        {
+            if (a == null && b == null)
+            {
+                return true;
+            }
+            if (a == null || b == null)
+            {
+                return false;
+            }
+            var properties = a.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.GetValue(a, null) != property.GetValue(b, null))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator !=(Person a, Person b)
+        {
+            return !(a == b);
+        }
     }
 }
