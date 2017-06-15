@@ -21,5 +21,31 @@ namespace GpsTracker.Models.Models
         public bool IsAdmin { get; set; }
 
         public DateTime DateCreatedAt { get; set; }
+
+        public static bool operator ==(User a, User b)
+        {
+            if (a == null && b == null)
+            {
+                return true;
+            }
+            if (a == null || b == null)
+            {
+                return false;
+            }
+            var properties = a.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.GetValue(a, null) != property.GetValue(b, null))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator !=(User a, User b)
+        {
+            return !(a == b);
+        }
     }
 }

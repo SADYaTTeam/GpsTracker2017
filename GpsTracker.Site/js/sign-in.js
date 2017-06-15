@@ -93,6 +93,8 @@ function authorize()
 
 $("#sign_out_button").bind("click",function(){
     document.cookie = "";
+    PERSON = null;
+    USER = null;
     authorize();
     setCookie("UserId", "", 0);
     mutex = false;

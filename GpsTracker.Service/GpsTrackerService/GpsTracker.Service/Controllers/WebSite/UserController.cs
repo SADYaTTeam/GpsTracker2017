@@ -36,93 +36,15 @@ namespace GpsTracker.Service.Controllers.WebSite
                 if (string.IsNullOrEmpty(message.Login) && string.IsNullOrEmpty((message.Password)))
                 {
                     return null;
-                    //return new ResultMessage()
-                    //{
-                    //    Type = ResultType.Decline,
-                    //    Message = "Login or password is empty."
-                    //};
                 }
                 var user = MainContext.Instance.User.GetBy(x => x.Login == message.Login &&
                                                                 x.Password == message.Password);
-                if (user == null)
-                {
-                    return null;
-                    //return new ResultMessage()
-                    //{
-                    //    Type = ResultType.Decline,
-                    //    Message = "There's no user with this login and password."
-                    //};
-                }
-                return user.ToList()[0];
-                //return new ResultMessage()
-                //{
-                //    Type = ResultType.Success,
-                //    Message = "User successfully log in."
-                //};
+                return user?.ToList()[0];
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Internal server exception: {ex.Message}");
                 return null;
-                //return new ResultMessage()
-                //{
-                //    Type = ResultType.UnknownError,
-                //    Message = $"Internal server exception: {ex.Message}"
-                //};
-            }
-        }
-
-        /// <summary>
-        /// Edit person info of user with this login
-        /// </summary>
-        /// <param name="newInfo">New person info about user</param>
-        /// <returns>Returns Success(0) if process succesfully ended,
-        /// Decline(1) if there're no user with input userInfo
-        /// UnknownError(-1) if there're some exceptions while process</returns>
-        [HttpPost]
-        [Route("editPerson")]
-        public ResultMessage EditPerson([FromBody] Person newInfo)
-        {
-            try
-            {
-                var users = MainContext.Instance.User.GetBy(x => x.UserId == newInfo.UserId);
-                if (users == null)
-                {
-                    return new ResultMessage()
-                    {
-                        Type = ResultType.Decline,
-                        Message = "There're no users with this login"
-                    };
-                }
-                var user = users.FirstOrDefault();
-                var person = MainContext.Instance.Person.GetBy(x => x.UserId == user.UserId);
-                if (person == null)
-                {
-                    throw new Exception("There's no person data about this user in db." +
-                                        "Create it through website(http://notbadtracker.azurewebsites.net/)");
-                }
-                if (MainContext.Instance.Person.Update(person.ToList()[0].PersonId, newInfo))
-                {
-                    return new ResultMessage()
-                    {
-                        Type = ResultType.Success,
-                        Message = "Person data successfully edited."
-                    };
-                }
-                return new ResultMessage()
-                {
-                    Type = ResultType.Decline,
-                    Message = "Can't edit person info with this info" +
-                              "(mb you write not accessible data)."
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ResultMessage()
-                {
-                    Type = ResultType.UnknownError,
-                    Message = $"Internal server error: {ex.Message}"
-                };
             }
         }
 
@@ -134,7 +56,7 @@ namespace GpsTracker.Service.Controllers.WebSite
         /// Decline(1) if there're no user with input userInfo,
         /// UnknownError(-1) if there're some exceptions while process</returns>
         [HttpPost]
-        [Route("editUser")]
+        [Route("edit")]
         public ResultMessage EditUser([FromBody] User newInfo)
         {
             try
@@ -145,16 +67,24 @@ namespace GpsTracker.Service.Controllers.WebSite
                     return new ResultMessage()
                     {
                         Type = ResultType.Decline,
-                        Message = "There're no users with this login"
+                        Message = "There's no user in DB."
                     };
                 }
                 var user = users.FirstOrDefault();
+                if (newInfo == user)
+                {
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Decline,
+                        Message = "You didn't change info."
+                    };
+                }
                 if (MainContext.Instance.User.Update(user.UserId, newInfo))
                 {
                     return new ResultMessage()
                     {
                         Type = ResultType.Success,
-                        Message = "Person data successfully edited."
+                        Message = "User info successfully edited."
                     };
                 }
                 return new ResultMessage()
