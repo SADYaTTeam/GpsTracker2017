@@ -1,11 +1,12 @@
 var map;
 var geocoder;
 var infowindow;
+var infowindowUser;
 var infomarker;
 
 function initMap() {
     // Create the map.
-    
+
     map = new google.maps.Map(document.getElementById('googleMap'), {
         zoom: 15,
         maxZoon: 20,
@@ -20,21 +21,24 @@ function drawMarkers(markers, iconPath, oldMarkers) {
     var marker;
     var i;
     var markersArray = new Array();
-    if(oldMarkers != null)
-    {
+    if (oldMarkers != null) {
         for (i = 0; i < oldMarkers.length; i++) {
             oldMarkers[i].setMap(null);
         }
     }
     for (i = 0; i < markers.length; i++) {
-        
+
         marker = new window.google.maps.Marker({
             position: new window.google.maps.LatLng(markers[i].Latitude, markers[i].Longitude),
             map: map,
             fillColor: '#00FF00',
-            fillOpacity: 0.35
+            fillOpacity: 0.35,
         });
         marker.setIcon(iconPath);
+
+        infowindowUser = new window.google.maps.InfoWindow({ zIndex: 1 });
+        infowindowUser.setContent("UserId:");
+        infowindowUser.open(map, marker);
 
         //Geocoding markers
         geocoder = new window.google.maps.Geocoder;
@@ -45,7 +49,35 @@ function drawMarkers(markers, iconPath, oldMarkers) {
         });
         markersArray.push(marker);
     };
+ 
     return markersArray;
+}
+
+function drawMarkersHistory(markers, iconPath) {
+    var marker;
+    var i;
+
+    for (i = 0; i < markers.length; i++) {
+
+        marker = new window.google.maps.Marker({
+            position: new window.google.maps.LatLng(markers[i].Latitude, markers[i].Longitude),
+            map: map,
+            fillColor: '#00FF00',
+            fillOpacity: 0.35,
+        });
+        marker.setIcon(iconPath);
+
+
+        //Geocoding markers
+        geocoder = new window.google.maps.Geocoder;
+        infowindow = new window.google.maps.InfoWindow;
+        window.google.maps.event.addListener(marker, 'click', function () {
+            geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
+            infomarker.setMap(null);
+        });
+
+        drawPath(markers);
+    };
 }
 
 function drawZones(zones) { // Construct the circle for each value in citymap.
@@ -89,7 +121,7 @@ function drawPath(markers) {
 
     var myPath = new Array();
     for (i = 0; i < markers.length; i++) {
-        myPath.push({'lat': markers[i][1], 'lng': markers[i][2]});
+        myPath.push({ 'lat': markers[i][1], 'lng': markers[i][2] });
     }
 
     var path = new window.google.maps.Polyline({
