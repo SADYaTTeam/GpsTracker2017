@@ -18,6 +18,8 @@ var zones = {
 };
 
 var markersArray = new Array();
+var infomarker;
+
 
 function initMap() {
     // Create the map.
@@ -75,7 +77,7 @@ function drawMarkers(markers) {
         infowindow = new window.google.maps.InfoWindow;
         window.google.maps.event.addListener(marker, 'click', function () {
             geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
-       
+            infomarker.setMap(null);
         });
         markersArray.push(marker);
     };
@@ -103,12 +105,13 @@ function geocodeLatLng(latlng, geocoder, map, infowindow) {
         if (status === 'OK') {
             if (results[1]) {
                 map.setZoom(15);
-                var marker = new google.maps.Marker({
+                infomarker = new google.maps.Marker({
                     position: latlng,
-                    map: map
+                    map: map,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                 });
                 infowindow.setContent(results[1].formatted_address);
-                infowindow.open(map, marker);
+                infowindow.open(map, infomarker);
             } else {
                 window.alert('No results found');
             }
