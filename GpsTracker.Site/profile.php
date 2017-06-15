@@ -6,12 +6,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/profile/profile.css">
+	<link rel="stylesheet" type="text/css" href="css/profile/media.css">
 	<link rel="stylesheet" type="text/css" href="css/w3.css">
 </head>
 <body>
 	<header>
-		<?php include("pages/header.html");?>
+
+	<?php include("pages/header.html");?>
+
+		
 	</header>
+
+
 
 	<section class="container-fluid">
 		<div class="row">
@@ -24,30 +30,31 @@
 				<form action="" class="form-horizontal" id="user_form">
 					<p class="label" id="message"></p>
 					<div class="form-group">
-						<label for="login" class="col-lg-2">Login</label>
+						<label for="login" class="col-lg-2 label-control">Login</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="login_field" placeholder="Enter new login"></div>
 					</div>
 					<div class="form-group">
-						<label for="password" class="col-lg-2">Password</label>
+						<label for="password" class="col-lg-2 label-control">Password</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="password_field" placeholder="Enter new password"></div>
 					</div>
+					<button class="btn-lg btn content_button" id="save_button">Save</button>
 				</form>
 				<form class="form-horizontal hidden" id="person_form">
 					<p class="label" id="message"></p>
 					<div class="form-group">
-						<label for="first_name" class="col-lg-2">First name</label>
+						<label for="first_name" class="col-lg-2 label-control">First name</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="first_name" placeholder="Enter first name"></div>
 					</div>
 					<div class="form-group">
-						<label for="middle_name" class="col-lg-2">Middle name</label>
+						<label for="middle_name" class="col-lg-2 label-control">Middle name</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="middle_name" placeholder="Enter middle name"></div>
 					</div>
 					<div class="form-group">
-						<label for="last_name" class="col-lg-2">Last name</label>
+						<label for="last_name" class="col-lg-2 label-control">Last name</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="last_name" placeholder="Enter lastname"></div>
 					</div>
 					<div class="form-group">
-						<label class="col-lg-2">Gender</label>
+						<label class="col-lg-2 label-control">Gender</label>
 						<div class="col-lg-8">
 							<label class="radio-inline">
 						      <input type="radio" name="gender" id="male" value="true">Male
@@ -58,7 +65,7 @@
 					    </div>
 					</div>
 					<div class="form-group form-inline">
-						<label class="col-lg-2">Birthday</label>
+						<label class="col-lg-2 label-control">Birthday</label>
 						<div class="input-group col-lg-8" id="date_input">
 			              <input name="day" placeholder="Day" class="form-control" type="text" style="width: 55px" id="day">
 			              <select name="month" class="form-control" style="width: 115px" id="month">
@@ -79,24 +86,25 @@
 			             </div>
 					</div>
 					<div class="form-group">
-						<label for="email" class="col-lg-2">E-mail</label>
+						<label for="email" class="col-lg-2 label-control">E-mail</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="email" placeholder="examle@example.com"></div>
 					</div>
 					<div class="form-group">
-						<label for="Phone" class="col-lg-2">Phone</label>
+						<label for="Phone" class="col-lg-2 label-control">Phone</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="phone" placeholder="+380123456789"></div>
 					</div>
 					<div class="form-group">
-						<label class="col-lg-2">Photo</label>
+						<label class="col-lg-2 label-control">Photo</label>
 						<div class="col-lg-8">
 							<input type="file" name="picture" id="picture" target="small-avatar" title=""/>
 							<img class="img-circle" id="small-avatar" src="">
 							<img class="img-circle" id="medium-avatar" src="">
 						</div>
 					</div>
+					<button class="btn-lg btn content_button" id="save_button2">Save</button>
 				</form>
 			</div>
-			<button class="btn-lg btn content_button" id="save_button">Save</button>
+			
 		</div>
 	</section>
 

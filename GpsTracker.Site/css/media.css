@@ -20,7 +20,7 @@
 #search
 {
 	width:70%;
-}
+}}
 /*Small devices, tablets*/
 @media only screen and (max-width: 768px){
 
@@ -114,7 +114,7 @@ nav
 {
 	display: block;
 	width:100%;
-}
+}}
 
 /*Extra small devices, phones*/
 @media only screen and (max-width: 480px){
@@ -175,7 +175,8 @@ nav
 {
 	display: block;
 	width:100%;
-}
+}}
+
 
 /*Iphone*/
 @media only screen and (max-width: 320px){
