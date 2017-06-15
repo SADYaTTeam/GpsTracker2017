@@ -1,6 +1,7 @@
 var map;
 var geocoder;
 var infowindow;
+var infomarker;
 
 function initMap() {
     // Create the map.
@@ -68,7 +69,6 @@ function geocodeLatLng(latlng, geocoder, map, infowindow) {
     geocoder.geocode({ 'location': latlng }, function (results, status) {
         if (status === 'OK') {
             if (results[1]) {
-                map.setZoom(15);
                 infomarker = new google.maps.Marker({
                     position: latlng,
                     map: map,
