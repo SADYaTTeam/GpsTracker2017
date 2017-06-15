@@ -102,7 +102,7 @@ $(function(){
 		showMenu("person");
 	});
 
-	$("save_button").bind("click", function(){
+	$("#save_button").bind("click", function(){
 		var temp;
 		try{
 			switch(option)
@@ -122,7 +122,16 @@ $(function(){
 					        contentType: "application/json; charset=utf-8",
 					        success: function(data)
 					        {
+					        	if(data.Type == 0)
+					        	{
+					        		$("#message").css("color", "green");
+					        	}
+					        	else
+					        	{
+					        		$("#message").css("color", "red");	
+					        	}
 					        	$("#message").html(data.Message);
+					        	$("#sign_out_button").trigger("click");
 					        }
 					    });
 					}
@@ -137,7 +146,8 @@ $(function(){
 						temp.MiddleName = $("#middle_name").val();
 						temp.LastName = $("#last_name").val();
 						temp.Gender = $('input[name=gender]:checked', '#myForm').val();
-						temp.DateOfBirth.setFullYear(parseInt($("#year").val(), 10), parseInt($("#month option:selected").val(), 10), parseInt($("#day").val(), 10));
+						var date = new Date();
+						temp.DateOfBirth = date.setFullYear(parseInt($("#year").val(), 10), parseInt($("#month option:selected").val(), 10), parseInt($("#day").val(), 10));
 						temp.Email = $("#email").val();
 						temp.Phone = $("#phone").val();
 						var imgString = $("#small-avatar").attr("src");
@@ -150,6 +160,14 @@ $(function(){
 					        contentType: "application/json; charset=utf-8",
 					        success: function(data)
 					        {
+					        	if(data.Type == 0)
+					        	{
+					        		$("#message").css("color", "green");
+					        	}
+					        	else
+					        	{
+					        		$("#message").css("color", "red");	
+					        	}
 					        	$("#message").html(data.Message);
 					        }
 					    });
@@ -164,6 +182,7 @@ $(function(){
 		}
 		catch(err)
 		{
+			$("#message").css("color", "red");
 			$("#message").html("Not valid data.");
 		}
 	});

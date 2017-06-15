@@ -98,7 +98,10 @@ $("#sign_out_button").bind("click",function(){
     authorize();
     setCookie("UserId", "", 0);
     mutex = false;
-    clearMarkers();
+    if(withMap)
+    {
+        clearMarkers();
+    }
 });
 
 $("#sign_button").bind("click", function send() {

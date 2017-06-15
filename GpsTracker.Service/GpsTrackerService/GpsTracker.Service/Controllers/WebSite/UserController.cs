@@ -71,14 +71,14 @@ namespace GpsTracker.Service.Controllers.WebSite
                     };
                 }
                 var user = users.FirstOrDefault();
-                if (newInfo == user)
-                {
-                    return new ResultMessage()
-                    {
-                        Type = ResultType.Decline,
-                        Message = "You didn't change info."
-                    };
-                }
+                //if (newInfo == user)
+                //{
+                //    return new ResultMessage()
+                //    {
+                //        Type = ResultType.Decline,
+                //        Message = "You didn't change info."
+                //    };
+                //}
                 if (MainContext.Instance.User.Update(user.UserId, newInfo))
                 {
                     return new ResultMessage()
