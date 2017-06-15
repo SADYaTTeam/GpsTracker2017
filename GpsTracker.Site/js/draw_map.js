@@ -53,7 +53,32 @@ function drawMarkers(markers, iconPath, oldMarkers) {
     return markersArray;
 }
 
+function drawMarkersHistory(markers, iconPath) {
+    var marker;
+    var i;
 
+    for (i = 0; i < markers.length; i++) {
+
+        marker = new window.google.maps.Marker({
+            position: new window.google.maps.LatLng(markers[i].Latitude, markers[i].Longitude),
+            map: map,
+            fillColor: '#00FF00',
+            fillOpacity: 0.35,
+        });
+        marker.setIcon(iconPath);
+
+
+        //Geocoding markers
+        geocoder = new window.google.maps.Geocoder;
+        infowindow = new window.google.maps.InfoWindow;
+        window.google.maps.event.addListener(marker, 'click', function () {
+            geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
+            infomarker.setMap(null);
+        });
+
+        drawPath(markers);
+    };
+}
 
 function drawZones(zones) { // Construct the circle for each value in citymap.
     // Note: We scale the area of the circle based on the population.
