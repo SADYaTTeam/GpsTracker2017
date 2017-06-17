@@ -1,7 +1,8 @@
 ﻿var mutex = true;
-var USER; 
+var USER;
 var sosMarkers = new Array();
 var markers = new Array();
+var trueData;
 
 function showMarkers(userData)
 {
@@ -43,18 +44,15 @@ function showMarkers(userData)
  	}, 5000);
 }
 
-function clearMarkers()
-{
-	if(sosMarkers != null)
-	{
-		for (i = 0; i < sosMarkers.length; i++) {
+function clearMarkers() {
+    if (sosMarkers != null) {
+        for (i = 0; i < sosMarkers.length; i++) {
             sosMarkers[i].setMap(null);
         }
-	}
-	if(markers != null)
-	{
-		for (i = 0; i < markers.length; i++) {
+    }
+    if (markers != null) {
+        for (i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
-	}
+    }
 }
