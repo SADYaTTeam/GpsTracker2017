@@ -3,6 +3,7 @@ var geocoder;
 var infowindow;
 var infowindowUser;
 var infomarker;
+var CONTENT = new Array();
 
 function initMap() {
     // Create the map.
@@ -37,7 +38,8 @@ function drawMarkers(markers, iconPath, oldMarkers) {
         marker.setIcon(iconPath);
 
         infowindowUser = new window.google.maps.InfoWindow({ zIndex: 1 });
-        infowindowUser.setContent("UserId:");
+        //infowindowUser.setContent("UserId:" + markers[i].DeviceId);
+        infowindowUser.setContent(CONTENT[i]);
         infowindowUser.open(map, marker);
 
         //Geocoding markers
