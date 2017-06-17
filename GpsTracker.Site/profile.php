@@ -29,7 +29,7 @@
 			</div>
 			<div class="profile_content col-lg-10">
 				<form action="" class="form-horizontal" id="user_form">
-					<p class="label" id="message"></p>
+					<p class="label message"></p>
 					<div class="form-group">
 						<label for="login" class="col-lg-2 label-control">Login</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="login_field" placeholder="Enter new login"></div>
@@ -38,10 +38,10 @@
 						<label for="password" class="col-lg-2 label-control">Password</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="password_field" placeholder="Enter new password"></div>
 					</div>
-					<button class="btn-lg btn content_button" id="save_button">Save</button>
+					<button class="btn-lg btn content_button" id="save_button_user" onclick="return false;">Save</button>
 				</form>
 				<form class="form-horizontal hidden" id="person_form">
-					<p class="label" id="message"></p>
+					<p class="label message"></p>
 					<div class="form-group">
 						<label for="first_name" class="col-lg-2 label-control">First name</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="first_name" placeholder="Enter first name"></div>
@@ -102,7 +102,7 @@
 							<img class="img-circle" id="medium-avatar" src="">
 						</div>
 					</div>
-					<button class="btn-lg btn content_button" id="save_button2">Save</button>
+					<button class="btn-lg btn content_button" id="save_button_profile" onclick="return false;">Save</button>
 				</form>
 			</div>
 			
