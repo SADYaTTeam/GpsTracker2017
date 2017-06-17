@@ -72,5 +72,28 @@ namespace GpsTracker.Service.Controllers.WebSite
                 return null;
             }
         }
+
+        [HttpPost]
+        [Route("logins")]
+        public List<LoginMessage> GetLoginsForMarkers([FromBody] CheckMessage message)
+        {
+            if (message?.UserId == null) return null;
+            try
+            {
+                var result = new List<LoginMessage>();
+                var context = (FriendlistContext)MainContext.Instance.Friendlist;
+                var friends = context.GetFriendOfUser((int)message.UserId)?.ToList();
+                result = MainContext.Instance.User.GetBy(x => friends.Contains(x.UserId))?
+                    .Select(x => new LoginMessage(){UserId = x.UserId, Login = x.Login}).ToList();
+                result.Add(MainContext.Instance.User.GetBy(x => x.UserId == message.UserId)
+                    ?.Select(x => new LoginMessage() {UserId = x.UserId, Login = x.Login}).FirstOrDefault());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception in MarkerController.cs: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

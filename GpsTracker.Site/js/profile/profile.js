@@ -102,90 +102,82 @@ $(function(){
 		showMenu("person");
 	});
 
-	$("#save_button").bind("click", function(){
-		var temp;
+	$("#save_button_user").bind("click", function(){
 		try{
-			switch(option)
+			if(USER != null)
 			{
-				case 0:
-				{
-					if(USER != null)
-					{
-						temp = USER;
-						temp.Login = $("#login_field").val();
-						temp.Password = $("#password_field").val();
-						$.ajax({
-					        url: 'api/web/user/edit',
-					        type: "POST",
-					        data: JSON.stringify(temp),
-					        dataType: "json",
-					        contentType: "application/json; charset=utf-8",
-					        success: function(data)
-					        {
-					        	if(data.Type == 0)
-					        	{
-					        		$("#message").css("color", "green");
-					        	}
-					        	else
-					        	{
-					        		$("#message").css("color", "red");	
-					        	}
-					        	$("#message").html(data.Message);
-					        	$("#sign_out_button").trigger("click");
-					        }
-					    });
-					}
-					break;
-				}
-				case 1:
-				{
-					if(PERSON != null)
-					{
-						temp = PERSON;
-						temp.FirstName = $("#first_name").val();
-						temp.MiddleName = $("#middle_name").val();
-						temp.LastName = $("#last_name").val();
-						temp.Gender = $('input[name=gender]:checked', '#myForm').val();
-						var date = new Date();
-						temp.DateOfBirth = date.setFullYear(parseInt($("#year").val(), 10), parseInt($("#month option:selected").val(), 10), parseInt($("#day").val(), 10));
-						temp.Email = $("#email").val();
-						temp.Phone = $("#phone").val();
-						var imgString = $("#small-avatar").attr("src");
-						temp.Photo = imgString.substring(imgstring.indexOf("data:image/png;base64,"+ 1));
-						$.ajax({
-					        url: 'api/web/person/edit',
-					        type: "POST",
-					        data: JSON.stringify(temp),
-					        dataType: "json",
-					        contentType: "application/json; charset=utf-8",
-					        success: function(data)
-					        {
-					        	if(data.Type == 0)
-					        	{
-					        		$("#message").css("color", "green");
-					        	}
-					        	else
-					        	{
-					        		$("#message").css("color", "red");	
-					        	}
-					        	$("#message").html(data.Message);
-					        }
-					    });
-					}
-					break;
-				}
-				default:
-				{
-					break;
-				}
+				temp = USER;
+				temp.Login = $("#login_field").val();
+				temp.Password = $("#password_field").val();
+				$.ajax({
+			        url: 'api/web/user/edit',
+			        type: "POST",
+			        data: JSON.stringify(temp),
+			        dataType: "json",
+			        contentType: "application/json; charset=utf-8",
+			        success: function(data)
+			        {
+			        	if(data.Type == 0)
+			        	{
+			        		$(".message").css("color", "green");
+			        	}
+			        	else
+			        	{
+			        		$(".message").css("color", "red");	
+			        	}
+			        	$(".message").html(data.Message);
+			        	$("#sign_out_button").trigger("click");
+			        }
+			    });
 			}
 		}
-		catch(err)
-		{
-			$("#message").css("color", "red");
-			$("#message").html("Not valid data.");
+		catch(err){
+			$(".message").css("color", "red");
+			$(".message").html("Not valid data.");
 		}
-	});
+	})	
+
+	$("#save_button_profile").bind("click", function(){	
+		try{
+			if(PERSON != null)
+			{
+				temp = PERSON;
+				temp.FirstName = $("#first_name").val();
+				temp.MiddleName = $("#middle_name").val();
+				temp.LastName = $("#last_name").val();
+				temp.Gender = $('input[name=gender]:selected', '#myForm').val();
+				var date = new Date();
+				temp.DateOfBirth = date.setFullYear(parseInt($("#year").val(), 10), parseInt($("#month option:selected").val(), 10), parseInt($("#day").val(), 10)).toString();
+				temp.Email = $("#email").val();
+				temp.Phone = $("#phone").val();
+				var imgString = $("#small-avatar").attr("src");
+				temp.Photo = imgString.substring(imgString.indexOf("data:image/png;base64,"+ 1));
+				$.ajax({
+			        url: 'api/web/person/edit',
+			        type: "POST",
+			        data: JSON.stringify(temp),
+			        dataType: "json",
+			        contentType: "application/json; charset=utf-8",
+			        success: function(data)
+			        {
+			        	if(data.Type == 0)
+			        	{
+			        		$(".message").css("color", "green");
+			        	}
+			        	else
+			        	{
+			        		$(".message").css("color", "red");	
+			        	}
+			        	$(".message").html(data.Message);
+			        }
+			    });
+			}
+		}
+		catch(err){
+			$(".message").css("color", "red");
+			$(".message").html("Not valid data.");
+		}
+	})
 
 	$("#picture").change(function(evt){
 		var tgt = evt.target || window.event.srcElement,
