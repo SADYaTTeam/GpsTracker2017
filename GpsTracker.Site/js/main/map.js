@@ -40,7 +40,7 @@ function showMarkers(userData)
 			        }
 			    });
 		}
- 	}, 1000);
+ 	}, 5000);
 }
 
 function clearMarkers()

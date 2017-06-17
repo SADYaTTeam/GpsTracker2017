@@ -22,5 +22,11 @@ namespace GpsTracker.Models.Messages
         /// User deviceId
         /// </summary>
         public string DeviceId { get; set; }
+
+
+        /// <summary>
+        /// User's id
+        /// </summary>
+        public int UserId { get; set; }
     }
 }
