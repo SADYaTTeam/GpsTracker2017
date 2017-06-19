@@ -25,7 +25,8 @@
 			<div class="profile_menu_nav col-lg-2 btn-group-vertical">
 				<button class="btn-lg btn-primary btn" id="user_info_button">User info</button>
 				<button class="btn-lg btn-primary btn" id="person_info_button">Personal info</button>
-				<button class="btn-lg btn-primary btn" id="list_info_button">Friend list</button>
+				<button class="btn-lg btn-primary btn" id="list_info_button">Friendlist</button>
+				<button class="btn-lg btn-primary btn" id="list_info_button">Log</button>
 			</div>
 			<div class="profile_content col-lg-10">
 				<form action="" class="form-horizontal" id="user_form">
@@ -103,6 +104,33 @@
 						</div>
 					</div>
 					<button class="btn-lg btn content_button" id="save_button_profile" onclick="return false;">Save</button>
+				</form>
+				<form class="form-horizontal hidden" id="friendlist_form">
+					<div class="form-horizontal col-lg-3">
+						<div class="form-inline">
+							<select class="form-control" id="search_dropdown">
+								<option value="" disabled selected>Search by</option>
+								<option value="id">Id</option>
+								<option value="login">Login</option>
+							</select>
+							<input type="text" class="form-control" id="search">
+						</div>
+					  <select multiple class="form-control" id="search_results">
+					  </select>
+					  <button class="btn-lg btn content_button" id="friendlist_add_button">Add</button>
+					</div>
+					<div class="form-inline col-lg-7">
+						<div class="form-hoizontal col-lg-3">
+							<label for="requests" class="label-control block">Friend requests</label>
+							<select name="requests" id="requests" multiple class="form-control"></select>
+							<button class="btn-lg btn content_button" id="friendlist_accept_button">Accept</button>
+						</div>
+						<div class="form-hoizontal col-lg-4">
+							<label for="friendlist" class="label-control block">Friendlist</label>
+							<select name="friendlist" id="friendlist" multiple class="form-control"></select>
+							<button class="btn-lg btn content_button" id="friendlist_delete_button">Delete</button>
+						</div>
+					</div>
 				</form>
 			</div>
 			
