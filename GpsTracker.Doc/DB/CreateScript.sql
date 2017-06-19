@@ -105,6 +105,13 @@ CREATE TABLE dbo.[Zone]
 )
 GO
 
+CREATE TYPE ZoneType AS TABLE(
+	Longitude FLOAT,
+	Latitude FLOAT,
+	Radius FLOAT,
+	Name VARCHAR(100)
+)
+
 INSERT  INTO dbo.Event
         ( Name )
 VALUES  ( 'NEW_USER'  -- Name - varchar(50)
