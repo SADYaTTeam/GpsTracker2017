@@ -161,6 +161,13 @@ namespace GpsTracker.Models.DataContext.Contexts
             return temp.AsEnumerable().Intersect(temp1.AsEnumerable(), new FriendlistComparer()).Select(x=>x.Sender);
         }
 
+        public IEnumerable<int> GetRequests(int userId)
+        {
+            var temp = Context.Friendlist.Where(x => x.Marked == userId).Select(x=>x.Sender);
+            var temp1 = GetFriendOfUser(userId);
+            return temp.Except(temp1);
+        }
+
         #endregion
     }
 }

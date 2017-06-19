@@ -1,4 +1,4 @@
-﻿// <copyright file="MaiPageController.cs" company="SADYaTTeam">
+﻿// <copyright file="MainPageController.cs" company="SADYaTTeam">
 //     SADYaTTeam 2017.
 // </copyright>
 namespace GpsTracker.Service.Controllers.WebSite

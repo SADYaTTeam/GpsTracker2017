@@ -106,6 +106,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\App\AppController.cs" />
     <Compile Include="Controllers\StaticInfo.cs" />
+    <Compile Include="Controllers\WebSite\FriendlistController.cs" />
+    <Compile Include="Controllers\WebSite\LogController.cs" />
     <Compile Include="Controllers\WebSite\MainPageController.cs" />
     <Compile Include="Controllers\WebSite\MarkerController.cs" />
     <Compile Include="Controllers\WebSite\PersonController.cs" />
