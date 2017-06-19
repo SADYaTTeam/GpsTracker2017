@@ -108,7 +108,7 @@ AS
 			SELECT DISTINCT zn.Longitude, zn.Latitude, zn.Radius, zn.Name
 			FROM [User] usr JOIN Friendlist fl ON usr.UserId = fl.Sender OR usr.UserId = fl.Marked
 				JOIN Zone zn ON fl.Sender = zn.UserId
-			WHERE usr.UserId = (SELECT UserId FROM Inserted WHERE MarkerId = @i))
+			WHERE usr.UserId = (SELECT UserId FROM Inserted WHERE MarkerId = @i)
 			SET @countZones = (SELECT COUNT(Longitude) FROM @zones)
 			SET @j = 0
 			IF((SELECT COUNT(LogId) FROM Log WHERE EventId = 4 OR EventId = 5) > 0)
