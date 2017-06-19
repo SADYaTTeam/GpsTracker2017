@@ -13,5 +13,6 @@ namespace GpsTracker.Models.Messages
         public int? LogId { get; set; }
         public int? PersonId { get; set; }
         public int? EventId { get; set; }
+        public string Login { get; set; }
     }
 }

@@ -67,7 +67,7 @@ body
 
 
 #save_button_user,
-#save_button_profile,
+#save_button_profile
 {
 	background-color: #333;
 	margin-bottom: 15px;
@@ -163,4 +163,31 @@ input[type='file'] {
 section
 {
 	height: 89hv;
+}
+
+table *
+{
+	font-style: 11px;
+}
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+  font-style: 11px;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+#sos_log, #zones_log, #user_info_log
+{
+	font-size: 11px;
 }

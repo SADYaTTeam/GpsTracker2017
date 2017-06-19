@@ -46,6 +46,7 @@ function signIn(url, user, withMap)
                 else
                 {
                     fillUserInfo();
+                    showLog(USER.UserId);
                 }
                 $.ajax({
                     url: 'api/web/person',

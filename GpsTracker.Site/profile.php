@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/profile/profile.css">
 	<link rel="stylesheet" type="text/css" href="css/profile/media.css">
 	<link rel="stylesheet" type="text/css" href="css/w3.css">
+	<link rel="stylesheet" type="text/css" href="css/test.css">
 </head>
 <body>
 	<header>
@@ -26,7 +27,7 @@
 				<button class="btn-lg btn-primary btn" id="user_info_button">User info</button>
 				<button class="btn-lg btn-primary btn" id="person_info_button">Personal info</button>
 				<button class="btn-lg btn-primary btn" id="list_info_button">Friendlist</button>
-				<button class="btn-lg btn-primary btn" id="list_info_button">Log</button>
+				<button class="btn-lg btn-primary btn" id="log_info_button">Log</button>
 			</div>
 			<div class="profile_content col-lg-10">
 				<form action="" class="form-horizontal" id="user_form">
@@ -117,19 +118,77 @@
 						</div>
 					  <select multiple class="form-control" id="search_results">
 					  </select>
-					  <button class="btn-lg btn content_button" id="friendlist_add_button">Add</button>
+					  <button class="btn-lg btn content_button" id="friendlist_add_button" onclick="return false;">Add</button>
 					</div>
 					<div class="form-inline col-lg-7">
 						<div class="form-hoizontal col-lg-3">
 							<label for="requests" class="label-control block">Friend requests</label>
 							<select name="requests" id="requests" multiple class="form-control"></select>
-							<button class="btn-lg btn content_button" id="friendlist_accept_button">Accept</button>
+							<button class="btn-lg btn content_button" id="friendlist_accept_button" onclick="return false;">Accept</button>
 						</div>
 						<div class="form-hoizontal col-lg-4">
 							<label for="friendlist" class="label-control block">Friendlist</label>
 							<select name="friendlist" id="friendlist" multiple class="form-control"></select>
-							<button class="btn-lg btn content_button" id="friendlist_delete_button">Delete</button>
+							<button class="btn-lg btn content_button" id="friendlist_delete_button" onclick="return false;">Delete</button>
 						</div>
+					</div>
+				</form>
+				<form class="form-horizontal hidden" id="log_form">
+					<div class="container col-xs-6">
+					  <div class="row">
+			          	<label for="user_info_log" class="label-control block">User info log</label>
+				        <table class="table table-fixed" id="user_info_log">
+				          <thead>
+				            <tr>
+				              <th class="col-xs-1">Event</th>
+				              <th class="col-xs-2">Message</th>
+				              <th class="col-xs-1">Login</th>
+				              <th class="col-xs-1">Id</th>
+				              <th class="col-xs-1">Date</th>
+				            </tr>
+				          </thead>
+				          <tbody>
+				          <tr></tr>	
+				          </tbody>
+				        </table>
+					  </div>
+					</div>
+					<div class="container-fluid col-xs-6">
+					  <div class="row">
+			          	<label for="sos_log" class="label-control block">Sos log</label>
+				        <table class="table table-fixed" id="sos_log">
+				          <thead>
+				            <tr>
+				              <th class="col-xs-1">Event</th>
+				              <th class="col-xs-6">Message</th>
+				              <th class="col-xs-2">Login</th>
+				              <th class="col-xs-2">Id</th>
+				              <th class="col-xs-1">Date</th>
+				            </tr>
+				          </thead>
+				          <tbody>
+				          	<tr></tr>
+				          </tbody>
+				        </table>
+					  </div>
+					</div>
+					<div class="container col-xs-12">
+					  <div class="row">
+			          	<label for="zones_log" class="label-control block">Zones log</label>
+				        <table class="table table-fixed" id="zones_log">
+				          <thead>
+				            <tr>
+				              <th class="col-xs-6">Message</th>
+				              <th class="col-xs-2">Login</th>
+				              <th class="col-xs-3">Id</th>
+				              <th class="col-xs-1">Date</th>
+				            </tr>
+				          </thead>
+				          <tbody>
+				          <tr></tr>
+				          </tbody>
+				        </table>
+					  </div>
 					</div>
 				</form>
 			</div>
@@ -143,6 +202,8 @@
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/profile/friendlist.js" async></script>
+	<script src="js/profile/log.js" async></script>
 	<script src="js/sign-in.js"></script>
 	<script src="js/view_scripts.js"></script>
 	<script src="js/profile/profile.js"></script>

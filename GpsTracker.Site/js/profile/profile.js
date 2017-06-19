@@ -23,6 +23,12 @@ function showMenu(menu)
 			option = 2;
 			break;
 		}
+		case "log":
+		{
+			form="#log_form";
+			option = 3;
+			break;
+		}
 		default:
 		{
 			return;
@@ -36,6 +42,9 @@ function showMenu(menu)
 	}
 	if(!$("#friendlist_form").hasClass("hidden")){
 		$("#friendlist_form").addClass("hidden")
+	}
+	if(!$("#log_form").hasClass("hidden")){
+		$("#log_form").addClass("hidden")
 	}
  	$(form).removeClass("hidden");
 }	
@@ -100,6 +109,10 @@ $(function(){
 
 	$("#person_info_button").bind("click",function(){
 		showMenu("person");
+	});
+
+	$("#log_info_button").bind("click",function(){
+		showMenu("log");
 	});
 
 	$("#save_button_user").bind("click", function(){

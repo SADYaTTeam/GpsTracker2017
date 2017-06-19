@@ -126,5 +126,31 @@ namespace GpsTracker.Service.Controllers.WebSite
             }
         }
 
+
+        /// <summary>
+        /// Return user info by DeviceId
+        /// </summary>
+        /// <param name="indexes">List of device indexes</param>
+        /// <returns>User info about user with this Device indexes</returns>
+        [HttpPost]
+        [Route("deviceId")]
+        public List<CheckMessage> GetByUserId([FromBody] List<CheckMessage> indexes)
+        {
+            try
+            {
+                if (indexes?.Count > 0)
+                {
+                    var temp = indexes.Select(x => x.DeviceId);
+                    return MainContext.Instance.User.GetBy(x => temp.Contains(x.DeviceId))?
+                        .Select(x => new CheckMessage() {Login = x.Login, DeviceId = x.DeviceId}).ToList();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Exception in UserController.cs:{e.Message}");
+                return null;
+            }
+        }
     }
 }

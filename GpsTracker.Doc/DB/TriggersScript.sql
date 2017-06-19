@@ -49,9 +49,10 @@ AS
     BEGIN
         INSERT  INTO dbo.[Log]
                 ( EventId ,
-                  [Message]
+                  [Message],
+				  DeviceId
                 )
-		SELECT 2, CONCAT(N'User with id: ', del.UserId, ' has been edited')
+		SELECT 2, CONCAT(N'User with id: ', del.UserId, ' has been edited'), del.DeviceId
 		FROM Deleted del
     END; 
 GO
