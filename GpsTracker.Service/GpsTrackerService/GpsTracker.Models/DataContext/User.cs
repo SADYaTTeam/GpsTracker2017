@@ -20,8 +20,6 @@ namespace GpsTracker.Models.DataContext
             this.Marker = new HashSet<Marker>();
             this.Person = new HashSet<Person>();
             this.Zone = new HashSet<Zone>();
-            this.Friendlist = new HashSet<Friendlist>();
-            this.Friendlist1 = new HashSet<Friendlist>();
         }
     
         public int UserId { get; set; }
@@ -37,9 +35,5 @@ namespace GpsTracker.Models.DataContext
         public virtual ICollection<Person> Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Zone> Zone { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Friendlist> Friendlist { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Friendlist> Friendlist1 { get; set; }
     }
 }

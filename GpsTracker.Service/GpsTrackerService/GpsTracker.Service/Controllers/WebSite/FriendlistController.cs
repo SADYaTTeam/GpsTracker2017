@@ -65,6 +65,49 @@ namespace GpsTracker.Service.Controllers.WebSite
             }
         }
 
+        [HttpPost]
+        [Route("add")]
+        public ResultMessage SendRequset([FromBody] FriendsMessage message)
+        {
+            if (message?.UserId == null || message.FriendId == null) return new ResultMessage()
+            {
+                Type = ResultType.Decline,
+                Message = "Wrong input data"
+            };
+            try
+            {
+                var result = MainContext.Instance.Friendlist.Insert(new Friendlist()
+                {
+                    Sender = (int)message.UserId,
+                    Marked = (int)message.FriendId
+                });
+                if (result)
+                {
+                    return new ResultMessage()
+                    {
+                        Type = ResultType.Success,
+                        Message = "Request successfully sended"
+                    };
+                }
+                return new ResultMessage()
+                {
+                    Type = ResultType.Decline,
+                    Message = "Can't send request to this user(mb you already send it)"
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Internal server error in FriendlistController: {ex.Message}");
+                return new ResultMessage()
+                {
+                    Type = ResultType.Decline,
+                    Message = "Internal server error in FriendlistController" +
+                              $": {ex.Message}"
+                };
+            }
+        }
+
         /// <summary>
         /// Accept incoming request
         /// </summary>

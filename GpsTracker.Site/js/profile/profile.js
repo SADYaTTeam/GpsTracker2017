@@ -115,6 +115,62 @@ $(function(){
 		showMenu("log");
 	});
 
+	$("#friendlist_accept_button").bind("click", function(){
+		$.ajax({
+			        url: 'api/web/user/bylogin',
+			        type: "POST",
+			        data: JSON.stringify({Login:$("#requests option:selected").text()}),
+			        dataType: "json",
+			        contentType: "application/json; charset=utf-8",
+			        success:function(friend){
+					$.ajax({
+					        url: 'api/web/friendlist/accept',
+					        type: "POST",
+					        data: JSON.stringify({UserId:USER.UserId, FriendId:friend.UserId}),
+					        dataType: "json",
+					        contentType: "application/json; charset=utf-8",
+					        success: function(data){
+					        	if(data.Type == 0){
+					        		alert(data.Message);
+					        		$("#friendlist option[" + friend.Login + "]").remove();
+					        	}
+					        	else{
+					        		alert(data.Message);
+					        	}	
+					        }
+					    });
+				}
+			});
+	})
+
+	$("#friendlist_delete_button").bind("click",function(){
+		$.ajax({
+			        url: 'api/web/user/bylogin',
+			        type: "POST",
+			        data: JSON.stringify({Login:$("#friendlist option:selected").text()}),
+			        dataType: "json",
+			        contentType: "application/json; charset=utf-8",
+			        success:function(friend){
+					$.ajax({
+					        url: 'api/web/friendlist/delete',
+					        type: "POST",
+					        data: JSON.stringify({UserId:USER.UserId, FriendId:friend.UserId}),
+					        dataType: "json",
+					        contentType: "application/json; charset=utf-8",
+					        success: function(data){
+					        	if(data.Type == 0){
+					        		alert(data.Message);
+					        		$("#friendlist option[" + friend.Login + "]").remove();
+					        	}
+					        	else{
+					        		alert(data.Message);
+					        	}	
+					        }
+					    });
+				}
+			});
+	})
+
 	$("#save_button_user").bind("click", function(){
 		try{
 			if(USER != null)
@@ -128,8 +184,7 @@ $(function(){
 			        data: JSON.stringify(temp),
 			        dataType: "json",
 			        contentType: "application/json; charset=utf-8",
-			        success: function(data)
-			        {
+			        success: function(data){
 			        	if(data.Type == 0)
 			        	{
 			        		$(".message").css("color", "green");
@@ -149,6 +204,91 @@ $(function(){
 			$(".message").html("Not valid data.");
 		}
 	})	
+
+	$("#friendlist_add_button").bind("click",function(){
+		if(USER != null){
+			$.ajax({
+			        url: 'api/web/user/bylogin',
+			        type: "POST",
+			        data: JSON.stringify({Login:$("#search_results option:selected").text()}),
+			        dataType: "json",
+			        contentType: "application/json; charset=utf-8",
+			        success: function(friend){
+			        	if(friend != null){
+							$.ajax({
+						        url: 'api/web/friendlist/add',
+						        type: "POST",
+						        data: JSON.stringify({UserId:USER.UserId, FriendId:friend.UserId}),
+						        dataType: "json",
+						        contentType: "application/json; charset=utf-8",
+						        success: function(result){
+						        	if(result != null)
+						        	{
+						        		if(result.Type == 0)
+						        		{
+						        			$("#search").val("");
+						        			$("#search_results option").remove();
+						        		}
+						        		alert(result.Message);
+						        		return;
+						        	}
+						        }
+					    	});	      	
+					    }
+			        }
+			    });
+		}
+	});
+
+	$("#search").change(function(){
+		switch($("#search_dropdown").val())
+		{
+			case "id":
+			{
+				$.ajax({
+			        url: 'api/web/user/regexp/deviceId',
+			        type: "POST",
+			        data: JSON.stringify({DeviceId:$("#search").val()}),
+			        dataType: "json",
+			        contentType: "application/json; charset=utf-8",
+			        success: function(data){
+			        	if(data != null)
+			        	{
+			        		$("#search_results option").remove();
+			        		data.forEach(function(item, i, data){
+			        			$("#search_results").append(new Option(item.Login, item.Login));
+			        		});
+			        	}
+			        }
+			    });
+				break;
+			}
+			case "login":
+			{
+					$.ajax({
+			        url: 'api/web/user/regexp/login',
+			        type: "POST",
+			        data: JSON.stringify({Login:$("#search").val()}),
+			        dataType: "json",
+			        contentType: "application/json; charset=utf-8",
+			        success: function(data){
+			        	if(data != null)
+			        	{
+			        		$("#search_results option").remove();
+			        		data.forEach(function(item, i, data){
+			        			$("#search_results").append(new Option(item.Login, item.Login));
+			        		});
+			        	}
+			        }
+			    });
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	});
 
 	$("#save_button_profile").bind("click", function(){	
 		try{

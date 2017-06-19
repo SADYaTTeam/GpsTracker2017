@@ -7,14 +7,9 @@
     <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'GpsTrackingDB.dbo.Friendlist' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Friendlist">
     <Key>
       <PropertyRef Name="ItemId" />
-      <PropertyRef Name="Sender" />
-      <PropertyRef Name="Marked" />
-      <PropertyRef Name="CreatedAt" />
     </Key>
     <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Sender" Type="int" Nullable="false" />
@@ -133,44 +128,13 @@ warning 6002: The table/view 'GpsTrackingDB.dbo.Zone' does not have a primary ke
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="PK_Friendlist_Marked_User">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="Friendlist" Type="Self.Friendlist" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="Friendlist">
-        <PropertyRef Name="Marked" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PK_Friendlist_Sender_User">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="Friendlist" Type="Self.Friendlist" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="Friendlist">
-        <PropertyRef Name="Sender" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="GpsTrackingDBModelStoreContainer">
     <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Friendlist" EntityType="Self.Friendlist" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Marker" EntityType="Self.Marker" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Friendlist" EntityType="Self.Friendlist" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Friendlist].[ItemId] AS [ItemId], 
-    [Friendlist].[Sender] AS [Sender], 
-    [Friendlist].[Marked] AS [Marked], 
-    [Friendlist].[CreatedAt] AS [CreatedAt]
-    FROM [dbo].[Friendlist] AS [Friendlist]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="Zone" EntityType="Self.Zone" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [Zone].[ZoneId] AS [ZoneId], 
@@ -196,14 +160,6 @@ warning 6002: The table/view 'GpsTrackingDB.dbo.Zone' does not have a primary ke
     <AssociationSet Name="FK_Zone_UserId_User" Association="Self.FK_Zone_UserId_User">
       <End Role="User" EntitySet="User" />
       <End Role="Zone" EntitySet="Zone" />
-    </AssociationSet>
-    <AssociationSet Name="PK_Friendlist_Marked_User" Association="Self.PK_Friendlist_Marked_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="Friendlist" EntitySet="Friendlist" />
-    </AssociationSet>
-    <AssociationSet Name="PK_Friendlist_Sender_User" Association="Self.PK_Friendlist_Sender_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="Friendlist" EntitySet="Friendlist" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

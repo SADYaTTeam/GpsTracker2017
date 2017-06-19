@@ -1,6 +1,9 @@
 ﻿// <copyright file="UserController.cs" company="SADYaTTeam">
 //     SADYaTTeam 2017.
 // </copyright>
+
+using System.Text.RegularExpressions;
+
 namespace GpsTracker.Service.Controllers.WebSite
 {
     #region using...
@@ -118,6 +121,84 @@ namespace GpsTracker.Service.Controllers.WebSite
             try
             {
                 return MainContext.Instance.User.GetBy(x => x.UserId == message.UserId)?.ToList()[0];
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Exception in UserController.cs : {e.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get user by login
+        /// </summary>
+        /// <param name="message">Login of user</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("bylogin")]
+        public User GetUserByLogin([FromBody] CheckMessage message)
+        {
+            if (string.IsNullOrEmpty(message?.Login))
+            {
+                return null;
+            }
+            try
+            {
+                return MainContext.Instance.User.GetBy(x => x.Login == message.Login)?.ToList()[0];
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Exception in UserController.cs : {e.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Regex search by login
+        /// </summary>
+        /// <param name="message">Input string</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("regexp/login")]
+        public List<User> RegexpByLogin([FromBody] CheckMessage message)
+        {
+            if (string.IsNullOrEmpty(message?.Login))
+            {
+                return null;
+            }
+            try
+            {
+                var rx = new Regex(message.Login+@".", RegexOptions.IgnoreCase);
+                var logins = MainContext.Instance.User.GetAll()?.Select(x => x.Login).AsEnumerable();
+                var result = logins?.Where(x => rx.IsMatch(x)).ToList();
+                return MainContext.Instance.User.GetBy(x => result.Contains(x.Login))?.ToList();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Exception in UserController.cs : {e.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Regex search by deviceId
+        /// </summary>
+        /// <param name="message">Input string</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("regexp/deviceid")]
+        public List<User> RegexpByDeviceId([FromBody] CheckMessage message)
+        {
+            if (string.IsNullOrEmpty(message?.DeviceId))
+            {
+                return null;
+            }
+            try
+            {
+                var rx = new Regex(message.DeviceId + @".", RegexOptions.IgnoreCase);
+                var indexes = MainContext.Instance.User.GetAll()?.Select(x => x.DeviceId).AsEnumerable();
+                var result = indexes?.Where(x => rx.IsMatch(x)).ToList();
+                return MainContext.Instance.User.GetBy(x => result.Contains(x.DeviceId))?.ToList();
             }
             catch (Exception e)
             {

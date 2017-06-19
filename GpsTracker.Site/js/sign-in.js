@@ -47,6 +47,7 @@ function signIn(url, user, withMap)
                 {
                     fillUserInfo();
                     showLog(USER.UserId);
+                    showFriendList(USER.UserId);
                 }
                 $.ajax({
                     url: 'api/web/person',
@@ -102,6 +103,8 @@ $("#sign_out_button").bind("click",function(){
     if(withMap)
     {
         clearMarkers();
+        clearLog();
+        clearFriendlist();
     }
 });
 
