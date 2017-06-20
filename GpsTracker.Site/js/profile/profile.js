@@ -53,8 +53,8 @@ function fillUserInfo()
 {
 	if(USER != null)
 	{
-		$("#login_field").val(USER.Login);
-		$("#password_field").val(USER.Password);
+		$("#login_field").val(USER.Login.trim());
+		$("#password_field").val(USER.Password.trim());
 	}
 }
 
@@ -63,9 +63,9 @@ function fillPersonInfo(person)
 	if(person != null)
 	{
 		var date = new Date(person.DateOfBirth);
-		$("#first_name").val(person.FirstName);
-		$("#middle_name").val(person.MiddleName);
-		$("#last_name").val(person.LastName);
+		$("#first_name").val(person.FirstName.trim());
+		$("#middle_name").val(person.MiddleName.trim());
+		$("#last_name").val(person.LastName.trim());
 		switch(person.Gender)
 		{
 			case true:
@@ -87,8 +87,8 @@ function fillPersonInfo(person)
 		$("#day").val(date.getDate());
 		$("#month option[value=\""+date.getMonth()+"\"").prop("selected", true);
 		$("#year").val(date.getFullYear());
-		$("#email").val(person.Email);
-		$("#phone").val(person.Phone);
+		$("#email").val(person.Email.trim());
+		$("#phone").val(person.Phone.trim());
 		$("#small-avatar, #medium-avatar").attr("src", "data:image/png;base64," + person.Photo);
 	}
 }
@@ -119,7 +119,7 @@ $(function(){
 		$.ajax({
 			        url: 'api/web/user/bylogin',
 			        type: "POST",
-			        data: JSON.stringify({Login:$("#requests option:selected").text()}),
+			        data: JSON.stringify({Login:$("#requests option:selected").text().trim()}),
 			        dataType: "json",
 			        contentType: "application/json; charset=utf-8",
 			        success:function(friend){
@@ -147,7 +147,7 @@ $(function(){
 		$.ajax({
 			        url: 'api/web/user/bylogin',
 			        type: "POST",
-			        data: JSON.stringify({Login:$("#friendlist option:selected").text()}),
+			        data: JSON.stringify({Login:$("#friendlist option:selected").text().trim()}),
 			        dataType: "json",
 			        contentType: "application/json; charset=utf-8",
 			        success:function(friend){
@@ -176,8 +176,8 @@ $(function(){
 			if(USER != null)
 			{
 				temp = USER;
-				temp.Login = $("#login_field").val();
-				temp.Password = $("#password_field").val();
+				temp.Login = $("#login_field").val().trim();
+				temp.Password = $("#password_field").val().trim();
 				$.ajax({
 			        url: 'api/web/user/edit',
 			        type: "POST",
@@ -210,7 +210,7 @@ $(function(){
 			$.ajax({
 			        url: 'api/web/user/bylogin',
 			        type: "POST",
-			        data: JSON.stringify({Login:$("#search_results option:selected").text()}),
+			        data: JSON.stringify({Login:$("#search_results option:selected").text().trim()}),
 			        dataType: "json",
 			        contentType: "application/json; charset=utf-8",
 			        success: function(friend){
@@ -248,7 +248,7 @@ $(function(){
 				$.ajax({
 			        url: 'api/web/user/regexp/deviceId',
 			        type: "POST",
-			        data: JSON.stringify({DeviceId:$("#search").val()}),
+			        data: JSON.stringify({DeviceId:$("#search").val().trim()}),
 			        dataType: "json",
 			        contentType: "application/json; charset=utf-8",
 			        success: function(data){
@@ -295,16 +295,19 @@ $(function(){
 			if(PERSON != null)
 			{
 				temp = PERSON;
-				temp.FirstName = $("#first_name").val();
-				temp.MiddleName = $("#middle_name").val();
-				temp.LastName = $("#last_name").val();
-				temp.Gender = $('input[name=gender]:selected', '#myForm').val();
+				temp.FirstName = $("#first_name").val().trim();
+				temp.MiddleName = $("#middle_name").val().trim();
+				temp.LastName = $("#last_name").val().trim();
+				temp.Gender = $("#gender_form input[type='radio']:checked").val();
 				var date = new Date();
-				temp.DateOfBirth = date.setFullYear(parseInt($("#year").val(), 10), parseInt($("#month option:selected").val(), 10), parseInt($("#day").val(), 10)).toString();
-				temp.Email = $("#email").val();
-				temp.Phone = $("#phone").val();
+				date.setDate(parseInt($("#day").val(), 10));
+				date.setMonth(parseInt($("#month option:selected").val(), 10));
+				date.setFullYear(parseInt($("#year").val(), 10));
+				temp.DateOfBirth = date.toDateString().trim();
+				temp.Email = $("#email").val().trim();
+				temp.Phone = $("#phone").val().trim();
 				var imgString = $("#small-avatar").attr("src");
-				temp.Photo = imgString.substring(imgString.indexOf("data:image/png;base64,"+ 1));
+				temp.Photo = imgString.substring(imgString.indexOf("base64,") + 7).trim();
 				$.ajax({
 			        url: 'api/web/person/edit',
 			        type: "POST",
@@ -316,12 +319,15 @@ $(function(){
 			        	if(data.Type == 0)
 			        	{
 			        		$(".message").css("color", "green");
+							$(".message").html(data.Message);
+			        		$("#sign_out_button").trigger("click");
+			        		checkCookie(withmap);
 			        	}
 			        	else
 			        	{
 			        		$(".message").css("color", "red");	
+			        		$(".message").html(data.Message);
 			        	}
-			        	$(".message").html(data.Message);
 			        }
 			    });
 			}

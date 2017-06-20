@@ -56,7 +56,7 @@
 						<label for="last_name" class="col-lg-2 label-control">Last name</label>
 						<div class="col-lg-8"><input type="text" class="form-control" id="last_name" placeholder="Enter lastname"></div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" id="gender_form">
 						<label class="col-lg-2 label-control">Gender</label>
 						<div class="col-lg-8">
 							<label class="radio-inline">
@@ -140,10 +140,9 @@
 				        <table class="table table-fixed" id="user_info_log">
 				          <thead>
 				            <tr>
-				              <th class="col-xs-1">Event</th>
-				              <th class="col-xs-2">Message</th>
-				              <th class="col-xs-1">Login</th>
-				              <th class="col-xs-1">Id</th>
+				              <th class="col-xs-6">Message</th>
+				              <th class="col-xs-2">Login</th>
+				              <th class="col-xs-3">Id</th>
 				              <th class="col-xs-1">Date</th>
 				            </tr>
 				          </thead>

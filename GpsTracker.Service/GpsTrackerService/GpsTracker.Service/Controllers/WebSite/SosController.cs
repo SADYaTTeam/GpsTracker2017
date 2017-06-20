@@ -32,11 +32,12 @@ namespace GpsTracker.Service.Controllers.WebSite
                 var result = new List<SosMessage>();
                 var context = (FriendlistContext)MainContext.Instance.Friendlist;
                 var friends = context.GetFriendOfUser((int)message.UserId)?.ToList();
+                var diff = new System.TimeSpan(0, 0, 15, 0);
                 List<SosMessage> temp;
                 if (friends != null && friends.Count != 0)
                 {
                     friends.Add((int)message.UserId);
-                    temp = StaticInfo.SosList.Where(x => friends.Contains(x.UserId)).ToList();
+                    temp = StaticInfo.SosList.Where(x => friends.Contains(x.UserId) && DateTime.Now.TimeOfDay.Subtract(x.Timestamp.TimeOfDay) < diff).ToList();
                 }
                 else
                 {
