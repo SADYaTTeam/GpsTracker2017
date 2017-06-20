@@ -65,6 +65,8 @@ namespace GpsTracker.Service.Controllers.WebSite
                 //        Message = "You didn't change info."
                 //    };
                 //}
+                if (newInfo.Phone == "") newInfo.Phone = null;
+                if (newInfo.Email == "") newInfo.Email = null;
                 if (MainContext.Instance.Person.Update(person.PersonId, newInfo))
                 {
                     return new ResultMessage()

@@ -82,6 +82,16 @@
 				</form>
 			</div>
 		</div>
+		<div class="w3-display-bottomleft" id="user_info">
+			<h3 id="user_info_login"></h3>
+			<img src="img/avatar.svg" id="user_info_avatar">
+			<label class="label-control block" id="user_info_firstname">First name: </label>
+			<label class="label-control block" id="user_info_lastname">Lastname: </label>
+			<label class="label-control block" id="user_info_middlename">Middle name: </label>
+			<label class="label-control block" id="user_info_phone">Phone: </label>
+			<label class="label-control block" id="user_info_email">Email: </label>
+			<label class="label-control block" id="user_info_birthday">Birthday: </label>
+		</div>
 		<section id="googleMap" style="width:100%;height:89vh;">
 		</section>
 	</div>

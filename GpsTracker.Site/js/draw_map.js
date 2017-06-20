@@ -22,6 +22,7 @@ function drawMarkers(markers, iconPath, oldMarkers) {
     var marker;
     var i;
     var markersArray = new Array();
+    CONTENT = new Array();
     if (oldMarkers != null) {
         for (i = 0; i < oldMarkers.length; i++) {
             oldMarkers[i].setMap(null);
@@ -36,7 +37,7 @@ function drawMarkers(markers, iconPath, oldMarkers) {
             fillOpacity: 0.35,
         });
         marker.setIcon(iconPath);
-
+        CONTENT.push(markers[i].Info);
         //infowindowUser = new window.google.maps.InfoWindow({ zIndex: 1 });
         //infowindowUser.setContent("UserId:" + markers[i].DeviceId);
         //infowindowUser.setContent(CONTENT[i]);
@@ -46,8 +47,42 @@ function drawMarkers(markers, iconPath, oldMarkers) {
         geocoder = new window.google.maps.Geocoder;
         infowindow = new window.google.maps.InfoWindow;
         window.google.maps.event.addListener(marker, 'click', function () {
+            var userId = CONTENT[markersArray.indexOf(marker)];
+            $.ajax({
+                url: 'api/web/user/id',
+                type: "POST",
+                data: JSON.stringify({ UserId: userId }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if(data != null){
+                        $("#user_info_login").text(data.Login);
+                        $.ajax({
+                            url: 'api/web/person',
+                            type: "POST",
+                            data: JSON.stringify({ UserId: data.UserId }),
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (person) {
+                                if(person!=null)
+                                {
+                                    $("#user_info_firstname").text("First name: " + person.FirstName);
+                                    $("#user_info_lastname").text("Lastname: " + person.LastName);
+                                    $("#user_info_middlename").text("Middle name: " + person.MiddleName);
+                                    $("#user_info_phone").text("Phone: " + person.Phone);
+                                    $("#user_info_email").text("Email: " + person.Email);
+                                    $("#user_info_birthday").text("Birthday: " + person.DateOfBirth.slice(0, person.DateOfBirth.indexOf("T")));
+                                    $("#user_info_avatar").attr("src", "data:image/png;base64," + person.Photo);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
             geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
-            infomarker.setMap(null);
+            if(infomarker!= null){
+                infomarker.setMap(null);
+            }
         });
         markersArray.push(marker);
     };
@@ -58,8 +93,23 @@ function drawMarkers(markers, iconPath, oldMarkers) {
 function drawMarkersHistory(markers, iconPath) {
     var marker;
     var i;
+    marker = new window.google.maps.Marker({
+        position: new window.google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
+        map: map,
+        fillColor: '#00FF00',
+        fillOpacity: 0.35,
+    });
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
 
-    for (i = 0; i < markers.length; i++) {
+
+    //Geocoding markers
+    geocoder = new window.google.maps.Geocoder;
+    infowindow = new window.google.maps.InfoWindow;
+    window.google.maps.event.addListener(marker, 'click', function () {
+        geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
+        infomarker.setMap(null);
+    });
+    for (i = 1; i < markers.length - 1; i++) {
 
         marker = new window.google.maps.Marker({
             position: new window.google.maps.LatLng(markers[i].Latitude, markers[i].Longitude),
@@ -77,9 +127,24 @@ function drawMarkersHistory(markers, iconPath) {
             geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
             infomarker.setMap(null);
         });
-
-        drawPath(markers);
     };
+    marker = new window.google.maps.Marker({
+        position: new window.google.maps.LatLng(markers[markers.length - 1].Latitude, markers[markers.length - 1].Longitude),
+        map: map,
+        fillColor: '#00FF00',
+        fillOpacity: 0.35,
+    });
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+
+
+    //Geocoding markers
+    geocoder = new window.google.maps.Geocoder;
+    infowindow = new window.google.maps.InfoWindow;
+    window.google.maps.event.addListener(marker, 'click', function () {
+        geocodeLatLng(this.getPosition(), geocoder, map, infowindow);
+        infomarker.setMap(null);
+    });
+    drawPath(markers);
 }
 
 function drawZones(zones) { // Construct the circle for each value in citymap.
@@ -123,7 +188,7 @@ function drawPath(markers) {
 
     var myPath = new Array();
     for (i = 0; i < markers.length; i++) {
-        myPath.push({ 'lat': markers[i][1], 'lng': markers[i][2] });
+        myPath.push({ 'lat': markers[i].Latitude, 'lng': markers[i].Longitude });
     }
 
     var path = new window.google.maps.Polyline({

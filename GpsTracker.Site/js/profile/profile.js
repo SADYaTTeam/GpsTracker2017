@@ -245,6 +245,7 @@ $(function(){
 		{
 			case "id":
 			{
+				$("#search_results option").remove();
 				$.ajax({
 			        url: 'api/web/user/regexp/deviceId',
 			        type: "POST",
@@ -254,7 +255,6 @@ $(function(){
 			        success: function(data){
 			        	if(data != null)
 			        	{
-			        		$("#search_results option").remove();
 			        		data.forEach(function(item, i, data){
 			        			$("#search_results").append(new Option(item.Login, item.Login));
 			        		});
@@ -265,21 +265,21 @@ $(function(){
 			}
 			case "login":
 			{
-					$.ajax({
-			        url: 'api/web/user/regexp/login',
-			        type: "POST",
-			        data: JSON.stringify({Login:$("#search").val()}),
-			        dataType: "json",
-			        contentType: "application/json; charset=utf-8",
-			        success: function(data){
-			        	if(data != null)
-			        	{
-			        		$("#search_results option").remove();
-			        		data.forEach(function(item, i, data){
-			        			$("#search_results").append(new Option(item.Login, item.Login));
-			        		});
-			        	}
-			        }
+				$("#search_results option").remove();
+				$.ajax({
+		        url: 'api/web/user/regexp/login',
+		        type: "POST",
+		        data: JSON.stringify({Login:$("#search").val()}),
+		        dataType: "json",
+		        contentType: "application/json; charset=utf-8",
+		        success: function(data){
+		        	if(data != null)
+		        	{
+		        		data.forEach(function(item, i, data){
+		        			$("#search_results").append(new Option(item.Login, item.Login));
+		        		});
+		        	}
+		        }
 			    });
 				break;
 			}
