@@ -46,6 +46,7 @@ namespace GpsTracker.Service.Controllers.WebSite
                     result.AddRange(StaticInfo.MarkerList.Where(x => friends.Contains(x.UserId)).ToList());
                 }
                 if (result.Any()) return result;
+                friends.Add((int)message.UserId);
                 var markers = MainContext.Instance.Marker.GetAll();
                 if (markers == null)
                 {
@@ -59,10 +60,16 @@ namespace GpsTracker.Service.Controllers.WebSite
                 }
                 var keys = groups.Select(x => x.Key).Distinct().ToList();
                 int temp;
+                Marker tempMarker;
                 foreach (var key in keys)
                 {
                     temp = groups.Single(x => x.Key == key).ToList().Max(x => x.MarkerId);
-                    result.Add(MainContext.Instance.Marker.GetBy(x => x.MarkerId==temp)?.ToList()[0]);
+                    tempMarker = MainContext.Instance.Marker
+                        .GetBy(x => x.MarkerId == temp && friends.Contains(x.UserId))?.ToList()[0];
+                    if (tempMarker != null)
+                    {
+                        result.Add(tempMarker);
+                    }
                 }
                 return result;
             }
