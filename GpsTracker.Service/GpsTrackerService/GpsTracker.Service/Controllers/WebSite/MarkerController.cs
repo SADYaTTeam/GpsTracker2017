@@ -102,5 +102,16 @@ namespace GpsTracker.Service.Controllers.WebSite
                 throw;
             }
         }
+
+        [HttpPost]
+        [Route("history")]
+        public List<Marker> GetHistory([FromBody] HistoryMessage message)
+        {
+            if (message == null) return null;
+            if (message.From > message.To) return null;
+            return MainContext.Instance.Marker.GetBy(x => x.Timestamp >= message.From
+                                                          && x.Timestamp <= message.To
+                                                          && x.UserId == message.UserId)?.ToList();
+        }
     }
 }

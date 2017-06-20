@@ -11,3 +11,43 @@ body
 	font-size: 16px;
 	height: 100%;
 }
+
+.dropdown_control
+{
+	color: white;
+	font-size: 15px;
+	background-color: #333;
+	z-index: 9999;
+}
+
+#dropdown_button
+{
+	z-index:99;
+}
+
+#dropdown_menu
+{
+	display: none;
+	position: absolute;
+	background-color: #333;
+	z-index: 999;
+	color:white;
+	padding:15px;
+	padding-top:25px;
+}
+
+#dropdown_menu *
+{
+	margin:5px;
+}
+
+#history_search,
+#history_cancel
+{
+	width: 100%;
+}
+
+#history_cancel:hover
+{
+	background-color: #e60000;	
+}
