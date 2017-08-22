@@ -4,6 +4,8 @@ var infowindow;
 var infowindowUser;
 var infomarker;
 var CONTENT = new Array();
+var temp;
+var tempMarkers;
 
 function initMap() {
     // Create the map.
@@ -47,7 +49,7 @@ function drawMarkers(markers, iconPath, oldMarkers) {
         geocoder = new window.google.maps.Geocoder;
         infowindow = new window.google.maps.InfoWindow;
         window.google.maps.event.addListener(marker, 'click', function () {
-            var userId = CONTENT[markersArray.indexOf(marker)];
+            var userId = trueData[markersArray.indexOf(marker)].Info;
             $.ajax({
                 url: 'api/web/user/id',
                 type: "POST",
@@ -71,8 +73,12 @@ function drawMarkers(markers, iconPath, oldMarkers) {
                                     $("#user_info_middlename").text("Middle name: " + person.MiddleName);
                                     $("#user_info_phone").text("Phone: " + person.Phone);
                                     $("#user_info_email").text("Email: " + person.Email);
-                                    $("#user_info_birthday").text("Birthday: " + person.DateOfBirth.slice(0, person.DateOfBirth.indexOf("T")));
-                                    $("#user_info_avatar").attr("src", "data:image/png;base64," + person.Photo);
+                                    if(person.DateOfBirth != null){
+                                        $("#user_info_birthday").text("Birthday: " + person.DateOfBirth.slice(0, person.DateOfBirth.indexOf("T")));
+                                    }
+                                    if(person.Photo != null){
+                                        $("#user_info_avatar").attr("src", "data:image/png;base64," + person.Photo);
+                                    }
                                 }
                             }
                         });
