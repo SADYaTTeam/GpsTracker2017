@@ -1,0 +1,193 @@
+.container-fluid
+{
+	padding:0px;
+}
+
+.form-control
+{
+	display: inline-block;
+	width: 90%;
+}
+
+body
+{
+	height: 100%;
+}
+
+.form-group
+{
+	width: 100%;
+	padding-top: 15px;
+	display: block;
+	position: relative;
+}
+
+#friendlist_form .form-group
+{
+	padding: 15px;
+	margin: 0px;
+	width: 25%;
+}
+
+#friendlist, #requests, #search_results
+{
+	width: 100%;
+}
+
+.block, select option
+{
+	display: block;
+}
+
+.profile_content
+{
+	padding-top: 20px;
+	display: inline-block;
+	width: 80%;
+	position: relative;
+
+}
+
+.profile_menu_nav
+{
+	position: relative;
+	background-color: #333;
+	height: 100%;
+	width: 200px;
+}
+
+.profile_menu_nav button
+{
+	display: block;
+	position: relative;
+	width: 100%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+
+#save_button_user,
+#save_button_profile
+{
+	background-color: #333;
+	margin-bottom: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+#save_button_user:hover,
+#save_button_user:focus,
+#save_button_profile:hover,
+#save_button_profile:focus,
+#friendlist_add_button:hover,
+#friendlist_add_button:focus,
+#friendlist_delete_button:hover,
+#friendlist_delete_button:focus,
+#friendlist_accept_button:hover,
+#friendlist_accept_button:focus
+{
+	background-color: #009900;
+	color: #ffffff;
+}
+
+
+#friendlist_delete_button
+{
+	width: 100%;
+	background-color: #e60000;	
+}
+
+#friendlist_accept_button
+{
+	width: 100%;
+	background-color: #3399ff;
+}
+
+
+#friendlist_add_button
+{
+	width: 100%;
+	background-color: #333;
+}
+
+section
+{
+	height: 89vh;
+}
+
+.row
+{
+	margin: 0px;
+}
+
+section *
+{
+	display:inline;
+}
+
+#date_input
+{
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+
+.hidden
+{
+	display: none;
+}
+
+.visible
+{
+	display: block;
+}
+
+input[type='file'] {
+  color: transparent;
+  margin-bottom: 5px;
+}
+
+#small-avatar
+{
+	width: 30px;
+	height: 35px;
+}
+
+#medium-avatar
+{
+	width: 75px;
+	height: 80px;
+}
+
+
+section
+{
+	height: 89hv;
+}
+
+table *
+{
+	font-style: 11px;
+}
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+  font-style: 11px;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+#sos_log, #zones_log, #user_info_log
+{
+	font-size: 11px;
+}
