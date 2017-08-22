@@ -5,6 +5,6 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kamanda.timon.gpstracker.MapsActivity"
+    tools:_context="com.kamanda.timon.gpstracker.MainActivity"
     tools:layout="@layout/activity_maps"
  />

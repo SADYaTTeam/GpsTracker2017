@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e24f647010b44de7a9701993b02c518f" Name="Diagram1">
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Event" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Friendlist" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Log" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Marker" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Person" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GpsTrackingDBModel.User" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GpsTrackingDBModel.Zone" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <AssociationConnector Association="GpsTrackingDBModel.FK_Log_Event_Id_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="GpsTrackingDBModel.FK_Marker_Track_Id_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GpsTrackingDBModel.FK_Person_User_Id_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GpsTrackingDBModel.FK_Zone_UserId_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
