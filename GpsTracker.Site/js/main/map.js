@@ -3,6 +3,7 @@ var USER;
 var sosMarkers = new Array();
 var markers = new Array();
 var trueData;
+var friends = new Array();
 
 function showMarkers(userData) {
     if (USER == null) {
@@ -21,34 +22,31 @@ function showMarkers(userData) {
                         return { Longitude: item.Longitude, Latitude: item.Latitude, Info: item.UserId };
                     });
                     markers = drawMarkers(trueData, 'http://maps.google.com/mapfiles/ms/icons/green-dot.png', markers);
-                    // $.ajax({
-                    //     //TODO Insert url here
-                    //     url: 'api/web/marker/logins',
-                    //     type: "POST",
-                    //     data: JSON.stringify({ UserId: USER.UserId }),
-                    //     dataType: "json",
-                    //     contentType: "application/json; charset=utf-8",
-                    //     success: function (data) {
-                    //         if (data != null) {
-                    //             CONTENT = new Array();
-                    //             //for (var i = 0; i <= markers.length; i++) {
-                    //             //    for (var j = 0; j <= data.length; j++) {
-                    //             //        if (data[j].UserId === parseInt(markers[i].Info)) {
-                    //             //            CONTENT = data[i].Login;
-                    //             //        };
-                    //             //    }
-                    //             //}
-                    //             trueData.forEach(function (item, i, trueData) {
-                    //                 data.forEach(function (item2, j, data) {
-                    //                     if (data[j].UserId === parseInt(trueData[i].Info)) {
-                    //                         CONTENT.push(data[j].Login);
-                    //                     };
-                    //                 });
-                    //             });
-                    //             
-                    //         }
-                    //     }
-                    // });
+                     $.ajax({
+                         //TODO Insert url here
+                         url: 'api/web/marker/logins',
+                         type: "POST",
+                         data: JSON.stringify({ UserId: USER.UserId }),
+                         dataType: "json",
+                         contentType: "application/json; charset=utf-8",
+                         success: function (data) {
+                             if (data != null) {
+                                 data.forEach(function (item, i, data) {
+                                     if (friends.indexOf(item) < 0) {
+                                         friends.push(item);
+                                     }
+                                 });
+                                 trueData.forEach(function (item, i, trueData) {
+                                     data.forEach(function (item2, j, data) {
+                                         if (data[j].UserId === parseInt(trueData[i].Info)) {
+                                             CONTENT.push(data[j].Login);
+                                         };
+                                     });
+                                 });
+                                 
+                             }
+                         }
+                     });
 
                 }
             });

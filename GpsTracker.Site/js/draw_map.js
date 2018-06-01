@@ -47,7 +47,7 @@ function drawMarkers(markers, iconPath, oldMarkers) {
         geocoder = new window.google.maps.Geocoder;
         infowindow = new window.google.maps.InfoWindow;
         window.google.maps.event.addListener(marker, 'click', function () {
-            var userId = CONTENT[markersArray.indexOf(marker)];
+            var userId = trueData[markers.indexOf(marker)];
             $.ajax({
                 url: 'api/web/user/id',
                 type: "POST",

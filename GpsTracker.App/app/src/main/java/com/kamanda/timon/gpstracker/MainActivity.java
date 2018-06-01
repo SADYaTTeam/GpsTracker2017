@@ -15,9 +15,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,21 +28,20 @@ import android.widget.Toast;
 import android.provider.Settings.Secure;
 
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Objects;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     //region Variables
     private static final String TAG = "MainActivity";
+    private static final int LAYOUT = R.layout.activity_main;
+
     private static String deviceId;
     private DataMessage message;
     private EditText editTextUpdateInterval;
@@ -48,6 +50,9 @@ public class MainActivity extends Activity {
     private Button button;
     private Button buttonSaveSettings;
 
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+
     private int updateInterval;
     private int fatestInterval;
     private int displacement;
@@ -55,9 +60,7 @@ public class MainActivity extends Activity {
     boolean mBounded;
     SendLocationToUrlService mServer;
 
-    private FirebaseAnalytics mFirebaseAnalytics;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     //endregion Variables
 
@@ -66,9 +69,12 @@ public class MainActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
-        setContentView(R.layout.settings_layout);
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        mAuth = FirebaseAuth.getInstance();
+
+        setContentView(LAYOUT);
+
+        initToolbar();
+        initNavigationView();
+
         message = new DataMessage();
         deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
@@ -79,20 +85,6 @@ public class MainActivity extends Activity {
         this.startService(intent);
         //startService(new Intent(this, SendLocationToUrlService.class));
         //minimizeApp();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
 
 //        if (savedInstanceState == null) {
 //            // Begin the transaction
@@ -105,6 +97,38 @@ public class MainActivity extends Activity {
 //        }
     }
 
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
+
+        toolbar.inflateMenu(R.menu.menu_navigation);
+    }
+
+    private void initNavigationView() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.map:
+                // Do onlick on menu action here
+
+                return true;
+        }
+        return false;
+    }
+
+    private void showMap(){
+
+    }
 
     @Override
     protected void onStart() {
@@ -112,7 +136,6 @@ public class MainActivity extends Activity {
         super.onStart();
         Intent mIntent = new Intent(this, SendLocationToUrlService.class);
         bindService(mIntent, mConnection, BIND_AUTO_CREATE);
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
     ServiceConnection mConnection = new ServiceConnection() {
@@ -142,9 +165,7 @@ public class MainActivity extends Activity {
         }
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.cancel(001);
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
+
     }
 
 
@@ -276,47 +297,6 @@ public class MainActivity extends Activity {
 
         mNotificationManager.notify(001, mBuilder.build());
 
-    }
-
-    private void createAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
-    }
-
-    private void signIn(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(MainActivity.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
     }
 }
 
