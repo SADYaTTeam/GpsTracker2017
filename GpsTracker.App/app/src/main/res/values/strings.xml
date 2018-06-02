@@ -83,5 +83,8 @@
     <string name="menu_item_settings">Налаштування</string>
     <string name="view_navigation_open">Open</string>
     <string name="view_navigation_close">Close</string>
+    <string name="update_interval">Update Interval</string>
+    <string name="fatest_interval">Fatest Interval</string>
+    <string name="displacement">Displacement</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.kamanda.timon.gpstracker.fragment.ExampleFragment;
 import com.kamanda.timon.gpstracker.fragment.MapViewFragment;
+import com.kamanda.timon.gpstracker.fragment.SettingsFragment;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
 
@@ -30,7 +31,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
             case  0:
                 return MapViewFragment.getInstanse();
             case  1:
-                return ExampleFragment.getInstanse();
+                return SettingsFragment.getInstanse();
         }
         return null;
     }
