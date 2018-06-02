@@ -27,7 +27,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Created by dasha_000 on 29.05.2017.
+ * Created by timon9551 on 29.05.2017.
  */
 
 public class MyService extends Service implements GoogleApiClient.ConnectionCallbacks,

@@ -82,7 +82,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="w3-display-bottomleft" id="user_info">
+		<div class="w3-display-bottomleft hidden" id="user_info">
 			<h3 id="user_info_login"></h3>
 			<img src="img/avatar.svg" id="user_info_avatar">
 			<label class="label-control block" id="user_info_firstname">First name: </label>
